@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان پیپر ماریو: در هزارساله</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* فونت‌های سیستمی برای پشتیبانی بهتر */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #1a1a2e;
+            color: #e6e6e6;
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 0, 255, 0.1) 0%, transparent 20%),
+                linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* صفحه بندی پیشرفته */
+        .book-container {
+            perspective: 1500px;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .page {
+            display: none;
+            padding: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 80vh;
+            background: rgba(25, 35, 45, 0.95);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 60px rgba(231, 76, 60, 0.3);
+            border-radius: 5px;
+            border: 1px solid #555;
+            transform-style: preserve-3d;
+            transition: transform 0.6s, box-shadow 0.6s;
+        }
+        
+        .page:hover {
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 80px rgba(231, 76, 60, 0.4);
+        }
+        
+        .active {
+            display: block;
+            animation: pageAppear 0.8s ease-out;
+        }
+        
+        /* صفحه شروع */
+        .start-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23161c2d" /><circle cx="20" cy="20" r="5" fill="%23e74c3c" opacity="0.3"/><circle cx="60" cy="40" r="8" fill="%233498db" opacity="0.3"/><circle cx="80" cy="70" r="6" fill="%23f39c12" opacity="0.3"/><circle cx="40" cy="80" r="10" fill="%232ecc71" opacity="0.3"/></svg>');
+        }
+        
+        /* هدر و فوتر پیشرفته */
+        header, footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(to bottom, #2c3e50, #1a2530);
+            border-bottom: 5px solid #e74c3c;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before, footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #e74c3c, transparent);
+        }
+        
+        footer {
+            border-bottom: none;
+            border-top: 5px solid #e74c3c;
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+        
+        /* لوگو و عنوان‌های پیشرفته */
+        .logo {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            filter: drop-shadow(0 0 15px rgba(231, 76, 60, 0.8));
+            transition: transform 0.5s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.03);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #e74c3c;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            margin: 20px 0;
+            background: linear-gradient(to right, #e74c3c, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 12px;
+            margin: 30px 0 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+            color: #f39c12;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        /* محتوای پیشرفته */
+        .content {
+            padding: 25px;
+            text-align: justify;
+            font-size: 1.15rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(52, 152, 219, 0.5), transparent);
+        }
+        
+        p {
+            margin-bottom: 22px;
+            text-align: justify;
+            line-height: 1.9;
+        }
+        
+        /* تصاویر پیشرفته */
+        .story-image {
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            margin: 25px auto;
+            display: block;
+            border: 8px double #bdc3c7;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s, box-shadow 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .story-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(231, 76, 60, 0.5);
+        }
+        
+        .story-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+        
+        /* دکمه‌های ناوبری پیشرفته */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 35px 0;
+            position: relative;
+        }
+        
+        .navigation::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(52, 152, 219, 0.3), transparent);
+            z-index: -1;
+        }
+        
+        .nav-btn {
+            padding: 14px 28px;
+            background: linear-gradient(to bottom, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #c0392b, #e74c3c);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .nav-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: linear-gradient(to bottom, #7f8c8d, #636e72);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .nav-btn:disabled::before {
+            display: none;
+        }
+        
+        /* دکمه شروع بازی */
+        .start-btn {
+            padding: 18px 40px;
+            background: linear-gradient(to bottom, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #c0392b, #e74c3c);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+        }
+        
+        .start-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .start-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* منوی تنظیمات */
+        .settings-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .settings-btn {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .settings-btn:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .settings-content {
+            display: none;
+            position: absolute;
+            top: 65px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            border: 1px solid #3498db;
+        }
+        
+        .settings-content.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .settings-option {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .settings-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* صفحه‌آرایی برای چاپ */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .book-container {
+                perspective: none;
+                padding: 0;
+            }
+            
+            .page {
+                display: block;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                background: white;
+                max-width: 100%;
+                padding: 15px;
+                margin: 0;
+                min-height: auto;
+                page-break-after: always;
+            }
+            
+            header, footer {
+                background: white;
+                color: black;
+                border-color: black;
+            }
+            
+            .navigation, .settings-menu {
+                display: none;
+            }
+            
+            h1 {
+                color: black;
+                background: none;
+                -webkit-text-fill-color: black;
+            }
+            
+            .story-image {
+                border-color: black;
+                max-width: 400px;
+            }
+            
+            .content {
+                background: white;
+            }
+        }
+        
+        /* واکنش‌گرایی پیشرفته */
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            h3 {
+                font-size: 1.4rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .nav-btn {
+                padding: 12px 22px;
+                font-size: 1.1rem;
+            }
+            
+            .start-btn {
+                padding: 15px 30px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.9rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content {
+                padding: 10px;
+                font-size: 1.05rem;
+            }
+            
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 1rem;
+            }
+            
+            .start-btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .settings-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .settings-content {
+                width: 200px;
+            }
+        }
+        
+        /* انیمیشن‌های پیشرفته */
+        @keyframes pageAppear {
+            from { 
+                opacity: 0;
+                transform: rotateY(20deg) translateX(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: rotateY(0) translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        /* استایل‌های خاص پیشرفته */
+        .highlight {
+            color: #f39c12;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        }
+        
+        .dialog {
+            background: rgba(52, 152, 219, 0.15);
+            border-left: 5px solid #3498db;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dialog::before {
+            content: '"';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(52, 152, 219, 0.3);
+            font-family: Georgia, serif;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: #3498db;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .copyright {
+            font-size: 0.95rem;
+            color: #bdc3c7;
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        .social-link {
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 2px 4px;
+        }
+        
+        .social-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #3498db;
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .social-link:hover {
+            color: #f39c12;
+        }
+        
+        .social-link:hover::after {
+            background: #f39c12;
+            transform: scaleX(1);
+        }
+        
+        .creator {
+            margin-top: 35px;
+            padding: 20px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(52, 152, 219, 0.2), rgba(0, 0, 0, 0.4));
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #e74c3c, #f39c12);
+            width: 0%;
+            transition: width 0.5s;
+            border-radius: 3px;
+        }
+        
+        .chapter-indicator {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-bottom: 10px;
+        }
+        
+        /* دکمه‌های منو */
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 30px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .menu-btn {
+            padding: 16px 25px;
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, #2980b9, #3498db);
+        }
+        
+        .menu-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* مودال برای اطلاعات سازندگان */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background: #2c3e50;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.5);
+            position: relative;
+            border: 2px solid #3498db;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* افکت‌های ویژه */
+        .sparkle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: sparkle 1s linear forwards;
+        }
+        
+        @keyframes sparkle {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1);
+                opacity: 0;
+            }
+        }
+        
+        .mario-star {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffeb3b, #ff9800);
+            border-radius: 50%;
+            box-shadow: 0 0 30px #ffeb3b, 0 0 60px #ff9800;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        
+        .star-animation {
+            animation: starAppear 1s ease-out forwards;
+        }
+        
+        @keyframes starAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- منوی تنظیمات -->
+    <div class="settings-menu">
+        <button class="settings-btn" onclick="toggleSettings()">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="settings-content" id="settingsContent">
+            <h3 style="text-align: center; margin-bottom: 20px;">تنظیمات</h3>
+            <div class="settings-option">
+                <label for="imageToggle">نمایش تصاویر</label>
+                <label class="switch">
+                    <input type="checkbox" id="imageToggle" checked onchange="toggleImages()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <label for="soundToggle">فعال‌سازی صدا</label>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggle" checked onchange="toggleSoundSetting()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <label for="animationToggle">انیمیشن‌ها</label>
+                <label class="switch">
+                    <input type="checkbox" id="animationToggle" checked onchange="toggleAnimations()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <button class="nav-btn" style="width: 100%;" onclick="showCredits()">
+                    <i class="fas fa-users"></i> سازندگان
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال سازندگان -->
+    <div class="modal" id="creditsModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('creditsModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2>سازندگان و توسعه‌دهندگان</h2>
+            <div class="content">
+                <p>این رمان تعاملی با الهام از بازی پیپر ماریو: در هزارساله ساخته شده است.</p>
+                
+                <h3>اثر الهام گرفته شده:</h3>
+                <ul style="list-style-type: none; padding: 15px;">
+                    <li><i class="fas fa-gamepad"></i> بازی اصلی: Paper Mario: The Thousand-Year Door</li>
+                    <li><i class="fas fa-building"></i> توسعه‌دهنده اصلی: Intelligent Systems</li>
+                    <li><i class="fas fa-building"></i> ناشر: Nintendo</li>
+                    <li><i class="fas fa-calendar"></i> سال انتشار: ۲۰۰۴ (ژاپن و آمریکای شمالی)، ۲۰۰۵ (اروپا)</li>
+                    <li><i class="fas fa-tv"></i> پلتفرم: Nintendo GameCube</li>
+                </ul>
+                
+                <h3>تیم توسعه این رمان تعاملی:</h3>
+                <ul style="list-style-type: none; padding: 15px;">
+                    <li><i class="fas fa-code"></i> توسعه‌دهنده: حسام الدین (Hessamedien)</li>
+                    <li><i class="fas fa-paint-brush"></i> طراحی و گرافیک: تیم گرافیک Hessamedien</li>
+                    <li><i class="fas fa-book"></i> داستان‌نویسی و روایت: تیم محتوای Hessamedien</li>
+                    <li><i class="fas fa-music"></i> صدا و موسیقی: تیم صوتی Hessamedien</li>
+                </ul>
+                
+                <h3>حقوق و مجوزها:</h3>
+                <p>این پروژه یک اثر طرفدارانه (Fan Project) است و به هیچ وجه قصد نقض حقوق نینتندو را ندارد. تمامی حقوق شخصیت‌ها، داستان اصلی و عناصر بازی متعلق به نینتندو است.</p>
+                
+                <div class="creator">
+                    <p>صفحه اینستاگرام: <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+                    <p>© 2023 Hessamedien. کلیه حقوق برای نینتندو محفوظ است.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ستاره برای افکت ویژه -->
+    <div class="mario-star"></div>
+
+    <div class="book-container">
+        <!-- صفحه شروع -->
+        <div class="page active start-page" id="startPage">
+            <header>
+                <!-- لوگو پیپر ماریو به صورت SVG دقیق -->
+                <svg class="logo" viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#e74c3c" />
+                            <stop offset="100%" stop-color="#c0392b" />
+                        </linearGradient>
+                        <filter id="shadow">
+                            <feDropShadow dx="3" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.7"/>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#logoGradient)" rx="15" filter="url(#shadow)" />
+                    <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="52" font-weight="bold" fill="white" filter="url(#shadow)">PAPER MARIO</text>
+                    <path d="M120,140 L480,140 L480,180 L120,180 Z" fill="white" filter="url(#shadow)" />
+                    <text x="50%" y="160" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="url(#logoGradient)" font-weight="bold">The Thousand-Year Door</text>
+                    <!-- ستاره درخشان -->
+                    <path d="M300,80 L310,100 L330,105 L315,120 L320,140 L300,130 L280,140 L285,120 L270,105 L290,100 Z" fill="#FFD700" class="float-animation" />
+                </svg>
+                <h1>رمان تعاملی پیپر ماریو: در هزارساله</h1>
+            </header>
+            
+            <div class="content">
+                <p>به دنیای شگفت‌انگیز پیپر ماریو خوش آمدید! در این رمان تعاملی، ماجراجویی حماسی ماریو را دنبال خواهید کرد که در جستجوی گنج افسانه‌ای "در هزارساله" است. این سفر پر از خطر، رمز و راز و دوستان جدید خواهد بود.</p>
+                
+                <!-- تصویر ماریو به صورت SVG دقیق -->
+                <svg class="story-image" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#3498db" />
+                            <stop offset="100%" stop-color="#2980b9" />
+                        </linearGradient>
+                        <filter id="imageShadow">
+                            <feDropShadow dx="3" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#bgGradient)" rx="10" filter="url(#imageShadow)" />
+                    <!-- سر ماریو -->
+                    <circle cx="150" cy="100" r="50" fill="red" filter="url(#imageShadow)" />
+                    <circle cx="135" cy="85" r="5" fill="white" />
+                    <circle cx="165" cy="85" r="5" fill="white" />
+                    <circle cx="135" cy="85" r="2" fill="black" />
+                    <circle cx="165" cy="85" r="2" fill="black" />
+                    <path d="M140,110 Q150,120 160,110" stroke="black" stroke-width="2" fill="none" />
+                    <!-- بدن ماریو -->
+                    <rect x="125" y="150" width="50" height="150" fill="blue" filter="url(#imageShadow)" />
+                    <!-- دست‌های ماریو -->
+                    <rect x="100" y="150" width="25" height="100" fill="blue" filter="url(#imageShadow)" />
+                    <rect x="175" y="150" width="25" height="100" fill="blue" filter="url(#imageShadow)" />
+                    <!-- پای‌های ماریو -->
+                    <rect x="125" y="300" width="20" height="50" fill="brown" filter="url(#imageShadow)" />
+                    <rect x="155" y="300" width="20" height="50" fill="brown" filter="url(#imageShadow)" />
+                    <!-- کلاه ماریو -->
+                    <rect x="120" y="50" width="60" height="20" fill="red" filter="url(#imageShadow)" />
+                    <rect x="130" y="30" width="40" height="30" fill="red" filter="url(#imageShadow)" />
+                    <!-- حرف M روی کلاه -->
+                    <path d="M140,40 L145,50 L150,45 L155,50 L160,40" stroke="white" stroke-width="3" fill="none" />
+                </svg>
+                
+                <p>این داستان بر اساس بازی محبوب "پیپر ماریو: در هزارساله" برای کنسول نینتندو گیمکیوب ساخته شده است. ماریو باید هفت کریستال ستاره‌ای را پیدا کند تا در هزارساله را باز کند و پرنسس پیچ را از چنگال بوزر نجات دهد.</p>
+                
+                <div class="dialog">
+                    <p class="character">پرنسس پیچ: ماریو! کمک! بوزر مرا ربوده است! او قصد دارد از قدرت در هزارساله استفاده کند!</p>
+                </div>
+                
+                <button class="start-btn" onclick="startGame()">
+                    <i class="fas fa-play"></i> شروع بازی
+                </button>
+                
+                <div class="menu-buttons">
+                    <button class="menu-btn" onclick="showSettings()">
+                        <i class="fas fa-cog"></i> تنظیمات
+                    </button>
+                    <button class="menu-btn" onclick="showCredits()">
+                        <i class="fas fa-users"></i> سازندگان
+                    </button>
+                </div>
+            </div>
+            
+            <footer>
+                <div class="copyright">
+                    <p>پیپر ماریو یک اثر متعلق به نینتندو است. این رمان صرفاً یک پروژه طرفداران است و هیچ ادعای مالکیتی نسبت به شخصیت‌ها ندارد.</p>
+                    <p>Developed by Hessamedien | <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- صفحه داستان - فصل 1 -->
+        <div class="page" id="page1">
+            <header>
+                <h1>فصل اول: آغاز ماجراجویی</h1>
+            </header>
+            
+            <div class="content">
+                <div class="chapter-indicator">فصل ۱ از ۷</div>
+                <div class="progress-bar"><div class="progress" style="width: 14%"></div></div>
+                
+                <p>داستان ما در شهر بندری روگورポート آغاز می‌شود، جایی که ماریو نامه‌ای از پرنسس پیچ دریافت می‌کند که در آن از او دعوت کرده تا به قصر بیاید تا گنجی افسانه‌ای را ببینند. ماریو با اشتیاق به سوی قصر می‌شتابد.</p>
+                
+                <!-- تصویر روگورポート -->
+                <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#87CEEB" />
+                            <stop offset="100%" stop-color="#4682B4" />
+                        </linearGradient>
+                        <linearGradient id="groundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#8B4513" />
+                            <stop offset="100%" stop-color="#654321" />
+                        </linearGradient>
+                        <filter id="buildingShadow">
+                            <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#skyGradient)" />
+                    <rect x="50" y="150" width="300" height="150" fill="url(#groundGradient)" />
+                    <!-- ساختمان‌ها -->
+                    <rect x="100" y="100" width="50" height="50" fill="#A9A9A9" filter="url(#buildingShadow)" />
+                    <rect x="110" y="110" width="30" height="30" fill="#D3D3D3" />
+                    <rect x="250" y="100" width="50" height="50" fill="#A9A9A9" filter="url(#buildingShadow)" />
+                    <rect x="260" y="110" width="30" height="30" fill="#D3D3D3" />
+                    <rect x="175" y="50" width="50" height="100" fill="#DAA520" filter="url(#buildingShadow)" />
+                    <rect x="185" y="70" width="30" height="30" fill="#FFD700" />
+                    <!-- خورشید -->
+                    <circle cx="200" cy="30" r="20" fill="#FFD700" />
+                    <!-- درها -->
+                    <rect x="120" y="150" width="30" height="50" fill="#696969" />
+                    <rect x="250" y="150" width="30" height="50" fill="#696969" />
+                    <!-- دریا -->
+                    <rect x="0" y="250" width="400" height="50" fill="#000080" opacity="0.7" />
+                    <!-- موج‌ها -->
+                    <path d="M0,260 Q100,250 200,265 Q300,250 400,260 L400,250 L0,250 Z" fill="#4169E1" />
+                </svg>
+                
+                <p>اما هنگامی که ماریو به قصر می‌رسد، متوجه می‌شود که پرنسس پیچ ناپدید شده است. نگهبانان به زمین افتاده‌اند و اثری از درگیری به چشم می‌خورد. تنها چیزی که از پرنسس پیچ باقی مانده، یک نقشه مرموز و یک جعbox حاوی چکش جادویی است.</p>
+                
+                <div class="dialog">
+                    <p class="character">ماریو: اووه-اوه! به نظر می‌رسه پرنسس پیچ دوباره در دردسر افتاده! باید زودتر می‌رسیدم!</p>
+                    <p class="character">تواد: نگران نباش ماریو! ما با هم می‌تونیم پرنسس رو نجات بدیم. اول باید بدونیم بوزر او رو کجا برده.</p>
+                </div>
+                
+                <p>ماریو با کمک تواد، دوست قارچی خود، متوجه می‌شود که پرنسس پیچ توسط بوزر ربوده شده است. بوزر قصد دارد از قدرت هفت کریستال ستاره‌ای برای باز کردن "در هزارساله" استفاده کند و به قدرت افسانه‌ای آن دست یابد. این در افسانه‌ای گفته می‌شود که هر آرزویی را برآورده می‌کند.</p>
+                
+                <p>ماریو سفر خود را برای نجات پرنسس پیچ و پیدا کردن کریستال‌های ستاره‌ای آغاز می‌کند. اولین مقصد او شهر پتروشبرگ است، جایی که اولین کریستال ستاره‌ای پنهان شده است. او چکش جادویی را برمی‌دارد و به سوی ماجراجویی جدیدی می‌شتابد.</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="navigate(1, 'startPage'); triggerSparkle()">قبلی</button>
+                <button class="nav-btn" onclick="navigate(1, 2); triggerSparkle()">بعدی</button>
+            </div>
+        </div>
+
+        <!-- صفحه داستان - فصل 2 -->
+        <div class="page" id="page2">
+            <header>
+                <h1>فصل دوم: شهر پتروشبرگ</h1>
+            </header>
+            
+            <div class="content">
+                <div class="chapter-indicator">فصل ۲ از ۷</div>
+                <div class="progress-bar"><div class="progress" style="width: 28%"></div></div>
+                
+                <p>ماریو پس از سفری طولانی به شهر پتروشبرگ، شهری سرد و برفی در دامنه کوه‌های بلند می‌رسد. هوای سرد و برف سنگین باعث می‌شود حرکت در این شهر دشوار باشد. ساکنان این شهر از دست یک گروه شرور به نام اکسس ناراضی هستند که کنترل شهر را در دست گرفته‌اند و از مردم باج می‌گیرند.</p>
+                
+                <!-- تصویر پتروشبرگ -->
+                <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="winterSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#E0F7FA" />
+                            <stop offset="100%" stop-color="#B2EBF2" />
+                        </linearGradient>
+                        <filter id="snowShadow">
+                            <feDropShadow dx="1" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#winterSky)" />
+                    <!-- زمین برفی -->
+                    <rect x="0" y="200" width="400" height="100" fill="#FFFFFF" />
+                    <path d="M0,200 Q100,190 200,205 Q300,190 400,200 L400,300 L0,300 Z" fill="#FFFFFF" />
+                    <!-- کوه‌ها -->
+                    <polygon points="100,50 150,150 50,150" fill="#B0BEC5" filter="url(#snowShadow)" />
+                    <polygon points="200,30 250,150 150,150" fill="#B0BEC5" filter="url(#snowShadow)" />
+                    <polygon points="300,70 350,150 250,150" fill="#B0BEC5" filter="url(#snowShadow)" />
+                    <!-- برف روی کوه‌ها -->
+                    <polygon points="90,50 110,50 100,40" fill="#FFFFFF" />
+                    <polygon points="190,30 210,30 200,20" fill="#FFFFFF" />
+                    <polygon points="290,70 310,70 300,60" fill="#FFFFFF" />
+                    <!-- خانه‌ها -->
+                    <rect x="120" y="200" width="40" height="60" fill="#78909C" filter="url(#snowShadow)" />
+                    <rect x="125" y="210" width="30" height="20" fill="#E0E0E0" />
+                    <rect x="240" y="200" width="40" height="60" fill="#78909C" filter="url(#snowShadow)" />
+                    <rect x="245" y="210" width="30" height="20" fill="#E0E0E0" />
+                    <!-- برف‌باران -->
+                    <circle cx="80" cy="40" r="10" fill="#FFFFFF" opacity="0.8" />
+                    <circle cx="180" cy="20" r="8" fill="#FFFFFF" opacity="0.8" />
+                    <circle cx="280" cy="50" r="12" fill="#FFFFFF" opacity="0.8" />
+                    <circle cx="50" cy="80" r="6" fill="#FFFFFF" opacity="0.8" />
+                    <circle cx="350" cy="30" r="7" fill="#FFFFFF" opacity="0.8" />
+                    <circle cx="150" cy="60" r="5" fill="#FFFFFF" opacity="0.8" />
+                </svg>
+                
+                <p>ماریو با فرانکی، یک یتی مهربان و قدرتمند آشنا می‌شود که به او در مبارزه با گروه اکسس کمک می‌کند. فرانکی اطلاعاتی درباره محل اختفای کریستال ستاره‌ای دارد اما برای رسیدن به آن،必须先 باید رهبر اکسس را شکست دهند.</p>
+                
+                <div class="dialog">
+                    <p class="character">فرانکی: ماریو، خوش اومدی به پتروشبرگ! мы به کمک نیاز داریم. اکسس شهر رو تحت کنترل گرفته و نمی‌ذاره مردم در آرامش زندگی کنن.</p>
+                    <p class="character">ماریو: نگران نباش فرانکی! من اینجا هستم که کمک کنم. بهم بگو چطور می‌تونم کمک کنم.</p>
+                </div>
+                
+                <p>ماریو و فرانکی با همکاری هم موفق می‌شوند رهبر اکسس را شکست دهند و کنترل شهر را به ساکنان آن بازگرداند. به پاس این پیروزی، فرانکی اولین کریستال ستاره‌ای را به ماریو می‌دهد که در غاری یخزده در بالای کوه پنهان شده بود.</p>
+                
+                <div class="dialog">
+                    <p class="character">فرانکی: ماریو، تو شهر ما رو نجات دادی! این کریستال ستاره‌ای رو به عنوان نشانه تشکر از تو می‌خوام. امیدوارم در سفرت به دردت بخوره.</p>
+                    <p class="character">ماریو: ممنون فرانکی! این فقط اولین قدم برای نجات پرنسس پیچه! هنوز راه درازی در پیش دارم.</p>
+                </div>
+                
+                <p>با دریافت اولین کریста�� ستاره‌ای، ماریو قدرت جدیدی به دست می‌آورد که به او اجازه می‌دهد به مکان‌های جدیدی دسترسی پیدا کند. او اکنون باید به سراغ کریستال بعدی برود که در جنگل بارانی بونجی قرار دارد.</p>
+                
+                <p>ماریو با قایق به سمت جنگل بارانی حرکت می‌کند، غافل از اینکه دشمنان زیادی در راه هستند و بوزر برای او تله‌هایی کار گذاشته است...</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="navigate(2, 1); triggerSparkle()">قبلی</button>
+                <button class="nav-btn" onclick="navigate(2, 3); triggerSparkle()">بعدی</button>
+            </div>
+        </div>
+
+        <!-- صفحات بعدی داستان به همین ترتیب ادامه می‌یابند -->
+
+        <!-- صفحه پایانی -->
+        <div class="page" id="pageFinal">
+            <header>
+                <h1>فصل پایانی: نبرد نهایی</h1>
+            </header>
+            
+            <div class="content">
+                <div class="chapter-indicator">فصل ۷ از ۷</div>
+                <div class="progress-bar"><div class="progress" style="width: 100%"></div></div>
+                
+                <p>پس از ماجراجویی‌های فراوان و گذر از خطرات بیشمار، ماریو finalmente موفق می‌شود همه هفت کریستال ستاره‌ای را جمع‌آوری کند و به قصر بوزر بازگردد. هر کریستال به او قدرت جدیدی بخشیده و او را برای نبرد نهایی آماده کرده است.</p>
+                
+                <!-- تصویر نبرد نهایی -->
+                <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="battleBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4A235A" />
+                            <stop offset="100%" stop-color="#2C3E50" />
+                        </linearGradient>
+                        <radialGradient id="starGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" stop-color="#F1C40F" />
+                            <stop offset="100%" stop-color="#E74C3C" />
+                        </radialGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#battleBg)" />
+                    <!-- ستاره قدرتمند -->
+                    <circle cx="200" cy="150" r="80" fill="url(#starGradient)" filter="url(#glow)" />
+                    <!-- ماریو -->
+                    <circle cx="130" cy="130" r="15" fill="red" />
+                    <rect x="120" cy="145" width="20" height="30" fill="blue" />
+                    <!-- بوزر -->
+                    <circle cx="270" cy="130" r="25" fill="#8B4513" />
+                    <rect x="250" y="155" width="40" height="40" fill="#8B4513" />
+                    <circle cx="260" cy="125" r="5" fill="white" />
+                    <circle cx="280" cy="125" r="5" fill="white" />
+                    <circle cx="260" cy="125" r="2" fill="black" />
+                    <circle cx="280" cy="125" r="2" fill="black" />
+                    <path d="M265,135 Q270,140 275,135" stroke="black" stroke-width="2" fill="none" />
+                    <!-- زمین نبرد -->
+                    <path d="M150,200 L250,200" stroke="#2C3E50" stroke-width="5" />
+                    <path d="M130,230 Q200,280 270,230" stroke="#2C3E50" stroke-width="5" fill="none" />
+                    <!-- پرنسس پیچ -->
+                    <circle cx="200" cy="80" r="10" fill="pink" />
+                    <rect x="195" y="90" width="10" height="15" fill="pink" />
+                </svg>
+                
+                <p>ماریو با بوزر نبرد نهایی را آغاز می‌کند. بوزر با استفاده از قدرت تاریکی، خود را به شکل هیولایی ترسناک درآورده است. اما ماریو با استفاده از قدرت کریستال‌های ستاره‌ای، موفق می‌شود بوزر را شکست دهد и پرنسس پیچ را نجات دهد.</p>
+                
+                <div class="dialog">
+                    <p class="character">بوزر: نهههه! ممکن نیست! تو نمی‌تونی من رو شکست بدی! من قدرتمندترین هستم!</p>
+                    <p class="character">ماریو: کار تمام شد بوزر! زمانش رسیده که شکست رو بپذیری و دیگه هیچوقت قلمرو قارچ رو اذیت نکنی!</p>
+                    <p class="character">پرنسس پیچ: ماریو! می‌دونستم که می‌تونی انجامش بدی! همیشه می‌تونم به تو حساب کنم!</p>
+                </div>
+                
+                <p>با شکست بوزر، صلح به قلمرو قارچ بازمی‌گردد. پرنسس پیچ به پاسداشت شجاعت ماریو، جشنی بزرگ برگزار می‌کند و به همه اعلام می‌کند که ماریو once again قلمرو را نجات داده است.</p>
+                
+                <p>اما این پایان ماجرا نیست... همانطور که جشن در حال برگزاری است, خبر می‌رسد که موجودی مرموز در جنگل‌های پشت قصر دیده شده است. ماریو و دوستانش می‌دانند که ماجراجویی‌های بیشتری در انتظار آنهاست!</p>
+                
+                <div class="creator">
+                    <h3>تقدیم به شما از طرف سازنده</h3>
+                    <p>این رمان تعاملی با عشق و Passion برای طرفداران پیپر ماریو ساخته شده است. امیدوارم از خواندن آن لذت برده باشید.</p>
+                    <p>توسعه دهنده: حسام الدین</p>
+                    <p>صفحه اینستاگرام: <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="navigate('Final', 6); triggerSparkle()">قبلی</button>
+                <button class="nav-btn" onclick="print(); triggerStar()">چاپ داستان</button>
+            </div>
+            
+            <footer>
+                <div class="copyright">
+                    <p>پیپر ماریو یک اثر متعلق به نینتندو است. این رمان صرفاً یک پروژه طرفداران است و هیچ ادعای مالکیتی نسبت به شخصیت‌ها ندارد.</p>
+                    <p>Developed by Hessamedien | <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // مدیریت پیمایش بین صفحات
+        function navigate(from, to) {
+            document.getElementById('page' + from).classList.remove('active');
+            document.getElementById('page' + to).classList.add('active');
+            playSound('pageTurn');
+            updateProgressBar(to);
+        }
+        
+        // شروع بازی
+        function startGame() {
+            document.getElementById('startPage').classList.remove('active');
+            document.getElementById('page1').classList.add('active');
+            playSound('start');
+            triggerSparkle();
+        }
+        
+        // بروزرسانی نوار پیشرفت
+        function updateProgressBar(pageNumber) {
+            if (pageNumber === 'startPage') return;
+            const progressPercentage = Math.min((pageNumber / 7) * 100, 100);
+            document.querySelector('.progress').style.width = progressPercentage + '%';
+        }
+        
+        // مدیریت صداها
+        let soundEnabled = true;
+        let backgroundMusicEnabled = false;
+        let imagesEnabled = true;
+        let animationsEnabled = true;
+        
+        const sounds = {
+            pageTurn: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABMYXZmNTguNDUuMTAwAAAAAAAAAAAAAA=="),
+            start: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABMYXZmNTguNDUuMTAwAAAAAAAAAAAAAA=="),
+            backgroundMusic: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABMYXZmNTguNDUuMTAwAAAAAAAAAAAAAA==")
+        };
+        
+        function playSound(type) {
+            if (soundEnabled && sounds[type]) {
+                sounds[type].currentTime = 0;
+                sounds[type].play().catch(e => console.log("Playback failed:", e));
+            }
+        }
+        
+        function toggleSoundSetting() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').checked = soundEnabled;
+            if (soundEnabled) playSound('pageTurn');
+        }
+        
+        function playBackgroundMusic() {
+            if (backgroundMusicEnabled) {
+                sounds.backgroundMusic.pause();
+            } else {
+                sounds.backgroundMusic.loop = true;
+                sounds.backgroundMusic.play().catch(e => console.log("Background music playback failed:", e));
+            }
+            backgroundMusicEnabled = !backgroundMusicEnabled;
+        }
+        
+        // مدیریت منوی تنظیمات
+        function toggleSettings() {
+            document.getElementById('settingsContent').classList.toggle('show');
+        }
+        
+        function showSettings() {
+            document.getElementById('settingsContent').classList.add('show');
+        }
+        
+        function toggleImages() {
+            imagesEnabled = !imagesEnabled;
+            const images = document.querySelectorAll('.story-image');
+            images.forEach(img => {
+                img.style.display = imagesEnabled ? 'block' : 'none';
+            });
+        }
+        
+        function toggleAnimations() {
+            animationsEnabled = !animationsEnabled;
+            const animatedElements = document.querySelectorAll('.float-animation');
+            animatedElements.forEach(el => {
+                if (animationsEnabled) {
+                    el.style.animationPlayState = 'running';
+                } else {
+                    el.style.animationPlayState = 'paused';
+                }
+            });
+        }
+        
+        // مدیریت مودال سازندگان
+        function showCredits() {
+            document.getElementById('creditsModal').classList.add('show');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+        
+        // ایجاد افکت‌های ویژه
+        function triggerSparkle() {
+            if (!soundEnabled || !animationsEnabled) return;
+            
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = Math.random() * 100 + 'vw';
+                sparkle.style.top = Math.random() * 100 + 'vh';
+                sparkle.style.setProperty('--tx', (Math.random() * 100 - 50) + 'px');
+                sparkle.style.setProperty('--ty', (Math.random() * 100 - 50) + 'px');
+                sparkle.style.width = sparkle.style.height = Math.random() * 10 + 5 + 'px';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    document.body.removeChild(sparkle);
+                }, 1000);
+            }
+        }
+        
+        function triggerStar() {
+            if (!animationsEnabled) return;
+            const star = document.querySelector('.mario-star');
+            star.classList.add('star-animation');
+            
+            setTimeout(() => {
+                star.classList.remove('star-animation');
+            }, 1000);
+        }
+        
+        // راه‌اندازی اولیه
+        window.onload = function() {
+            // افزودن قابلیت کلیک برای ایجاد افکت
+            document.addEventListener('click', function(e) {
+                if (soundEnabled && animationsEnabled && Math.random() > 0.7) {
+                    triggerSparkle();
+                }
+            });
+            
+            // بستن منوی تنظیمات با کلیک خارج از آن
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.settings-menu')) {
+                    document.getElementById('settingsContent').classList.remove('show');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

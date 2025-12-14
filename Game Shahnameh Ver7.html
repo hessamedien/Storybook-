@@ -1,0 +1,109 @@
+<script>
+  const gameContainer = document.getElementById('game');
+  const storyLog = document.getElementById('storyLog');
+
+  const heroes = {
+    'گردآفرید': {
+      origin: 'طبرستان',
+      gender: 'زن',
+      intro: 'گردآفرید، بانوی جنگجوی شمال ایران، آماده دفاع از سرزمین خود است...',
+      branches: [
+        {
+          title: '🕰️ سفر به گذشته',
+          text: 'گردآفرید وارد غاری باستانی می‌شود و با سیمرغ روبه‌رو می‌گردد...',
+          choices: ['ماندن در گذشته', 'بازگشت با دانش']
+        },
+        {
+          title: '❤️ عشق و خیانت',
+          text: 'او عاشق بهرام، فرمانده دشمن می‌شود...',
+          choices: ['خیانت برای عشق', 'فداکاری برای وطن']
+        },
+        {
+          title: '👑 نجات شاهزاده',
+          text: 'گردآفرید برای نجات شاهزاده ربوده‌شده به جنگل دیوها می‌رود...',
+          choices: ['نبرد با دیو سفید', 'استفاده از جادو']
+        }
+      ],
+      endings: [
+        '👑 تبدیل به ملکه افسانه‌ای',
+        '🕊️ فداکاری برای سرزمین',
+        '🌪️ تبعید به سرزمین‌های دور'
+      ]
+    },
+    'رستم': {
+      origin: 'زابلستان',
+      gender: 'مرد',
+      intro: 'رستم، قهرمان جوان زابل، در جستجوی افتخار و هویت خویش است...',
+      branches: [
+        {
+          title: '🕰️ سفر به آینده',
+          text: 'رستم با سنگی اسرارآمیز به آینده سفر می‌کند...',
+          choices: ['تغییر آینده', 'آماده‌سازی نسل']
+        },
+        {
+          title: '❤️ عشق ممنوعه',
+          text: 'رستم عاشق آرزو، دختر شورشی می‌شود...',
+          choices: ['ازدواج و اتحاد', 'ترک عشق برای وفاداری']
+        },
+        {
+          title: '⚔️ نبرد با دیو زمان',
+          text: 'رستم با دیوی به نام زمان‌خوار روبه‌رو می‌شود...',
+          choices: ['نیروی سیمرغ', 'قربانی خاطرات']
+        }
+      ],
+      endings: [
+        '🛡️ قهرمان ملی',
+        '💔 شکست عشقی',
+        '🌀 گم‌شده در زمان'
+      ]
+    }
+  };
+
+  let currentHero = null;
+  let currentBranch = 0;
+
+  function startGame(heroName) {
+    currentHero = heroes[heroName];
+    currentBranch = 0;
+    storyLog.textContent = `شروع داستان با ${heroName} از ${currentHero.origin}\n`;
+    showModal(currentHero.intro);
+    setTimeout(() => showBranch(), 1000);
+  }
+
+  function showBranch() {
+    if (currentBranch >= currentHero.branches.length) {
+      showEndings();
+      return;
+    }
+
+    const branch = currentHero.branches[currentBranch];
+    gameContainer.innerHTML = `<h3>${branch.title}</h3><p>${branch.text}</p>`;
+    branch.choices.forEach(choice => {
+      const btn = document.createElement('div');
+      btn.className = 'choice';
+      btn.textContent = choice;
+      btn.onclick = () => {
+        storyLog.textContent += `\n${branch.title}: ${choice}\n`;
+        showModal(`انتخاب شما: ${choice}`);
+        currentBranch++;
+        setTimeout(() => showBranch(), 1000);
+      };
+      gameContainer.appendChild(btn);
+    });
+  }
+
+  function showEndings() {
+    gameContainer.innerHTML = `<h3>📜 پایان داستان</h3><p>بر اساس انتخاب‌های شما، یکی از پایان‌های زیر رقم می‌خورد:</p>`;
+    currentHero.endings.forEach(end => {
+      const btn = document.createElement('div');
+      btn.className = 'choice';
+      btn.textContent = end;
+      btn.onclick = () => {
+        storyLog.textContent += `\n🏁 پایان: ${end}\n`;
+        showModal(`پایان شما: ${end}`);
+        gameContainer.innerHTML = `<p>🎉 داستان شما به پایان رسید. می‌توانید آن را چاپ کنید.</p>`;
+      };
+      gameContainer.appendChild(btn);
+    });
+  }
+</script>

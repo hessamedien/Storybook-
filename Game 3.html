@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>ماجراهای اسرارآمیز | بازی نقش‌آفرینی تعاملی</title>
+ <style>
+ :root {
+ --win11-bg: linear-gradient(139deg, #0063b1 0%, #5b0094 100%);
+ --win11-accent: #0078d7;
+ --win11-text: #ffffff;
+ --win11-panel: rgba(32, 32, 32, 0.85);
+ --win11-card: rgba(255, 255, 255, 0.1);
+ --win11-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+ --win11-taskbar: rgba(32, 32, 32, 0.8);
+ }
+
+ * {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ font-family: 'Segoe UI', 'B Nazanin', Tahoma, sans-serif;
+ }
+
+ body {
+ background: var(--win11-bg);
+ color: var(--win11-text);
+ height: 100vh;
+ overflow: hidden;
+ position: relative;
+ }
+
+ /* نوار وظیفه */
+ .taskbar {
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ height: 48px;
+ background: var(--win11-taskbar);
+ backdrop-filter: blur(10px);
+ display: flex;
+ align-items: center;
+ z-index: 1000;
+ border-top: 1px solid rgba(255, 255, 255, 0.1);
+ padding: 12px;
+ }
+
+ .taskbar-center {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-grow: 1;
+ gap: 6px;
+ }
+
+ .taskbar-icon {
+ width: 24px;
+ height: 24px;
+ padding: 6px;
+ border-radius: 4px;
+ cursor: pointer;
+ transition: all 0.2s;
+ }
+
+ .taskbar-icon:hover {
+ background: rgba(255, 255, 255, 0.1);
+ }
+
+ .taskbar-icon img {
+ width: 100%;
+ height: 100%;
+ }
+
+ .start-button {
+ width: 40px;
+ height: 40px;
+ background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7H3zm16-7-8-5.5a1 1 0 0 0-1.1 0L3 5.3A2 2 0 0 0 2 7v10a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4V7a2 2 0 0 0-1-1.7z"/></svg>') no-repeat center;
+ cursor: pointer;
+ transition: transform 0.2s;
+ margin-right: 8px;
+ }
+
+ .start-button:hover {
+ transform: scale(1.1);
+ }
+
+ .time-date {
+ font-size: 12px;
+ padding: 6px 8px;
+ background: rgba(255, 255, 255, 0.1);
+ border-radius: 4px;
+ margin-left: 8px;
+ }
+
+ /* دسکتاپ */
+ .desktop {
+ height: calc(100vh - 48px);
+ padding: 20px;
+ display: grid;
+ grid-template-columns: repeat(auto-fill, 80px);
+ grid-auto-rows: 100px;
+ gap: 20px;
+ align-content: start;
+ }
+
+ .desktop-icon {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ text-align: center;
+ cursor: pointer;
+ padding: 10px;
+ border-radius: 8px;
+ transition: all 0.2s;
+ }
+
+ .desktop-icon:hover {
+ background: var(--win11-card);
+ }
+
+ .desktop-icon:active {
+ transform: scale(0.95);
+ }
+
+ .desktop-icon img {
+ width: 40px;
+ height: 40px;
+ margin-bottom: 8px;
+ object-fit: contain;
+ }
+
+ .desktop-icon span {
+ font-size: 12px;
+ text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+ word-break: break-word;
+ max-width: 100%;
+ }
+
+ /* پنجره‌ها */
+ .window {
+ position: absolute;
+ background: var(--win11-panel);
+ backdrop-filter: blur(20px);
+ border-radius: 8px;
+ box-shadow: var(--win11-shadow);
+ overflow: hidden;
+ min-width: 300px;
+ max-width: 90vw;
+ display: none;
+ z-index: 100;
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ .window-header {
+ padding: 12px 16px;
+ background: rgba(0, 0, 0, 0.3);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ cursor: move;
+ user-select: none;
+ }
+
+ .window-title {
+ font-weight: 600;
+ font-size: 14px;
+ }
+
+ .window-close {
+ width: 20px;
+ height: 20px;
+ background: rgba(255, 255, 255, 0.2);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ transition: all 0.2s;
+ }
+
+ .window-close:hover {
+ background: rgba(255, 255, 255, 0.3);
+ }
+
+ .window-body {
+ padding: 16px;
+ max-height: 70vh;
+ overflow-y: auto;
+ }
+
+ /* پنجره بازی */
+ .game-window {
+ width: 700px;
+ height: 600px;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ }
+
+ .scene-text {
+ line-height: 1.8;
+ margin-bottom: 24px;
+ text-align: justify;
+ font-size: 15px;
+ }
+
+ .choices {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ }
+
+ .choice-btn {
+ background: var(--win11-accent);
+ color: white;
+ border: none;
+ padding: 12px 16px;
+ border-radius: 6px;
+ cursor: pointer;
+ text-align: right;
+ transition: all 0.2s;
+ font-size: 14px;
+ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+ }
+
+ .choice-btn:hover {
+ background: #0062ad;
+ transform: translateX(-5px);
+ }
+
+ .choice-btn:active {
+ transform: translateX(-5px) scale(0.98);
+ }
+
+ /* پنجره شخصیت‌ها */
+ .character-window {
+ width: 450px;
+ }
+
+ .character-info {
+ display: flex;
+ gap: 16px;
+ margin-bottom: 20px;
+ }
+
+ .character-avatar {
+ width: 100px;
+ height: 100px;
+ border-radius: 8px;
+ object-fit: cover;
+ border: 2px solid rgba(255, 255, 255, 0.2);
+ }
+
+ .character-details {
+ flex: 1;
+ }
+
+ .character-details h3 {
+ margin: 0 0 8px 0;
+ color: var(--win11-accent);
+ }
+
+ .character-stats {
+ display: flex;
+ gap: 10px;
+ margin-top: 12px;
+ flex-wrap: wrap;
+ }
+
+ .stat {
+ background: rgba(0, 0, 0, 0.3);
+ padding: 4px 10px;
+ border-radius: 4px;
+ font-size: 12px;
+ display: flex;
+ align-items: center;
+ }
+
+ .stat::before {
+ content: "•";
+ margin-left: 4px;
+ color: var(--win11-accent);
+ }
+
+ /* منوی استارت */
+ .start-menu {
+ position: absolute;
+ bottom: 60px;
+ left: 12px;
+ width: 500px;
+ height: 600px;
+ background: var(--win11-panel);
+ backdrop-filter: blur(30px);
+ border-radius: 8px;
+ box-shadow: var(--win11-shadow);
+ display: none;
+ z-index: 1001;
+ overflow: hidden;
+ border: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ .search-box {
+ padding: 16px;
+ background: rgba(0, 0, 0, 0.2);
+ border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+ }
+
+ .search-box input {
+ width: 100%;
+ padding: 10px 16px;
+ background: rgba(255, 255, 255, 0.1);
+ border: none;
+ border-radius: 20px;
+ color: white;
+ font-family: inherit;
+ }
+
+ .start-menu-items {
+ display: grid;
+ grid-template-columns: repeat(6, 1fr);
+ gap: 12px;
+ padding: 16px;
+ overflow-y: auto;
+ }
+
+ .start-menu-item {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ padding: 12px;
+ border-radius: 6px;
+ cursor: pointer;
+ transition: all 0.2s;
+ }
+
+ .start-menu-item:hover {
+ background: rgba(255, 255, 255, 0.1);
+ }
+
+ .start-menu-item img {
+ width: 36px;
+ height: 36px;
+ margin-bottom: 8px;
+ }
+
+ .start-menu-item span {
+ font-size: 12px;
+ text-align: center;
+ }
+
+ /* صفحه شروع */
+ .start-screen {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 48px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ background: rgba(0, 0, 0, 0.5);
+ backdrop-filter: blur(10px);
+ z-index: 999;
+ }
+
+ .game-title {
+ font-size: 3rem;
+ margin-bottom: 20px;
+ text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+ color: #fff;
+ }
+
+ .start-btn {
+ background: var(--win11-accent);
+ color: white;
+ border: none;
+ padding: 15px 30px;
+ border-radius: 6px;
+ cursor: pointer;
+ font-size: 1.2rem;
+ transition: all 0.3s;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+ }
+
+ .start-btn:hover {
+ background: #0062ad;
+ transform: translateY(-3px);
+ box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+ }
+
+ .version-info {
+ position: absolute;
+ bottom: 20px;
+ font-size: 12px;
+ color: rgba(255, 255, 255, 0.7);
+ }
+
+ /* حالت موبایل */
+ @media (max-width: 768px) {
+ .desktop {
+ grid-template-columns: repeat(auto-fill, 70px);
+ grid-auto-rows: 90px;
+ gap: 10px;
+ padding: 10px;
+ }
+
+ .desktop-icon {
+ width: 60px;
+ padding: 5px;
+ }
+
+ .desktop-icon img {
+ width: 30px;
+ height: 30px;
+ }
+
+ .game-window {
+ width: 95vw;
+ height: 80vh;
+ }
+
+ .character-window {
+ width: 90vw;
+ }
+
+ .start-menu {
+ width: 90vw;
+ height: 70vh;
+ left: 5vw;
+ }
+
+ .start-menu-items {
+ grid-template-columns: repeat(3, 1fr);
+ }
+
+ .game-title {
+ font-size: 2rem;
+ text-align: center;
+ }
+ }
+
+ /* انیمیشن‌ها */
+ @keyframes fadeIn {
+ from { opacity: 0; transform: translateY(20px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
+
+ @keyframes pulse {
+ 0% { opacity: 0.7; }
+ 50% { opacity: 1; }
+ 100% { opacity: 0.7; }
+ }
+
+ .tense-moment {
+ animation: pulse 1.5s infinite;
+ color: #ff5555;
+ font-weight: bold;
+ }
+
+ .fade-in {
+ animation: fadeIn 0.5s ease-out forwards;
+ }
+ </style>
+</head>
+<body>
+ <!-- صفحه شروع -->
+ <div class="start-screen" id="start-screen">
+ <h1 class="game-title">ماجراهای اسرارآمیز</h1>
+ <button class="start-btn" onclick="hideStartScreen()">شروع بازی</button>
+ <div class="version-info">نسخه 1.0.0 | ساخته شده توسط HessamEdien</div>
+ </div>
+
+ <!-- دسکتاپ -->
+ <div class="desktop">
+ <div class="desktop-icon" onclick="showCharacterWindow('آرش')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230078d7'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="آرش">
+ <span>آرش</span>
+ </div>
+ <div class="desktop-icon" onclick="showCharacterWindow('پریسا')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e91e63'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="پریسا">
+ <span>پریسا</span>
+ </div>
+ <div class="desktop-icon" onclick="showCharacterWindow('کامیار')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234caf50'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="کامیار">
+ <span>کامیار</span>
+ </div>
+ <div class="desktop-icon" onclick="showCharacterWindow('نازنین')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff9800'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="نازنین">
+ <span>نازنین</span>
+ </div>
+ <div class="desktop-icon" onclick="showWindow('settings')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z'/></svg>" alt="تنظیمات">
+ <span>تنظیمات</span>
+ </div>
+ <div class="desktop-icon" onclick="showWindow('help')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/></svg>" alt="راهنما">
+ <span>راهنما</span>
+ </div>
+ </div>
+
+ <!-- نوار وظیفه -->
+ <div class="taskbar">
+ <div class="start-button" onclick="toggleStartMenu()"></div>
+ <div class="taskbar-center">
+ <div class="taskbar-icon" onclick="showCharacterWindow('آرش')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230078d7'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="آرش">
+ </div>
+ <div class="taskbar-icon" onclick="showCharacterWindow('پریسا')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e91e63'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="پریسا">
+ </div>
+ <div class="taskbar-icon" onclick="showCharacterWindow('کامیار')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234caf50'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="کامیار">
+ </div>
+ <div class="taskbar-icon" onclick="showCharacterWindow('نازنین')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff9800'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="نازنین">
+ </div>
+ </div>
+ <div class="time-date" id="time-date"></div>
+ </div>
+
+ <!-- منوی استارت -->
+ <div class="start-menu" id="start-menu">
+ <div class="search-box">
+ <input type="text" placeholder="جستجو...">
+ </div>
+ <div class="start-menu-items">
+ <div class="start-menu-item" onclick="showCharacterWindow('آرش')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230078d7'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="آرش">
+ <span>آرش</span>
+ </div>
+ <div class="start-menu-item" onclick="showCharacterWindow('پریسا')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e91e63'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="پریسا">
+ <span>پریسا</span>
+ </div>
+ <div class="start-menu-item" onclick="showCharacterWindow('کامیار')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234caf50'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="کامیار">
+ <span>کامیار</span>
+ </div>
+ <div class="start-menu-item" onclick="showCharacterWindow('نازنین')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff9800'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>" alt="نازنین">
+ <span>نازنین</span>
+ </div>
+ <div class="start-menu-item" onclick="showWindow('settings')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z'/></svg>" alt="تنظیمات">
+ <span>تنظیمات</span>
+ </div>
+ <div class="start-menu-item" onclick="showWindow('help')">
+ <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/></svg>" alt="راهنما">
+ <span>راهنما</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- پنجره شخصیت‌ها -->
+ <div class="window character-window" id="character-window">
+ <div class="window-header">
+ <div class="window-title">اطلاعات شخصیت</div>
+ <div class="window-close" onclick="hideWindow('character')">×</div>
+ </div>
+ <div class="window-body">
+ <div class="character-info">
+ <img class="character-avatar" id="char-avatar" src="" alt="آواتار">
+ <div class="character-details">
+ <h3 id="char-name">نام شخصیت</h3>
+ <p id="char-bio">بیوگرافی شخصیت</p>
+ <div class="character-stats">
+ <span class="stat" id="char-strength">قدرت: 5</span>
+ <span class="stat" id="char-intel">هوش: 5</span>
+ <span class="stat" id="char-charisma">کاریزما: 5</span>
+ </div>
+ </div>
+ </div>
+ <div class="choices">
+ <button class="choice-btn" id="start-game-btn" onclick="startGame()">شروع ماجراجویی با این شخصیت</button>
+ </div>
+ </div>
+ </div>
+
+ <!-- پنجره تنظیمات -->
+ <div class="window" id="settings-window">
+ <div class="window-header">
+ <div class="window-title">تنظیمات بازی</div>
+ <div class="window-close" onclick="hideWindow('settings')">×</div>
+ </div>
+ <div class="window-body">
+ <div style="margin-bottom: 20px;">
+ <label for="difficulty">سطح دشواری:</label>
+ <select id="difficulty" style="width: 100%; padding: 8px; margin-top: 5px;">
+ <option value="easy">آسان</option>
+ <option value="normal" selected>متوسط</option>
+ <option value="hard">سخت</option>
+ </select>
+ </div>
+ <div style="margin-bottom: 20px;">
+ <label for="theme">تم بازی:</label>
+ <select id="theme" style="width: 100%; padding: 8px; margin-top: 5px;">
+ <option value="default">پیش‌فرض (آبی-بنفش)</option>
+ <option value="dark">تیره</option>
+ <option value="green">سبز</option>
+ <option value="red">قرمز</option>
+ </select>
+ </div>
+ <div style="margin-bottom: 20px;">
+ <label for="sound">صدای بازی:</label>
+ <select id="sound" style="width: 100%; padding: 8px; margin-top: 5px;">
+ <option value="on">روشن</option>
+ <option value="off">خاموش</option>
+ </select>
+ </div>
+ <button class="choice-btn" onclick="applySettings()">اعمال تنظیمات</button>
+ </div>
+ </div>
+
+ <!-- پنجره راهنما -->
+ <div class="window" id="help-window">
+ <div class="window-header">
+ <div class="window-title">راهنمای بازی</div>
+ <div class="window-close" onclick="hideWindow('help')">×</div>
+ </div>
+ <div class="window-body">
+ <h3>ماجراهای اسرارآمیز - بازی نقش‌آفرینی</h3>
+ <p>این یک بازی نقش‌آفرینی تعاملی است که در آن شما کنترل کامل سرنوشت شخصیت اصلی را در دست دارید. هر تصمیمی که می‌گیرید، مسیر داستان را تغییر می‌دهد.</p>
+ 
+ <h4>راهنمای بازی:</h4>
+ <ul style="margin-bottom: 15px;">
+ <li>ابتدا از منوی استارت یا دسکتاپ یک شخصیت انتخاب کنید</li>
+ <li>داستان را با دقت بخوانید و از بین گزینه‌های موجود انتخاب کنید</li>
+ <li>هر انتخاب می‌تواند نتیجه متفاوتی در داستان داشته باشد</li>
+ <li>در پایان بازی می‌توانید نتیجه نهایی را ببینید</li>
+ </ul>
+ 
+ <h4>ویژگی‌های بازی:</h4>
+ <ul>
+ <li>4 شخصیت منحصر به فرد با داستان‌های متفاوت</li>
+ <li>ده‌ها انتخاب تعاملی که سرنوشت بازی را تغییر می‌دهند</li>
+ <li>پایان‌های متعدد بر اساس تصمیمات شما</li>
+ <li>محیط کاربری شبیه به ویندوز ۱۱</li>
+ <li>بهینه‌شده برای موبایل و دسکتاپ</li>
+ </ul>
+ 
+ <p style="margin-top: 20px; text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.7);">ساخته شده توسط HessamEdien | نسخه 1.0.0</p>
+ </div>
+ </div>
+
+ <!-- پنجره بازی -->
+ <div class="window game-window" id="game-window">
+ <div class="window-header">
+ <div class="window-title" id="game-title">ماجراجویی</div>
+ <div class="window-close" onclick="endGame()">×</div>
+ </div>
+ <div class="window-body">
+ <div class="scene-text" id="scene-text">
+ برای شروع بازی، لطفاً یکی از شخصیت‌ها را از منوی استارت یا دسکتاپ انتخاب کنید.
+ </div>
+ <div class="choices" id="game-choices"></div>
+ </div>
+ </div>
+
+ <script>
+ // اطلاعات شخصیت‌ها و داستان‌ها
+ const characters = {
+ "آرش": {
+ bio: "آرش یک روزنامه‌نگار تحقیقی 32 ساله است که به خاطر پیگیری پرونده‌های حساس معروف شده. او که در یک خانواده نظامی بزرگ شده، مهارت‌های رزمی پایه‌ای نیز دارد. نقطه قوت او کنجکاوی بی‌پایان و شم خبرنگاری قوی است.",
+ strength: 7,
+ intelligence: 8,
+ charisma: 6,
+ avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230078d7'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>",
+ story: {
+ start: {
+ title: "پرونده ناتمام",
+ text: "آرش در حال بررسی آرشیو روزنامه برای یک گزارش جدید است که ناگهان پرونده‌ای قدیمی توجهش را جلب می‌کند. پرونده مربوط به ناپدید شدن مرموز یک دانشمند هسته‌ای به نام دکتر رحیمی است که 5 سال پیش اتفاق افتاده. آخرین یادداشت روزنامه‌نگار قبلی که روی این پرونده کار می‌کرد، حاکی از این است که او به چیزی بزرگ دست یافته بود... اما روز بعد، او هم ناپدید شد. مدیر روزنامه به آرش هشدار می‌دهد که از این پرونده دوری کند.",
+ choices: [
+ { text: "پرونده را بردار و تحقیقات را شروع کن", next: "investigate" },
+ { text: "به توصیه مدیر عمل کن و پرونده را کنار بگذار", next: "ignore" },
+ { text: "اول با منبع قدیمی خودت در وزارت اطلاعات تماس بگیری", next: "call_contact" }
+ ]
+ },
+ investigate: {
+ title: "شروع تحقیقات",
+ text: "آرش تصمیم می‌گیرد پرونده را بررسی کند. او به آزمایشگاه قدیمی دکتر رحیمی می‌رود که اکنون به یک انبار تبدیل شده. در میان وسایل قدیمی، یک لپ‌تاپ پیدا می‌کند که به نظر می‌رسد عمداً مخفی شده بود. وقتی آن را روشن می‌کند، با یک صفحه قفل مواجه می‌شود که از او رمز می‌خواهد. همزمان، صدای پای کسی از پشت سرش به گوش می‌رسد...",
+ choices: [
+ { text: "سریع لپ‌تاپ را بردار و از در دیگر فرار کن", next: "escape_with_laptop" },
+ { text: "بچرخ و با فرد روبرو شو", next: "confront" },
+ { text: "وانمود کن که یک نگهبان معمولی هستی", next: "pretend_guard" }
+ ]
+ },
+ // ادامه داستان آرش...
+ }
+ },
+ "پریسا": {
+ bio: "پریسا یک رواندرمانگر 28 ساله است که در درمان اختلالات اضطرابی تخصص دارد. او که خود در کودکی تجربه نزدیک به مرگ داشته، به مسائل ماوراءطبیعه حساسیت خاصی دارد. بیمارانش او را به خاطر صبر و همدردی بی‌نظیرش تحسین می‌کنند.",
+ strength: 5,
+ intelligence: 9,
+ charisma: 8,
+ avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e91e63'><path d='M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z'/></svg>",
+ story: {
+ start: {
+ title: "بیمار مرموز",
+ text: "در یک شب بارانی، زنی به نام مریم با چشمانی پر از ترس به مطب پریسا می‌آید. او ادعا می‌کند که هر شب در خواب دختر 5 ساله‌اش را می‌بیند که 2 سال پیش در یک سانحه رانندگی فوت کرده. اما اخیراً این خواب‌ها واقعی‌تر شده‌اند و دخترش به او هشدار می‌دهد که 'آنها می‌خواهند تو را بگیرند'. ناگهان چراغ‌های مطب شروع به سوسو زدن می‌کنند و صدای عجیبی از راهرو به گوش می‌رسد...",
+ choices: [
+ { text: "آرامشت را حفظ کن و از مریم بخواه بیشتر توضیح دهد", next: "calm_patient" },
+ { text: "به آرامی از اتاق خارج شو و وضعیت را بررسی کن", next: "check_hallway" },
+ { text: "با اورژانس تماس بگیر و تقاضای کمک کن", next: "call_emergency" }
+ ]
+ },
+ // ادامه داستان پریسا...
+ }
+ },
+ // شخصیت‌های دیگر...
+ };
+
+ // متغیرهای بازی
+ let currentCharacter = null;
+ let currentScene = "start";
+ let gameState = {};
+ let startTime = null;
+ let selectedDifficulty = "normal";
+ let selectedTheme = "default";
+
+ // به روز رسانی تاریخ و ساعت
+ function updateTime() {
+ const now = new Date();
+ const time = now.toLocaleTimeString('fa-IR');
+ const date = now.toLocaleDateString('fa-IR');
+ document.getElementById('time-date').textContent = `${time} - ${date}`;
+ }
+
+ setInterval(updateTime, 1000);
+ updateTime();
+
+ // نمایش/پنهان کردن صفحه شروع
+ function hideStartScreen() {
+ document.getElementById('start-screen').style.display = 'none';
+ }
+
+ // نمایش/پنهان کردن منوی استارت
+ function toggleStartMenu() {
+ const menu = document.getElementById('start-menu');
+ menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+ }
+
+ // نمایش پنجره‌ها
+ function showWindow(windowType) {
+ document.getElementById('start-menu').style.display = 'none';
+ document.getElementById(`${windowType}-window`).style.display = 'block';
+ }
+
+ function showCharacterWindow(characterName) {
+ const character = characters[characterName];
+ document.getElementById('char-name').textContent = characterName;
+ document.getElementById('char-bio').textContent = character.bio;
+ document.getElementById('char-strength').textContent = `قدرت: ${character.strength}`;
+ document.getElementById('char-intel').textContent = `هوش: ${character.intelligence}`;
+ document.getElementById('char-charisma').textContent = `کاریزما: ${character.charisma}`;
+ document.getElementById('char-avatar').src = character.avatar;
+ document.getElementById('start-game-btn').setAttribute('data-character', characterName);
+ 
+ showWindow('character');
+ }
+
+ // پنهان کردن پنجره‌ها
+ function hideWindow(windowType) {
+ document.getElementById(`${windowType}-window`).style.display = 'none';
+ }
+
+ // شروع بازی
+ function startGame() {
+ currentCharacter = document.getElementById('start-game-btn').getAttribute('data-character');
+ currentScene = "start";
+ gameState = {};
+ startTime = new Date();
+ 
+ hideWindow('character');
+ showWindow('game');
+ 
+ loadScene();
+ }
+
+ // بارگذاری صحنه
+ function loadScene() {
+ const scene = characters[currentCharacter].story[currentScene];
+ document.getElementById('game-title').textContent = scene.title;
+ document.getElementById('scene-text').textContent = scene.text;
+ 
+ const choicesDiv = document.getElementById('game-choices');
+ choicesDiv.innerHTML = "";
+ 
+ scene.choices.forEach(choice => {
+ const button = document.createElement('button');
+ button.className = 'choice-btn';
+ button.textContent = choice.text;
+ button.onclick = () => {
+ currentScene = choice.next;
+ if (currentScene.startsWith('end_')) {
+ endGame();
+ } else {
+ loadScene();
+ }
+ };
+ choicesDiv.appendChild(button);
+ });
+ }
+
+ // پایان بازی
+ function endGame() {
+ const endTime = new Date();
+ const playTime = Math.floor((endTime - startTime) / 1000);
+ const minutes = Math.floor(playTime / 60);
+ const seconds = playTime % 60;
+ 
+ document.getElementById('scene-text').innerHTML = `
+ <h3>پایان ماجراجویی!</h3>
+ <p>شما با شخصیت ${currentCharacter} به پایان داستان رسیدید.</p>
+ <p>زمان بازی: ${minutes} دقیقه و ${seconds} ثانیه</p>
+ <p>سطح دشواری: ${selectedDifficulty}</p>
+ `;
+ 
+ document.getElementById('game-choices').innerHTML = `
+ <button class="choice-btn" onclick="startGame()">شروع دوباره</button>
+ <button class="choice-btn" onclick="hideWindow('game')">بازگشت به دسکتاپ</button>
+ `;
+ }
+
+ // اعمال تنظیمات
+ function applySettings() {
+ selectedDifficulty = document.getElementById('difficulty').value;
+ selectedTheme = document.getElementById('theme').value;
+ 
+ // تغییر تم
+ const root = document.documentElement;
+ switch(selectedTheme) {
+ case "dark":
+ root.style.setProperty("--win11-bg", "linear-gradient(135deg, #1a1a1a 0%, #333 100%)");
+ root.style.setProperty("--win11-accent", "#555");
+ break;
+ case "green":
+ root.style.setProperty("--win11-bg", "linear-gradient(135deg, #1b5e20 0%, #388e3c 100%)");
+ root.style.setProperty("--win11-accent", "#4caf50");
+ break;
+ case "red":
+ root.style.setProperty("--win11-bg", "linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%)");
+ root.style.setProperty("--win11-accent", "#f44336");
+ break;
+ default:
+ root.style.setProperty("--win11-bg", "linear-gradient(135deg, #0063b1 0%, #5b0094 100%)");
+ root.style.setProperty("--win11-accent", "#0078d7");
+ }
+ 
+ alert("تنظیمات با موفقیت اعمال شد!");
+ hideWindow('settings');
+ }
+
+ // بستن منوی استارت با کلیک خارج از آن
+ document.addEventListener('click', function(event) {
+ const startMenu = document.getElementById('start-menu');
+ const startButton = document.querySelector('.start-button');
+ 
+ if (!startMenu.contains(event.target) && !startButton.contains(event.target)) {
+ startMenu.style.display = 'none';
+ }
+ });
+ </script>
+</body>
+</html>

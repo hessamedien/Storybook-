@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی شاهنامه: روایت‌های جاودان</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --text-color: #2C1810;
+            --background-color: #F4E1D2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: rtl;
+        }
+
+        #game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255,255,255,0.8);
+            min-height: 100vh;
+        }
+
+        #game-title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        #version-info {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .menu-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        #settings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .settings-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .difficulty-option {
+            flex: 1;
+            margin: 0 10px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #character-selection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="game-title">بازی شاهنامه: روایت‌های جاودان</h1>
+        <div id="version-info"></div>
+
+        <div id="main-menu">
+            <button class="menu-button" onclick="openSettings()">تنظیمات</button>
+            <button class="menu-button" onclick="startGame()">شروع بازی</button>
+            <button class="menu-button" onclick="showCredits()">درباره سازنده</button>
+        </div>
+
+        <div id="settings-modal" style="display:none;">
+            <div class="settings-content">
+                <h2>تنظیمات بازی</h2>
+                <div class="difficulty-selector">
+                    <div class="difficulty-option" data-difficulty="easy" onclick="selectDifficulty(this)">آسان</div>
+                    <div class="difficulty-option" data-difficulty="medium" onclick="selectDifficulty(this)">متوسط</div>
+                    <div class="difficulty-option" data-difficulty="hard" onclick="selectDifficulty(this)">سخت</div>
+                </div>
+                <button onclick="closeSettings()">تأیید</button>
+            </div>
+        </div>
+
+        <div id="character-selection" style="display:none;">
+            <h2>انتخاب شخصیت</h2>
+            <div class="character-options">
+                <div class="character-card" onclick="selectCharacter('gerdafarid')">
+                    <img src="" alt="گردآفرید">
+                    <h3>گردآفرید</h3>
+                </div>
+                <div class="character-card" onclick="selectCharacter('rostam')">
+                    <img src="" alt="رستم">
+                    <h3>رستم</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تعیین اتوماتیک ورژن بر اساس تاریخ
+        function generateVersion() {
+            const now = new Date();
+            return `v${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()}`;
+        }
+
+        document.getElementById('version-info').textContent = generateVersion();
+
+        function openSettings() {
+            document.getElementById('settings-modal').style.display = 'flex';
+        }
+
+        function closeSettings() {
+            document.getElementById('settings-modal').style.display = 'none';
+        }
+
+        function selectDifficulty(element) {
+            const difficulties = document.querySelectorAll('.difficulty-option');
+            difficulties.forEach(diff => diff.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function startGame() {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('character-selection').style.display = 'block';
+        }
+
+        function selectCharacter(character) {
+            // در مراحل بعدی کامل می‌شود
+            console.log(`انتخاب شخصیت: ${character}`);
+        }
+
+        function showCredits() {
+            alert('سازنده: حسام الدین\nاینستاگرام: @hessamedien');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان پیپر ماریو</title>
+    <style>
+        /* Reset و فونت‌ها */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazir', sans-serif;
+        }
+        
+        body {
+            background: #2c3e50;
+            color: #ecf0f1;
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 0L100 100" stroke="%23344a5f" stroke-width="2"/><path d="M100 0L0 100" stroke="%23344a5f" stroke-width="2"/></svg>');
+        }
+        
+        /* صفحه بندی */
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: rgba(25, 35, 45, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-left: 1px solid #7f8c8d;
+            border-right: 1px solid #7f8c8d;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        /* هدر و فوتر */
+        header, footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid #e74c3c;
+            margin-bottom: 30px;
+        }
+        
+        footer {
+            border-bottom: none;
+            border-top: 3px solid #e74c3c;
+            margin-top: 30px;
+            margin-bottom: 0;
+        }
+        
+        /* لوگو و عنوان‌ها */
+        .logo {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(231, 76, 60, 0.7));
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin: 25px 0 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: #f39c12;
+            margin: 20px 0 10px;
+        }
+        
+        /* محتوا */
+        .content {
+            padding: 20px;
+            text-align: justify;
+            font-size: 1.1rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        /* تصاویر */
+        .story-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            border: 5px solid #bdc3c7;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* دکمه‌های ناوبری */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* افکت‌های صوتی */
+        .sound-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .sound-btn {
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        /* صفحه‌آرایی برای چاپ */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .page {
+                display: block;
+                box-shadow: none;
+                border: none;
+                background: white;
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            header, footer {
+                background: white;
+                color: black;
+                border-color: black;
+            }
+            
+            .navigation, .sound-controls {
+                display: none;
+            }
+            
+            h1 {
+                color: black;
+            }
+            
+            .story-image {
+                border-color: black;
+                max-width: 400px;
+            }
+        }
+        
+        /* واکنش‌گرایی */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content {
+                padding: 10px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        /* استایل‌های خاص */
+        .highlight {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .dialog {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .social-link:hover {
+            color: #f39c12;
+            text-decoration: underline;
+        }
+        
+        .creator {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- کنترل صدا -->
+    <div class="sound-controls">
+        <button class="sound-btn" onclick="toggleSound()">🔊</button>
+    </div>
+
+    <!-- صفحه عنوان -->
+    <div class="page active" id="page1">
+        <header>
+            <!-- لوگو پیپر ماریو به صورت SVG -->
+            <svg class="logo" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#e74c3c" rx="15" />
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="48" font-weight="bold" fill="white">PAPER MARIO</text>
+                <path d="M100,120 L400,120 L400,160 L100,160 Z" fill="white" />
+                <text x="50%" y="140" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="24" fill="#e74c3c">The Thousand-Year Door</text>
+            </svg>
+            <h1>رمان تعاملی پیپر ماریو</h1>
+        </header>
+        
+        <div class="content">
+            <p>به دنیای شگفت‌انگیز پیپر ماریو خوش آمدید! در این رمان تعاملی، ماجراجویی حماسی ماریو را دنبال خواهید کرد که در جستجوی گنج افسانه‌ای "در هزارساله" است.</p>
+            
+            <!-- تصویر ماریو به صورت SVG -->
+            <svg class="story-image" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#3498db" rx="10" />
+                <circle cx="150" cy="100" r="50" fill="red" />
+                <rect x="125" y="150" width="50" height="150" fill="blue" />
+                <rect x="100" y="150" width="25" height="100" fill="blue" />
+                <rect x="175" y="150" width="25" height="100" fill="blue" />
+                <circle cx="135" cy="85" r="5" fill="white" />
+                <circle cx="165" cy="85" r="5" fill="white" />
+                <circle cx="135" cy="85" r="2" fill="black" />
+                <circle cx="165" cy="85" r="2" fill="black" />
+                <path d="M140,110 Q150,120 160,110" stroke="black" stroke-width="2" fill="none" />
+            </svg>
+            
+            <p>این داستان بر اساس بازی محبوب "پیپر ماریو: در هزارساله" برای کنسول نینتندو گیمکیوب ساخته شده است. ماریو باید هفت کریستال ستاره‌ای را پیدا کند تا در هزارساله را باز کند و پرنسس پیچ را نجات دهد.</p>
+            
+            <div class="dialog">
+                <p class="character">پرنسس پیچ: ماریو! کمک! بوزر مرا ربوده است!</p>
+            </div>
+            
+            <p>برای شروع ماجراجویی، دکمه بعدی را فشار دهید.</p>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" disabled>قبلی</button>
+            <button class="nav-btn" onclick="navigate(1, 2)">بعدی</button>
+        </div>
+        
+        <footer>
+            <div class="copyright">
+                <p>پیپر ماریو یک اثر متعلق به نینتندو است. این رمان صرفاً یک پروژه طرفداران است و هیچ ادعای مالکیتی نسبت به شخصیت‌ها ندارد.</p>
+                <p>Developed by Hessamedien | <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- صفحه داستان - فصل 1 -->
+    <div class="page" id="page2">
+        <header>
+            <h1>فصل اول: آغاز ماجراجویی</h1>
+        </header>
+        
+        <div class="content">
+            <p>داستان ما در شهر روگورポート آغاز می‌شود، جایی که ماریو نامه‌ای از پرنسس پیچ دریافت می‌کند که در آن از او دعوت کرده تا به شهرش بیاید تا گنجی افسانه‌ای را ببینند.</p>
+            
+            <!-- تصویر روگورポート -->
+            <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#87CEEB" />
+                <rect x="50" y="150" width="300" height="150" fill="#8B4513" />
+                <rect x="100" y="100" width="50" height="50" fill="#A9A9A9" />
+                <rect x="250" y="100" width="50" height="50" fill="#A9A9A9" />
+                <rect x="175" y="50" width="50" height="100" fill="#DAA520" />
+                <circle cx="200" cy="30" r="20" fill="#FFD700" />
+                <rect x="120" y="150" width="30" height="50" fill="#696969" />
+                <rect x="250" y="150" width="30" height="50" fill="#696969" />
+            </svg>
+            
+            <p>اما هنگامی که ماریو به قصر می‌رسد، متوجه می‌شود که پرنسس پیچ ناپدید شده است. تنها چیزی که از او باقی مانده، یک نقشه مرموز و یک جعبه حاوی چکش است.</p>
+            
+            <div class="dialog">
+                <p class="character">ماریو: اووه-اوه! به نظر می‌رسه پرنسس پیچ دوباره در دردسر افتاده!</p>
+            </div>
+            
+            <p>ماریو با کمک تواد، دوست قارچی خود، متوجه می‌شود که پرنسس پیچ توسط بوزر ربوده شده است. بوزر قصد دارد از قدرت هفت کریستال ستاره‌ای برای باز کردن "در هزارساله" استفاده کند و به قدرت افسانه‌ای آن دست یابد.</p>
+            
+            <p>ماریو سفر خود را برای نجات پرنسس پیچ و پیدا کردن کریستال‌های ستاره‌ای آغاز می‌کند. اولین مقصد او شهر پتروشبرگ است، جایی که اولین کریستال ستاره‌ای پنهان شده است.</p>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" onclick="navigate(2, 1)">قبلی</button>
+            <button class="nav-btn" onclick="navigate(2, 3)">بعدی</button>
+        </div>
+    </div>
+
+    <!-- صفحه داستان - فصل 2 -->
+    <div class="page" id="page3">
+        <header>
+            <h1>فصل دوم: شهر پتروشبرگ</h1>
+        </header>
+        
+        <div class="content">
+            <p>ماریو به شهر پتروشبرگ، شهری سرد و برفی می‌رسد. ساکنان این شهر از دست یک گروه شرور به نام اکسس ناراضی هستند که کنترل شهر را در دست گرفته‌اند.</p>
+            
+            <!-- تصویر پتروشبرگ -->
+            <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#E0F7FA" />
+                <rect x="50" y="200" width="300" height="100" fill="#FFFFFF" />
+                <polygon points="100,50 150,150 50,150" fill="#B0BEC5" />
+                <polygon points="200,30 250,150 150,150" fill="#B0BEC5" />
+                <polygon points="300,70 350,150 250,150" fill="#B0BEC5" />
+                <circle cx="80" cy="40" r="10" fill="#FFFFFF" />
+                <circle cx="180" cy="20" r="8" fill="#FFFFFF" />
+                <circle cx="280" cy="50" r="12" fill="#FFFFFF" />
+                <rect x="120" y="200" width="40" height="60" fill="#78909C" />
+                <rect x="240" y="200" width="40" height="60" fill="#78909C" />
+            </svg>
+            
+            <p>ماریو با کمک فرانکی، یک Yeti محلی، موفق می‌شود رهبر اکسس را شکست دهد و کنترل شهر را به ساکنان آن بازگرداند. به پاس این پیروزی، فرانکی اولین کریستال ستاره‌ای را به ماریو می‌دهد.</p>
+            
+            <div class="dialog">
+                <p class="character">فرانکی: ماریو، تو شهر ما رو نجات دادی! این کریستال ستاره‌ای رو به عنوان نشانه تشکر از تو می‌خوام.</p>
+                <p class="character">ماریو: ممنون فرانکی! این فقط اولین قدم برای نجات پرنسس پیچه!</p>
+            </div>
+            
+            <p>با دریافت اولین کریستال ستاره‌ای، ماریو قدرت جدیدی به دست می‌آورد که به او اجازه می‌دهد به مکان‌های جدیدی دسترسی پیدا کند. او اکنون باید به سراغ کریستال بعدی برود که در جنگل بارانی بونجی قرار دارد.</p>
+            
+            <p>ماریو با قایق به سمت جنگل بارانی حرکت می‌کند، غافل از اینکه دشمنان زیادی در راه هستند...</p>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" onclick="navigate(3, 2)">قبلی</button>
+            <button class="nav-btn" onclick="navigate(3, 4)">بعدی</button>
+        </div>
+    </div>
+
+    <!-- صفحات بعدی داستان به همین ترتیب ادامه می‌یابند -->
+
+    <!-- صفحه پایانی -->
+    <div class="page" id="pageFinal">
+        <header>
+            <h1>پایان ماجراجویی</h1>
+        </header>
+        
+        <div class="content">
+            <p>پس از ماجراجویی‌های فراوان، ماریو finalmente موفق می‌شود همه هفت کریستال ستاره‌ای را جمع‌آوری کند و به قصر بوزر بازگردد.</p>
+            
+            <!-- تصویر نبرد نهایی -->
+            <svg class="story-image" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#4A235A" />
+                <circle cx="200" cy="150" r="80" fill="#F1C40F" />
+                <rect x="150" y="150" width="100" height="100" fill="#E74C3C" />
+                <circle cx="130" cy="130" r="15" fill="#3498DB" />
+                <circle cx="270" cy="130" r="15" fill="#3498DB" />
+                <path d="M150,200 L250,200" stroke="#2C3E50" stroke-width="5" />
+                <path d="M130,230 Q200,280 270,230" stroke="#2C3E50" stroke-width="5" fill="none" />
+            </svg>
+            
+            <p>ماریو با بوزر نبرد نهایی را آغاز می‌کند. با استفاده از قدرت کریستال‌های ستاره‌ای، ماریو موفق می‌شود بوزر را شکست دهد و پرنسس پیچ را نجات دهد.</p>
+            
+            <div class="dialog">
+                <p class="character">بوزر: نهههه! ممکن نیست! تو نمی‌تونی من رو شکست بدی!</p>
+                <p class="character">ماریو: کار تمام شد بوزر! زمانش رسیده که شکست رو بپذیری!</p>
+                <p class="character">پرنسس پیچ: ماریو! می‌دونستم که می‌تونی انجامش بدی!</p>
+            </div>
+            
+            <p>با شکست بوزر، صلح به قلمرو قارچ بازمی‌گردد. پرنسس پیچ به پاسداشت شجاعت ماریو، جشنی بزرگ برگزار می‌کند و به همه اعلام می‌کند که ماریو once again قلمرو را نجات داده است.</p>
+            
+            <p>اما این پایان ماجرا نیست... ماجراجویی‌های بیشتری در انتظار ماریو و دوستانش هستند!</p>
+            
+            <div class="creator">
+                <h3>تقدیم به شما از طرف سازنده</h3>
+                <p>این رمان تعاملی با عشق و Passion برای طرفداران پیپر ماریو ساخته شده است.</p>
+                <p>توسعه دهنده: حسام الدین</p>
+                <p>صفحه اینستاگرام: <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" onclick="navigate('Final', 3)">قبلی</button>
+            <button class="nav-btn" onclick="print()">چاپ داستان</button>
+        </div>
+        
+        <footer>
+            <div class="copyright">
+                <p>پیپر ماریو یک اثر متعلق به نینتندو است. این رمان صرفاً یک پروژه طرفداران است و هیچ ادعای مالکیتی نسبت به شخصیت‌ها ندارد.</p>
+                <p>Developed by Hessamedien | <a href="https://www.instagram.com/hessamedien" class="social-link">@hessamedien</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // مدیریت پیمایش بین صفحات
+        function navigate(from, to) {
+            document.getElementById('page' + from).classList.remove('active');
+            document.getElementById('page' + to).classList.add('active');
+            playSound('turn');
+        }
+        
+        // مدیریت صداها
+        let soundEnabled = true;
+        const sounds = {
+            turn: new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAAABMYXZmNTguNDUuMTAwAAAAAAAAAAAAAA==")
+        };
+        
+        function playSound(type) {
+            if (soundEnabled && sounds[type]) {
+                sounds[type].currentTime = 0;
+                sounds[type].play().catch(e => console.log("Playback failed:", e));
+            }
+        }
+        
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.querySelector('.sound-btn').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+        
+        // ایجاد افکت‌های صوتی ساده
+        function createSounds() {
+            // ایجاد صدای برگشتن صفحه
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(400, ctx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+            
+            oscillator.start();
+            oscillator.stop(ctx.currentTime + 0.1);
+            
+            // ذخیره صدا برای استفاده بعدی
+            sounds.turn = oscillator;
+        }
+        
+        // راه‌اندازی اولیه
+        window.onload = function() {
+            try {
+                createSounds();
+            } catch (e) {
+                console.log("Could not initialize audio:", e);
+            }
+        };
+    </script>
+</body>
+</html>

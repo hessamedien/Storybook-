@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی شاهنامه: روایت‌های جاودان</title>
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2B48C;
+            --accent-color: #A52A2A;
+            --text-color: #2F4F4F;
+            --light-text: #F5F5DC;
+            --background-light: #F5F5DC;
+            --background-dark: #2F4F4F;
+            --success-color: #2E8B57;
+            --danger-color: #B22222;
+            --warning-color: #FF8C00;
+            --info-color: #4682B4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .dark-theme {
+            --primary-color: #A52A2A;
+            --secondary-color: #8B4513;
+            --text-color: #F5F5DC;
+            --light-text: #2F4F4F;
+            --background-light: #2F4F4F;
+            --background-dark: #1A1A1A;
+            background-color: var(--background-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-family: 'B Nazanin', 'Iranian Sans', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .version {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            opacity: 0.8;
+        }
+
+        .creator {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .creator a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .creator a:hover {
+            color: var(--accent-color);
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 70vh;
+        }
+
+        .story-section {
+            flex: 1;
+            padding: 20px;
+            background-color: var(--background-light);
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+            font-family: 'B Nazanin', 'Iranian Sans', sans-serif;
+        }
+
+        .character-name {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .choices-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .choice-btn {
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+            font-family: 'B Nazanin', 'Iranian Sans', sans-serif;
+        }
+
+        .choice-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .choice-btn {
+            padding: 12px 20px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+            font-family: 'B Nazanin', 'Iranian Sans', sans-serif;
+        }
+
+        .choice-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .setting-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .setting-label {
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle, .difficulty-select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid var(--secondary-color);
+            background-color: var(--background-light);
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .character-selection {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .character-card {
+            width: 300px;
+            padding: 20px;
+            background-color: var(--background-light);
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .character-card.selected {
+            border-color: var(--accent-color);
+            background-color: rgba(165, 42, 42, 0.1);
+        }
+
+        .character-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .character-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            font-family: 'B Nazanin', 'Iranian Sans', sans-serif;
+        }
+
+        .character-desc {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .start-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .restart-btn {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .print-btn {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .character-image-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-text);
+            font-size: 3rem;
+            border: 3px solid var(--primary-color);
+        }
+
+        .ending-screen {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--background-light);
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .ending-title {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .ending-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(139, 69, 19, 0.1);
+            border-radius: 5px;
+            min-width: 150px;
+            margin: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .choices-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .settings-container {
+                flex-direction: column;
+            }
+            
+            .story-text {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Special text effects */
+        .important-text {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .quote-text {
+            font-style: italic;
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+
+        /* Battle specific styles */
+        .battle-theme {
+            background-color: #3a1c1c;
+            color: #f8d7d7;
+        }
+
+        .battle-theme .story-section {
+            background-color: #2a1212;
+            border-color: #5e2a2a;
+        }
+
+        .peace-theme {
+            background-color: #1c3a2a;
+            color: #d7f8e2;
+        }
+
+        .peace-theme .story-section {
+            background-color: #122a1e;
+            border-color: #2a5e42;
+        }
+
+        .time-travel-theme {
+            background-color: #2a1c3a;
+            color: #e2d7f8;
+        }
+
+        .time-travel-theme .story-section {
+            background-color: #1e122a;
+            border-color: #422a5e;
+        }
+
+        /* Character specific themes */
+        .gordafrid-theme {
+            --primary-color: #4a6fa5;
+            --accent-color: #3a4a6e;
+        }
+
+        .rostam-theme {
+            --primary-color: #a54a4a;
+            --accent-color: #6e3a3a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>بازی شاهنامه: روایت‌های جاودان</h1>
+            <div class="subtitle">یک ماجراجویی تعاملی بر اساس شاهنامه فردوسی</div>
+            <div class="version">نسخه 1.0.0 - مرداد ۱۴۰۴</div>
+            <div class="creator">
+                ساخته شده توسط <a href="https://instagram.com/hessamedien" target="_blank">HessamEdien</a>
+            </div>
+        </header>
+
+        <div class="settings-container">
+            <div class="setting-group">
+                <span class="setting-label">تم:</span>
+                <select id="themeToggle" class="theme-toggle">
+                    <option value="light">روشن</option>
+                    <option value="dark">تیره</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <span class="setting-label">سختی بازی:</span>
+                <select id="difficultySelect" class="difficulty-select">
+                    <option value="easy">آسان</option>
+                    <option value="medium" selected>متوسط</option>
+                    <option value="hard">سخت</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="characterSelection" class="character-selection">
+            <div class="character-card" data-character="gordafrid">
+                <div class="character-image-placeholder">گ</div>
+                <h2 class="character-name">گردآفرید</h2>
+                <p class="character-desc">زن جنگجوی شجاع از شمال ایران که در نبردها و سیاست مهارت دارد و به دنبال کشف رازهای گذشته خود است.</p>
+            </div>
+            <div class="character-card" data-character="rostam">
+                <div class="character-image-placeholder">ر</div>
+                <h2 class="character-name">رستم</h2>
+                <p class="character-desc">قهرمان جوان و پرتوان از زابلستان که در جستجوی هویت خود و اثبات شایستگی‌هایش است.</p>
+            </div>
+        </div>
+
+        <div id="gameContainer" class="game-container hidden">
+            <div id="storySection" class="story-section">
+                <!-- Story content will be dynamically inserted here -->
+            </div>
+            <div id="choicesContainer" class="choices-container">
+                <!-- Choice buttons will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div id="endingScreen" class="ending-screen hidden">
+            <h2 class="ending-title">پایان داستان شما</h2>
+            <div id="endingText" class="ending-text"></div>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-label">شخصیت</div>
+                    <div id="endingCharacter" class="stat-value"></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">پایان‌های ممکن</div>
+                    <div id="totalEndings" class="stat-value">۱۲</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">زمان بازی</div>
+                    <div id="playTime" class="stat-value">۰ دقیقه</div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="restartBtn" class="action-btn restart-btn">شروع مجدد</button>
+                <button id="printBtn" class="action-btn print-btn">چاپ داستان</button>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="startBtn" class="action-btn start-btn hidden">شروع ماجراجویی</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentCharacter: null,
+            currentScene: null,
+            visitedScenes: [],
+            choices: [],
+            startTime: null,
+            difficulty: 'medium',
+            theme: 'light',
+            characterStats: {
+                gordafrid: {
+                    strength: 70,
+                    intelligence: 85,
+                    diplomacy: 80,
+                    courage: 90,
+                    morality: 75
+                },
+                rostam: {
+                    strength: 95,
+                    intelligence: 70,
+                    diplomacy: 60,
+                    courage: 85,
+                    morality: 80
+                }
+            },
+            dynamicStats: {
+                health: 100,
+                reputation: 50,
+                honor: 50,
+                relationships: {}
+            }
+        };
+
+        // Game scenes data
+        const scenes = {
+            // Character selection
+            character_selection: {
+                text: "<p>به بازی شاهنامه: روایت‌های جاودان خوش آمدید. لطفاً شخصیت خود را انتخاب کنید:</p>",
+                choices: [
+                    { text: "گردآفرید - زن جنگجوی شمال ایران", nextScene: "gordafrid_intro", character: "gordafrid" },
+                    { text: "رستم - قهرمان جوان زابلستان", nextScene: "rostam_intro", character: "rostam" }
+                ]
+            },
+
+            // Gordafrid story branch
+            gordafrid_intro: {
+                text: `
+                    <p>در سرزمین سرسبز و کوهستانی طبرستان، <span class="character-name">گردآفرید</span>، سردار زن ایرانی، بر بالای دیوارهای دژ ایستاده بود. بادهای تند از کوه‌های البرز می‌وزید و موهایش را به بازی گرفته بود.</p>
+                    <p class="quote-text">"اینجا خانه ماست و از آن دفاع خواهیم کرد، تا آخرین نفس."</p>
+                    <p>اخبار رسیده بود که لشکری از دشمنان به فرماندهی افراسیاب به سوی طبرستان در حرکت است. گردآفرید می‌دانست که زمان تصمیم‌گیری فرا رسیده است.</p>
+                `,
+                choices: [
+                    { text: "سربازان را آماده نبرد کن و به استقبال دشمن برو", nextScene: "gordafrid_battle_prep", statChange: { courage: 5 } },
+                    { text: "پیک‌هایی به شهرهای اطراف بفرست و درخواست کمک کن", nextScene: "gordafrid_diplomacy", statChange: { diplomacy: 5 } },
+                    { text: "به تنهایی به اردوی دشمن برو و از نزدیک وضعیت را بررسی کن", nextScene: "gordafrid_scout", statChange: { intelligence: 5 } }
+                ],
+                theme: "gordafrid-theme"
+            },
+
+            gordafrid_battle_prep: {
+                text: `
+                    <p>گردآفرید فرمان داد تا سربازان آماده نبرد شوند. او با تجربه‌ای که از جنگ‌های پیشین داشت، می‌دانست که باید از زمین به نفع خود استفاده کند.</p>
+                    <p>کوه‌های اطراف دژ می‌توانستند مزیت تاکتیکی خوبی باشند. گردآفرید باید تصمیم می‌گرفت که چگونه نیروهایش را سازماندهی کند.</p>
+                `,
+                choices: [
+                    { text: "نیروها را در دره‌های اطراف کمین کن و دشمن را غافلگیر کن", nextScene: "gordafrid_ambush", statChange: { strength: 5 } },
+                    { text: "در پشت دیوارهای دژ بمان و از مواضع دفاعی استفاده کن", nextScene: "gordafrid_siege_defense", statChange: { intelligence: 3 } },
+                    { text: "گروهی کوچک از بهترین سربازان را انتخاب کن و به قلب لشکر دشمن حمله کن", nextScene: "gordafrid_spearhead", statChange: { courage: 8, health: -10 } }
+                ],
+                theme: "battle-theme"
+            },
+
+            gordafrid_diplomacy: {
+                text: `
+                    <p>گردآفرید تصمیم گرفت به جای درگیری مستقیم، از دیپلماسی استفاده کند. او پیک‌هایی به شهرهای اطراف فرستاد و از آنها درخواست کمک کرد.</p>
+                    <p>در میان پادشاهان منطقه، دو پاسخ متفاوت دریافت کرد:</p>
+                    <p class="important-text">پادشاه ری: وعده کمک داد اما خواستار ازدواج با گردآفرید در ازای این کمک شد.</p>
+                    <p class="important-text">پادشاه گرگان: گفت که اگر طبرستان تسلیم شود، او میانجیگری خواهد کرد تا آسیب کمتری به مردم برسد.</p>
+                `,
+                choices: [
+                    { text: "پیشنهاد پادشاه ری را بپذیر و برای نجات مردم ازدواج کن", nextScene: "gordafrid_marriage", statChange: { diplomacy: 10, honor: -5 } },
+                    { text: "به پادشاه گرگان بگو که طبرستان هرگز تسلیم نمی‌شود", nextScene: "gordafrid_reject_negotiation", statChange: { honor: 5, reputation: 5 } },
+                    { text: "به هر دو پاسخ منفی بده و به آماده‌سازی دفاع ادامه بده", nextScene: "gordafrid_battle_prep", statChange: { courage: 5 } }
+                ],
+                theme: "gordafrid-theme"
+            },
+
+            // Rostam story branch
+            rostam_intro: {
+                text: `
+                    <p>در سرزمین خشک و گرم زابلستان، <span class="character-name">رستم</span> جوان زیر سایه درختان نخلیست که زال، پدرش، او را فرا خوانده است.</p>
+                    <p class="quote-text">"پسرم، اخبار ناخوشایندی از مرزهای شرقی رسیده. شورشیان به رهبری شاه هاماوران در حال پیشروی هستند."</p>
+                    <p>زال ادامه داد: "تو باید ثابت کنی که شایسته نام رستم هستی. این اولین آزمون بزرگ تو به عنوان مدافع زابلستان خواهد بود."</p>
+                `,
+                choices: [
+                    { text: "بی‌درنگ سوار بر رخش شو و به سوی مرزها بتاز", nextScene: "rostam_charge", statChange: { courage: 8, health: -5 } },
+                    { text: "ابتدا اطلاعات بیشتری جمع‌آوری کن و سپس اقدام کن", nextScene: "rostam_gather_info", statChange: { intelligence: 5 } },
+                    { text: "از پدرت بخواه که همراه تو بیاید", nextScene: "rostam_ask_zal", statChange: { diplomacy: 3 } }
+                ],
+                theme: "rostam-theme"
+            },
+
+            rostam_charge: {
+                text: `
+                    <p>رستم بی‌درنگ سوار بر رخش، اسب افسانه‌ای خود شد و به سوی مرزهای شرقی تاخت. گرد و غبار برخاسته از سم‌های رخش، مسیرش را مشخص می‌کرد.</p>
+                    <p>پس از دو روز سفر سخت، به اولین گروه از شورشیان برخورد. آنها در حال غارت یک روستای مرزی بودند.</p>
+                    <p>رستم باید تصمیم می‌گرفت که چگونه با این موقعیت برخورد کند.</p>
+                `,
+                choices: [
+                    { text: "مستقیم به قلب گروه حمله کن و آنها را پراکنده کن", nextScene: "rostam_direct_attack", statChange: { strength: 8, health: -15 } },
+                    { text: "ابتدا روستاییان را نجات بده و سپس به تعقیب شورشیان برو", nextScene: "rostam_rescue_first", statChange: { morality: 5, health: -10 } },
+                    { text: "مخفیانه آنها را زیر نظر بگیر و به کمپ اصلی شان دنبال کن", nextScene: "rostam_scout_camp", statChange: { intelligence: 5 } }
+                ],
+                theme: "battle-theme"
+            },
+
+            // More scenes would continue here...
+            // For brevity, I'm showing a few scenes, but the full game would have many more
+            // with all the branching paths and character interactions
+
+            // Intersection scene where characters meet
+            characters_meet: {
+                text: `
+                    <p>در میانه‌های داستان، مسیر <span class="character-name">${gameState.currentCharacter === 'gordafrid' ? 'گردآفرید' : 'رستم'}</span> به ${gameState.currentCharacter === 'gordafrid' ? 'رستم' : 'گردآفرید'} می‌رسد.</p>
+                    <p>این ملاقات می‌تواند به اتحاد، نبرد، یا حتی عشق منجر شود. انتخاب با شماست.</p>
+                `,
+                choices: [
+                    { text: "با او متحد شو و نیروهایتان را ترکیب کن", nextScene: "alliance_formed", statChange: { reputation: 10 } },
+                    { text: "به او مشکوک باش و مراقب رفتارش باش", nextScene: "cautious_interaction", statChange: { intelligence: 5 } },
+                    { text: "او را به مبارزه بطلب", nextScene: "duel_challenge", statChange: { strength: 5, honor: -3 } }
+                ],
+                theme: gameState.currentCharacter === 'gordafrid' ? "rostam-theme" : "gordafrid-theme"
+            },
+
+            // Example ending scene
+            gordafrid_ending_queen: {
+                text: `
+                    <p>پس از سال‌ها مبارزه و دیپلماسی، گردآفرید به عنوان ملکه‌ای افسانه‌ای بر تخت طبرستان نشست.</p>
+                    <p>حکومت او عصر طلایی صلح و پیشرفت برای سرزمین‌های شمالی ایران بود. داستان‌های شجاعت و خرد او برای نسل‌ها نقل شد.</p>
+                    <p class="quote-text">"هیچ مرزی برای آنچه یک زن می‌تواند به دست آورد وجود ندارد، مگر آن‌چه خود بر خود تحمیل کند."</p>
+                    <p>این پایان داستان گردآفرید بود، اما آغاز افسانه‌ای شد که تا ابد در خاطره‌ها ماند.</p>
+                `,
+                ending: true,
+                theme: "peace-theme"
+            },
+
+            rostam_ending_hero: {
+                text: `
+                    <p>رستم پس از نبردهای بی‌شمار و اثبات شایستگی‌هایش، به عنوان قهرمان بی‌همتای زابلستان شناخته شد.</p>
+                    <p>نام او در سراسر ایران با احترام برده می‌شد و دشمنان از شنیدن نامش به لرزه می‌افتادند.</p>
+                    <p class="quote-text">"شجاعت نه در نبود ترس، که در غلبه بر آن است." این جمله‌ای بود که رستم همیشه به شاگردانش می‌گفت.</p>
+                    <p>این پایان داستان جوانی رستم بود، اما آغاز افسانه‌ای شد که قرن‌ها زنده ماند.</p>
+                `,
+                ending: true,
+                theme: "rostam-theme"
+            }
+        };
+
+        // DOM elements
+        const characterSelectionEl = document.getElementById('characterSelection');
+        const gameContainerEl = document.getElementById('gameContainer');
+        const storySectionEl = document.getElementById('storySection');
+        const choicesContainerEl = document.getElementById('choicesContainer');
+        const startBtnEl = document.getElementById('startBtn');
+        const restartBtnEl = document.getElementById('restartBtn');
+        const printBtnEl = document.getElementById('printBtn');
+        const endingScreenEl = document.getElementById('endingScreen');
+        const endingTextEl = document.getElementById('endingText');
+        const endingCharacterEl = document.getElementById('endingCharacter');
+        const themeToggleEl = document.getElementById('themeToggle');
+        const difficultySelectEl = document.getElementById('difficultySelect');
+
+        // Initialize game
+        function initGame() {
+            // Set up event listeners
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.addEventListener('click', selectCharacter);
+            });
+
+            startBtnEl.addEventListener('click', startGame);
+            restartBtnEl.addEventListener('click', restartGame);
+            printBtnEl.addEventListener('click', printStory);
+            themeToggleEl.addEventListener('change', toggleTheme);
+            difficultySelectEl.addEventListener('change', updateDifficulty);
+
+            // Show character selection
+            characterSelectionEl.classList.remove('hidden');
+            startBtnEl.classList.remove('hidden');
+            
+            // Set initial theme
+            toggleTheme();
+        }
+
+        // Character selection
+        function selectCharacter(e) {
+            const characterCard = e.currentTarget;
+            const character = characterCard.dataset.character;
+            
+            // Update UI
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            characterCard.classList.add('selected');
+            
+            // Update game state
+            gameState.currentCharacter = character;
+            startBtnEl.disabled = false;
+        }
+
+        // Start the game
+        function startGame() {
+            // Hide character selection and show game container
+            characterSelectionEl.classList.add('hidden');
+            startBtnEl.classList.add('hidden');
+            gameContainerEl.classList.remove('hidden');
+            
+            // Initialize game state
+            gameState.startTime = new Date();
+            gameState.currentScene = 'character_selection';
+            gameState.visitedScenes = [];
+            gameState.choices = [];
+            
+            // Initialize dynamic stats based on character
+            gameState.dynamicStats = {
+                health: 100,
+                reputation: 50,
+                honor: 50,
+                relationships: {}
+            };
+            
+            // Load first scene
+            loadScene(gameState.currentScene);
+            
+            // Apply character theme
+            document.body.classList.add(`${gameState.currentCharacter}-theme`);
+        }
+
+        // Load a scene
+        function loadScene(sceneId) {
+            const scene = scenes[sceneId];
+            
+            if (!scene) {
+                console.error(`Scene ${sceneId} not found`);
+                return;
+            }
+            
+            // Update current scene
+            gameState.currentScene = sceneId;
+            gameState.visitedScenes.push(sceneId);
+            
+            // Apply theme if specified
+            if (scene.theme) {
+                // Remove all theme classes first
+                document.body.classList.remove(
+                    'battle-theme', 'peace-theme', 'time-travel-theme',
+                    'gordafrid-theme', 'rostam-theme'
+                );
+                
+                // Add new theme class
+                document.body.classList.add(scene.theme);
+            }
+            
+            // Update story text
+            let storyText = scene.text;
+            
+            // Replace character name placeholder
+            if (gameState.currentCharacter) {
+                const charName = gameState.currentCharacter === 'gordafrid' ? 'گردآفرید' : 'رستم';
+                storyText = storyText.replace(/<span class="character-name">گردآفرید<\/span>/g, `<span class="character-name">${charName}</span>`);
+                storyText = storyText.replace(/<span class="character-name">رستم<\/span>/g, `<span class="character-name">${charName}</span>`);
+            }
+            
+            storySectionEl.innerHTML = storyText;
+            
+            // Clear previous choices
+            choicesContainerEl.innerHTML = '';
+            
+            // Add choices if this isn't an ending
+            if (!scene.ending) {
+                scene.choices.forEach((choice, index) => {
+                    const choiceBtn = document.createElement('button');
+                    choiceBtn.className = 'choice-btn slide-in';
+                    choiceBtn.style.animationDelay = `${index * 0.1}s`;
+                    choiceBtn.textContent = choice.text;
+                    choiceBtn.addEventListener('click', () => makeChoice(choice));
+                    choicesContainerEl.appendChild(choiceBtn);
+                });
+            } else {
+                // Show ending screen
+                showEnding(scene.text);
+            }
+            
+            // Scroll to top
+            storySectionEl.scrollTop = 0;
+        }
+
+        // Player makes a choice
+        function makeChoice(choice) {
+            // Record the choice
+            gameState.choices.push({
+                scene: gameState.currentScene,
+                choice: choice.text,
+                timestamp: new Date()
+            });
+            
+            // Apply stat changes if any
+            if (choice.statChange) {
+                Object.keys(choice.statChange).forEach(stat => {
+                    if (gameState.dynamicStats[stat] !== undefined) {
+                        gameState.dynamicStats[stat] += choice.statChange[stat];
+                        
+                        // Clamp values between 0-100
+                        if (gameState.dynamicStats[stat] > 100) gameState.dynamicStats[stat] = 100;
+                        if (gameState.dynamicStats[stat] < 0) gameState.dynamicStats[stat] = 0;
+                    } else if (gameState.characterStats[gameState.currentCharacter][stat] !== undefined) {
+                        gameState.characterStats[gameState.currentCharacter][stat] += choice.statChange[stat];
+                        
+                        // Clamp values between 0-100
+                        if (gameState.characterStats[gameState.currentCharacter][stat] > 100) {
+                            gameState.characterStats[gameState.currentCharacter][stat] = 100;
+                        }
+                        if (gameState.characterStats[gameState.currentCharacter][stat] < 0) {
+                            gameState.characterStats[gameState.currentCharacter][stat] = 0;
+                        }
+                    }
+                });
+            }
+            
+            // Load next scene
+            loadScene(choice.nextScene);
+        }
+
+        // Show ending screen
+        function showEnding(endingText) {
+            gameContainerEl.classList.add('hidden');
+            endingScreenEl.classList.remove('hidden');
+            
+            // Set ending text
+            endingTextEl.innerHTML = endingText;
+            
+            // Set character name
+            endingCharacterEl.textContent = gameState.currentCharacter === 'gordafrid' ? 'گردآفرید' : 'رستم';
+            
+            // Calculate play time
+            const playTime = Math.floor((new Date() - gameState.startTime) / 60000);
+            document.getElementById('playTime').textContent = `${playTime} دقیقه`;
+        }
+
+        // Restart game
+        function restartGame() {
+            endingScreenEl.classList.add('hidden');
+            characterSelectionEl.classList.remove('hidden');
+            startBtnEl.classList.remove('hidden');
+            
+            // Reset body classes
+            document.body.className = '';
+            if (gameState.theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        }
+
+        // Print story
+        function printStory() {
+            const printWindow = window.open('', '', 'width=800,height=600');
+            const characterName = gameState.currentCharacter === 'gordafrid' ? 'گردآفرید' : 'رستم';
+            
+            let printContent = `
+                <html>
+                    <head>
+                        <title>داستان ${characterName} - بازی شاهنامه</title>
+                        <style>
+                            body { font-family: 'B Nazanin', Tahoma; line-height: 1.6; padding: 20px; }
+                            h1 { color: #8B4513; text-align: center; }
+                            .scene { margin-bottom: 30px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
+                            .choice { font-weight: bold; color: #A52A2A; margin: 10px 0; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>داستان ${characterName} در بازی شاهنامه: روایت‌های جاودان</h1>
+            `;
+            
+            // Add all visited scenes and choices
+            gameState.visitedScenes.forEach((sceneId, index) => {
+                const scene = scenes[sceneId];
+                let sceneText = scene.text;
+                
+                // Replace character name
+                sceneText = sceneText.replace(/<span class="character-name">گردآفرید<\/span>/g, characterName);
+                sceneText = sceneText.replace(/<span class="character-name">رستم<\/span>/g, characterName);
+                
+                // Remove HTML tags for printing
+                sceneText = sceneText.replace(/<[^>]*>/g, '');
+                
+                printContent += `
+                    <div class="scene">
+                        <p>${sceneText}</p>
+                `;
+                
+                // Add the choice that led here (except for first scene)
+                if (index > 0) {
+                    const choice = gameState.choices[index - 1];
+                    printContent += `<p class="choice">شما انتخاب کردید: ${choice.choice}</p>`;
+                }
+                
+                printContent += `</div>`;
+            });
+            
+            printContent += `
+                    </body>
+                </html>
+            `;
+            
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.focus();
+            
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            gameState.theme = themeToggleEl.value;
+            
+            if (gameState.theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        // Update difficulty
+        function updateDifficulty() {
+            gameState.difficulty = difficultySelectEl.value;
+        }
+
+        // Initialize the game when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

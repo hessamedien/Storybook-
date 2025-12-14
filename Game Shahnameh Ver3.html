@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی شاهنامه: روایت‌های جاودان</title>
+    <style>
+        /* استایل کلی */
+        body {
+            font-family: 'IranNastaliq', Arial, sans-serif;
+            background-color: #f3f0e0;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+
+        /* هدر و عنوان بازی */
+        header {
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px solid #e67e22;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        /* لینک اینستاگرام و ورژن */
+        .info {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .info a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
+        /* تنظیمات */
+        .settings {
+            margin: 20px auto;
+            padding: 10px;
+            max-width: 800px;
+            background: #fff5e6;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .settings label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .settings input, .settings select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+
+        /* داستان */
+        .story {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .story p {
+            text-align: justify;
+        }
+
+        /* دکمه‌ها */
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .buttons button:hover {
+            background: #2980b9;
+        }
+
+        /* تم‌های قابل تغییر */
+        .dark-theme {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .dark-theme .story {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .dark-theme .settings {
+            background-color: #34495e;
+        }
+
+        .dark-theme button {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>بازی شاهنامه: روایت‌های جاودان</h1>
+        <div class="info">
+            <span>نسخه: 1.0 (تاریخ ساخت: 05/08/2025)</span><br>
+            <a href="https://www.instagram.com/hessamedien" target="_blank">اینستاگرام سازنده</a>
+        </div>
+    </header>
+
+    <section class="settings">
+        <h3>تنظیمات بازی</h3>
+        <label for="difficulty">درجه سختی:</label>
+        <select id="difficulty">
+            <option value="easy">آسان</option>
+            <option value="medium">متوسط</option>
+            <option value="hard">سخت</option>
+        </select>
+
+        <label for="theme">تم بازی:</label>
+        <select id="theme">
+            <option value="default">سنتی ایرانی</option>
+            <option value="dark">تاریک</option>
+        </select>
+
+        <button onclick="startGame()">شروع بازی</button>
+    </section>
+
+    <section class="story" id="story">
+        <p>به بازی خوش آمدید. برای شروع، تنظیمات را انتخاب کنید و روی "شروع بازی" کلیک کنید.</p>
+    </section>
+
+    <script>
+        // تغییر تم
+        const themeSelector = document.getElementById('theme');
+        themeSelector.addEventListener('change', () => {
+            document.body.className = themeSelector.value === 'dark' ? 'dark-theme' : '';
+        });
+
+        // شروع بازی
+        function startGame() {
+            const storyElement = document.getElementById('story');
+            storyElement.innerHTML = `
+                <p>داستان بازی از اینجا آغاز می‌شود. شما می‌توانید یکی از دو قهرمان "گردآفرید" یا "رستم" را انتخاب کنید و مسیر داستانی خود را ادامه دهید.</p>
+                <div class="buttons">
+                    <button onclick="selectHero('گردآفرید')">انتخاب گردآفرید</button>
+                    <button onclick="selectHero('رستم')">انتخاب رستم</button>
+                </div>
+            `;
+        }
+
+        // انتخاب قهرمان
+        function selectHero(hero) {
+            const storyElement = document.getElementById('story');
+            if (hero === 'گردآفرید') {
+                storyElement.innerHTML = `
+                    <p>شما گردآفرید را انتخاب کردید. داستان او از نبردی بزرگ برای دفاع از طبرستان آغاز می‌شود...</p>
+                    <div class="buttons">
+                        <button onclick="continueStory('past')">سفر به گذشته</button>
+                        <button onclick="continueStory('rescue')">نجات شاهزاده</button>
+                    </div>
+                `;
+            } else if (hero === 'رستم') {
+                storyElement.innerHTML = `
+                    <p>شما رستم را انتخاب کردید. داستان او از جستجوی رخش، اسب افسانه‌ای، آغاز می‌شود...</p>
+                    <div class="buttons">
+                        <button onclick="continueStory('adventure')">سفر به سرزمین ناشناخته</button>
+                        <button onclick="continueStory('meet')">ملاقات با گردآفرید</button>
+                    </div>
+                `;
+            }
+        }
+
+        // ادامه داستان
+        function continueStory(path) {
+            const storyElement = document.getElementById('story');
+            if (path === 'past') {
+                storyElement.innerHTML = `
+                    <p>گردآفرید به گذشته سفر می‌کند و با رازهای عجیبی از خانواده خود روبه‌رو می‌شود...</p>
+                `;
+            } else if (path === 'rescue') {
+                storyElement.innerHTML = `
+                    <p>گردآفرید برای نجات شاهزاده‌ای ربوده شده به دل جنگل‌های ناشناخته سفر می‌کند...</p>
+                `;
+            } else if (path === 'adventure') {
+                storyElement.innerHTML = `
+                    <p>رستم به دنبال رخش، به سرزمین‌های ناشناخته قدم می‌گذارد و با دشمنانی ترسناک روبه‌رو می‌شود...</p>
+                `;
+            } else if (path === 'meet') {
+                storyElement.innerHTML = `
+                    <p>رستم و گردآفرید در میدان نبرد به هم می‌رسند و سرنوشتی مشترک را آغاز می‌کنند...</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی شاهنامه: روایت‌های جاودان</title>
+    <style>
+        :root {
+        :root {
+            --primary-color: #8B4513; /* قهوه‌ای چرمی */
+            --secondary-color: #A0522D; /* قهوه‌ای سیر */
+            --text-color: #2C1E1E; /* مشکی مایل به قهوه‌ای */
+            --bg-color: #F5DEB3; /* بژ روشن */
+            --highlight-color: #CD853F; /* قهوه‌ای طلایی */
+            --dark-bg: #5D4037; /* قهوه‌ای تیره */
+            --light-text: #EFEBE9; /* سفید مایل به بژ */
+            --danger-color: #C62828; /* قرمز برای صحنه‌های نبرد */
+            --mystery-color: #6A1B9A; /* بنفش برای صحنه‌های اسرارآمیز */
+            --time-travel-color: #1565C0; /* آبی برای سفر در زمان */
+        }
+
+        /* تم تاریک */
+        .dark-theme {
+            --primary-color: #5D4037;
+            --secondary-color: #3E2723;
+            --text-color: #EFEBE9;
+            --bg-color: #3E2723;
+            --highlight-color: #8D6E63;
+            --dark-bg: #1B1B1B;
+            --light-text: #D7CCC8;
+        }
+
+        /* تم نبرد */
+        .battle-theme {
+            --primary-color: #C62828;
+            --secondary-color: #8E0000;
+            --bg-color: #2C1E1E;
+            --text-color: #FFEBEE;
+            --highlight-color: #FF5252;
+        }
+
+        /* تم سفر در زمان */
+        .time-theme {
+            --primary-color: #1565C0;
+            --secondary-color: #0D47A1;
+            --bg-color: #0D1B2A;
+            --text-color: #E3F2FD;
+            --highlight-color: #64B5F6;
+        }
+
+        /* تم احساسی */
+        .emotional-theme {
+            --primary-color: #6A1B9A;
+            --secondary-color: #4A148C;
+            --bg-color: #1A0033;
+            --text-color: #F3E5F5;
+            --highlight-color: #BA68C8;
+        }
+
+        /* استایل‌های پایه */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'B Nazanin', 'Iranian Sans', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 2;
+            transition: all 0.5s ease;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%238B4513" fill-opacity="0.1" d="M30,10L50,30L70,10L90,30L70,50L90,70L70,90L50,70L30,90L10,70L30,50L10,30L30,10Z"/></svg>');
+            background-size: 200px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 30px;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background-image: linear-gradient(135deg, var(--dark-bg) 0%, var(--secondary-color) 100%);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #D4AF37;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--highlight-color);
+        }
+
+        .version {
+            font-size: 1rem;
+            color: var(--highlight-color);
+            margin-top: 10px;
+        }
+
+        .creator {
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        .creator a {
+            color: #D4AF37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .creator a:hover {
+            text-decoration: underline;
+            color: #F4C430;
+        }
+
+        .game-screen {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        .story-text {
+            background-color: rgba(139, 69, 19, 0.15);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            line-height: 2.2;
+            font-size: 1.2rem;
+            text-align: justify;
+        }
+
+        /* نمایش شخصیت */
+        .character-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: rgba(93, 64, 55, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .character-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            margin: 15px auto;
+            object-fit: cover;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .character-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .character-name {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .character-desc {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .character-traits {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .trait {
+            background-color: var(--highlight-color);
+            color: var(--light-text);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* گزینه‌ها */
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .choice-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-align: right;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn:hover {
+            background-color: var(--highlight-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .choice-btn:active {
+            transform: translateY(1px);
+        }
+
+        .choice-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .choice-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* تنظیمات */
+        .settings {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background-color: rgba(139, 69, 19, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .setting-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-label {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .theme-toggle, .difficulty-select {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover, .difficulty-select:hover {
+            background-color: var(--highlight-color);
+            color: var(--light-text);
+        }
+
+        /* دکمه شروع */
+        .start-btn {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4C430 100%);
+            color: #2C1E1E;
+            border: none;
+            padding: 18px 35px;
+            font-size: 1.3rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 40px auto;
+            display: block;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        /* خلاصه داستان */
+        .story-summary {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--highlight-color);
+        }
+
+        .summary-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #D4AF37;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .summary-content {
+            line-height: 2.2;
+            font-size: 1.1rem;
+        }
+
+        .ending-type {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .good-ending {
+            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+            color: white;
+        }
+
+        .bad-ending {
+            background: linear-gradient(135deg, #C62828 0%, #B71C1C 100%);
+            color: white;
+        }
+
+        .neutral-ending {
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            color: white;
+        }
+
+        .mystery-ending {
+            background: linear-gradient(135deg, #6A1B9A 0%, #4A148C 100%);
+            color: white;
+        }
+
+        /* دکمه‌های عمل */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #f44336 0%, #C62828 100%);
+            color: white;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #2196F3 0%, #1565C0 100%);
+            color: white;
+        }
+
+        .show-summary-btn {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .character-image {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .choice-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .settings {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+        }
+
+        /* فونت‌ها */
+        @font-face {
+            font-family: 'B Nazanin';
+            src: local('B Nazanin'), local('BNazanin');
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Iranian Sans';
+            src: local('Iranian Sans'), local('IranianSans');
+            font-display: swap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- منوی اصلی -->
+        <div id="main-menu" class="game-screen active">
+            <header>
+                <h1>شاهنامه: سفرهای رستم و سهراب</h1>
+                <div class="subtitle">حماسه‌ای از عشق، جنگ و سرنوشت</div>
+                <div class="version">نسخه: ۳.۰.۲۰۲۵۰۸۰۵</div>
+                <div class="creator">ساخته شده توسط <a href="https://instagram.com/hessamedien" target="_blank">HessamEdien</a></div>
+            </header>
+
+            <div class="settings">
+                <div class="setting-group">
+                    <span class="setting-label">تم:</span>
+                    <select id="theme-select" class="theme-toggle">
+                        <option value="light">روشن</option>
+                        <option value="dark">تیره</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <span class="setting-label">سختی:</span>
+                    <select id="difficulty-select" class="difficulty-select">
+                        <option value="easy">آسان</option>
+                        <option value="medium">متوسط</option>
+                        <option value="hard">سخت</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="start-game" class="start-btn">آغاز حماسه</button>
+        </div>
+
+        <!-- صفحه بازی -->
+        <div id="game-screen" class="game-screen">
+            <div id="character-display" class="character-display">
+                <img id="character-img" class="character-image" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%238B4513' opacity='0.2'/></svg>" alt="شخصیت">
+                <h2 id="character-name" class="character-name"></h2>
+                <p id="character-desc" class="character-desc"></p>
+                <div id="character-traits" class="character-traits">
+                    <!-- ویژگی‌ها به صورت دینامیک اضافه می‌شوند -->
+                </div>
+            </div>
+
+            <div id="story-text" class="story-text fade-in">
+                به دنیای شاهنامه خوش آمدید. در اینجا شما می‌توانید سرنوشت قهرمانان افسانه‌ای ایران را رقم بزنید. آیا آماده شروع ماجراجویی هستید؟
+            </div>
+
+            <div id="choices" class="choices">
+                <!-- گزینه‌ها به صورت دینامیک اضافه می‌شوند -->
+            </div>
+
+            <div id="story-summary" class="story-summary">
+                <h3 class="summary-title">خلاصه داستان شما</h3>
+                <div id="summary-content" class="summary-content">
+                    <!-- محتوای خلاصه به صورت دینامیک اضافه می‌شود -->
+                </div>
+                <div id="ending-type" class="ending-type"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="back-btn" class="action-btn back-btn">بازگشت</button>
+                <button id="restart-btn" class="action-btn restart-btn">شروع مجدد</button>
+                <button id="print-btn" class="action-btn print-btn">چاپ داستان</button>
+                <button id="show-summary-btn" class="action-btn show-summary-btn" style="display: none;">نمایش داستان</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // حالت بازی
+        const gameState = {
+            currentScene: 'start',
+            difficulty: 'medium',
+            theme: 'light',
+            currentTheme: 'light',
+            storyPath: [],
+            characterStats: {
+                wisdom: 0,
+                courage: 0,
+                honor: 0,
+                destiny: 0
+            },
+            currentCharacter: null,
+            ending: null,
+            visitedScenes: new Set()
+        };
+
+        // شخصیت‌ها با ویژگی‌های رفتاری دقیق
+        const characters = {
+            rostam: {
+                name: 'رستم',
+                description: 'پهلوان افسانه‌ای ایران، فرزند زال و رودابه',
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='40' r='20' fill='%238B4513'/><circle cx='50' cy='40' r='15' fill='%23D2B48C'/><path d='M35,40 Q50,50 65,40' fill='none' stroke='%232C1E1E' stroke-width='2'/><circle cx='40' cy='35' r='2' fill='%232C1E1E'/><circle cx='60' cy='35' r='2' fill='%232C1E1E'/><path d='M30,70 Q50,90 70,70' fill='none' stroke='%238B4513' stroke-width='3'/><path d='M50,60 L50,80 M40,65 L60,65' fill='none' stroke='%238B4513' stroke-width='2'/></svg>",
+                traits: ['شجاعت افسانه‌ای', 'وفاداری بی‌قید و شرط', 'غرور پهلوانی', 'راستگویی', 'احترام به پیمان‌ها'],
+                voice: 'طنین دار و پرصلابت',
+                style: 'مستقیم و بی‌پرده',
+                motivations: ['دفاع از ایران', 'حفظ شرافت', 'وفاداری به خانواده']
+            },
+            sohrab: {
+                name: 'سهراب',
+                description: 'پسر رستم و تهمینه، جوانی دلاور و جویای هویت',
+                image: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='40' r='18' fill='%23A0522D'/><circle cx='50' cy='40' r='13' fill='%23E6C229'/><path d='M35,40 Q50,45 65,40' fill='none' stroke='%232C1E1E' stroke-width='2'/><circle cx='40' cy='35' r='2' fill='%232C1E1E'/><circle cx='60' cy='35' r='2' fill='%232C1E1E'/><path d='M30,70 Q50,85 70,70' fill='none' stroke='%23A0522D' stroke-width='2'/><path d='M50,60 L50,75 M45,65 L55,65' fill='none' stroke='%23A0522D' stroke-width='1.5'/></svg>",
+                traits: ['جوانی پرشور', 'جستجوی هویت', 'استعداد ذاتی در نبرد', 'سرنوشت محتوم', 'احساسات عمیق'],
+                voice: 'جوان و پراحساس',
+                style: 'کنجکاو و پرسشگر',
+                motivations: ['یافتن پدر', 'ثبت نام خود', 'درک هدف زندگی']
+            }
+        };
+
+        // تمام صحنه‌های بازی (به دلیل حجم زیاد، فقط نمونه‌هایی آورده شده است)
+        const scenes = {
+            start: {
+                text: "در سرزمین اساطیری ایران، جایی که افسانه‌ها و واقعیت در هم می‌آمیزند، تو به عنوان قهرمان این داستان انتخاب شده‌ای. کدام شخصیت را برای شروع ماجراجویی انتخاب می‌کنی؟",
+                choices: [
+                    {
+                        text: "رستم، پهلوان بی‌همتای ایران",
+                        nextScene: "rostam_intro",
+                        action: () => setCharacter('rostam')
+                    },
+                    {
+                        text: "سهراب، جوان دلاور جویای هویت",
+                        nextScene: "sohrab_intro",
+                        action: () => setCharacter('sohrab')
+                    }
+                ]
+            },
+
+            // مسیر رستم
+            rostam_intro: {
+                text: `تو رستم هستی، پهلوان افسانه‌ای ایران. در قلعه زابلستان ایستاده‌ای و باد گرمی از شرق می‌وزد که بوی خطر می‌دهد. خبر رسیده که شاه کابل به ایرانشهر حمله کرده و شهرها را یکی پس از دیگری تسخیر می‌کند.
+                
+                زال، پدر پیر و خردمندت، در حال مشورت با موبدان است. رودابه، مادرت، نگرانانه به تو می‌نگرد. رخش، اسب وفادارت، بی‌قرارانه سم می‌کوبد. چه می‌کنی؟`,
+                character: "rostam",
+                choices: [
+                    {
+                        text: "بی‌درنگ سوار بر رخش می‌شوم و به سوی کابل می‌تازم",
+                        nextScene: "rostam_kabul_direct",
+                        action: () => {
+                            updateStats({ courage: 3, wisdom: -1 });
+                            applyTheme('battle');
+                        }
+                    },
+                    {
+                        text: "به شورای زال می‌پیوندم و نظر موبدان را می‌پرسم",
+                        nextScene: "rostam_council",
+                        action: () => updateStats({ wisdom: 2, honor: 1 })
+                    },
+                    {
+                        text: "پیش مادرم می‌روم و از نگرانی‌هایش می‌پرسم",
+                        nextScene: "rostam_mother_advice",
+                        action: () => updateStats({ honor: 2, wisdom: 1 })
+                    },
+                    {
+                        text: "به کوهستان می‌روم تا با سیمرغ مشورت کنم",
+                        nextScene: "rostam_seek_simorgh",
+                        action: () => {
+                            updateStats({ destiny: 2, wisdom: 1 });
+                            applyTheme('mystery');
+                        }
+                    }
+                ]
+            },
+
+            // مسیر مستقیم رستم به کابل
+            rostam_kabul_direct: {
+                text: `با شتاب سوار بر رخش به سوی کابل می‌تازی. پس از سه روز سفر در بیابان‌های سوزان، در تنگه‌ای تاریک با دیو سپیدی روبرو می‌شوی که راه را بر تو بسته است. چشمانش مانند ذغال گداخته می‌درخشد و نفسش بوی گوگرد می‌دهد.
+                
+                دیو با صدایی غرش‌وار می‌گوید: 'رستم، پهلوان نامدار! اگر پاسخ معمایم را بدهی، راهت را باز می‌کنم. اگر نه، باید از نیرویت بگذری!'`,
+                character: "rostam",
+                theme: "battle",
+                choices: [
+                    {
+                        text: "می‌پذیرم و از دیو می‌خواهم معما را بپرسد",
+                        nextScene: "rostam_riddle",
+                        action: () => updateStats({ wisdom: 1, courage: -1 })
+                    },
+                    {
+                        text: "با گرز گاوسر بر سر دیو می‌کوبم و راهم را باز می‌کنم",
+                        nextScene: "rostam_fight_demon",
+                        action: () => {
+                            updateStats({ courage: 3, honor: -1 });
+                            applyTheme('battle');
+                        }
+                    },
+                    {
+                        text: "از راه دیگری می‌روم، هرچند سه روز به سفرم اضافه شود",
+                        nextScene: "rostam_alternative_route",
+                        action: () => updateStats({ wisdom: 2, courage: -1 })
+                    },
+                    {
+                        text: "از دیو می‌پرسم آیا می‌تواند مرا به آینده ببرد تا نتیجه جنگ را ببینم",
+                        nextScene: "rostam_time_travel_future",
+                        action: () => {
+                            updateStats({ destiny: 2, wisdom: 1 });
+                            applyTheme('time');
+                        }
+                    }
+                ]
+            },
+
+            // معمای دیو
+            rostam_riddle: {
+                text: `دیو چشمانش را تنگ می‌کند و می‌پرسد: 'چه چیزی است که هر چه بیشتر بگیریش، بیشتر رشد می‌کند؟'
+                
+                تو پس از اندکی تأمل پاسخ می‌دهی: 'آتش'. 
+                
+                دیو می‌خندد و می‌گوید: 'درست گفتی، اما این تنها نیمی از پاسخ است. پاسخ کامل 'دانش' است. هر چه بیشتر دانش را در آغوش بگیری، بیشتر رشد می‌کند. حالا انتخاب کن...'`,
+                character: "rostam",
+                choices: [
+                    {
+                        text: "از دیو برای این درس سپاسگزاری می‌کنم",
+                        nextScene: "rostam_thanks_demon",
+                        action: () => {
+                            updateStats({ wisdom: 2, honor: 1 });
+                            applyTheme('light');
+                        }
+                    },
+                    {
+                        text: "باز هم با گرز به دیو حمله می‌کنم",
+                        nextScene: "rostam_attack_after_riddle",
+                        action: () => {
+                            updateStats({ courage: 2, honor: -2 });
+                            applyTheme('battle');
+                        }
+                    },
+                    {
+                        text: "از دیو می‌پرسم آیا می‌تواند مرا به گذشته ببرد تا اشتباهاتم را جبران کنم",
+                        nextScene: "rostam_time_travel_past",
+                        action: () => {
+                            updateStats({ destiny: 3, wisdom: 1 });
+                            applyTheme('time');
+                        }
+                    }
+                ]
+            },
+
+            // سفر رستم به آینده
+            rostam_time_travel_future: {
+                text: `دیو دستانش را به آسمان بلند می‌کند و جهان دورت تاریک می‌شود. وقتی چشمانت را باز می‌کنی، خود را در میدان نبردی ویرانگر می‌بینی. 
+                
+                ایران در آتش می‌سوزد. رستم پیر و فرتوت شده‌ای با موهای سفید و چهره‌ای پر از چروک، زخمی بر زمین افتاده‌است. شاه کابل با سپاهیانش در حال پیشروی هستند. دیو در کنارت ظاهر می‌شود و می‌پرسد: 'حالا که آینده را دیدی، چه می‌کنی؟'`,
+                character: "rostam",
+                theme: "time",
+                choices: [
+                    {
+                        text: "به گذشته بازمی‌گردم و از همین امروز برای جلوگیری از این آینده تلاش می‌کنم",
+                        nextScene: "rostam_change_future",
+                        action: () => {
+                            updateStats({ wisdom: 3, courage: 2 });
+                            applyTheme('light');
+                        },
+                        ending: "good"
+                    },
+                    {
+                        text: "در این زمان می‌مانم و به عنوان رهبر جدید ایران قیام می‌کنم",
+                        nextScene: "rostam_future_leader",
+                        action: () => {
+                            updateStats({ courage: 3, honor: -2 });
+                            applyTheme('battle');
+                        },
+                        ending: "neutral"
+                    },
+                    {
+                        text: "از دیو می‌خواهم مرا به زمان پیش از تولدم ببرد",
+                        nextScene: "rostam_time_travel_past",
+                        action: () => {
+                            updateStats({ destiny: 3 });
+                            applyTheme('time');
+                        },
+                        ending: "mystery"
+                    }
+                ]
+            },
+
+            // مسیر سهراب
+            sohrab_intro: {
+                text: `تو سهراب هستی، پسر رستم و تهمینه. در توران بزرگ شده‌ای و مادرت همیشه از پدرت با چشمانی پر از اشک یاد می‌کرد. اکنون افراسیاب، پادشاه توران، تو را به اتاق جنگ فراخوانده است.
+                
+                افراسیاب با چهره‌ای مصمم می‌گوید: 'سهراب، تو باید به ایران بروی و این پادشاهان مغرور را به چالش بکشی. اما مراقب باش، گفته می‌شود رستم، پهلوان ایران، در کمین است.'
+                
+                قلب تند می‌زند. چه می‌کنی؟`,
+                character: "sohrab",
+                choices: [
+                    {
+                        text: "فرمان افراسیاب را می‌پذیرم و به ایران می‌روم",
+                        nextScene: "sohrab_to_iran",
+                        action: () => {
+                            updateStats({ courage: 1, honor: -1 });
+                            applyTheme('battle');
+                        }
+                    },
+                    {
+                        text: "پیش مادرم می‌روم و درباره پدرم می‌پرسم",
+                        nextScene: "sohrab_ask_mother",
+                        action: () => {
+                            updateStats({ wisdom: 2, honor: 1 });
+                            applyTheme('emotional');
+                        }
+                    },
+                    {
+                        text: "به دنبال حقیقت هویت خود می‌روم",
+                        nextScene: "sohrab_search_truth",
+                        action: () => updateStats({ wisdom: 1, courage: 1 })
+                    },
+                    {
+                        text: "به خوابگاه می‌روم و رویای دیشب را تفسیر می‌کنم",
+                        nextScene: "sohrab_dream_interpretation",
+                        action: () => {
+                            updateStats({ destiny: 2, wisdom: 1 });
+                            applyTheme('mystery');
+                        }
+                    }
+                ]
+            },
+
+            // تعبیر خواب سهراب
+            sohrab_dream_interpretation: {
+                text: `در خوابگاه، پیرزن دانای قبیله با دیدن چهره‌ات می‌گوید: 'رویایی دیده‌ای که باید تعبیر شود.'
+                
+                برایش تعریف می‌کنی: 'در خواب، مردی سپیدموی با چشمانی پر از اندوه را دیدم که نامم را صدا می‌زد. در یک دستش گرزی بزرگ و در دست دیگرش حلقه‌ای با نشان خورشید داشت.'
+                
+                پیرزن پس از لحظه‌ای سکید می‌گوید: 'این می‌تواند پدر واقعی تو باشد. اما مراقب باش، جستجوی حقیقت ممکن است به بهای جان تو تمام شود.'`,
+                character: "sohrab",
+                theme: "mystery",
+                choices: [
+                    {
+                        text: "به دنبال این مرد می‌روم، هر خطری که هست",
+                        nextScene: "sohrab_seek_father",
+                        action: () => {
+                            updateStats({ courage: 2, honor: 1 });
+                            applyTheme('light');
+                        }
+                    },
+                    {
+                        text: "به مأموریت افراسیاب ادامه می‌دهم و این خواب را فراموش می‌کنم",
+                        nextScene: "sohrab_continue_mission",
+                        action: () => {
+                            updateStats({ courage: 1, wisdom: -1 });
+                            applyTheme('battle');
+                        }
+                    },
+                    {
+                        text: "از جادوگر قبیله می‌خواهم مرا به گذشته ببرد تا پدرم را ببینم",
+                        nextScene: "sohrab_time_travel_past",
+                        action: () => {
+                            updateStats({ destiny: 3, wisdom: 1 });
+                            applyTheme('time');
+                        }
+                    }
+                ]
+            },
+
+            // پایان‌های رستم
+            rostam_good_ending: {
+                text: `با خرد و شجاعتی که از خود نشان دادی، توانستی شاه کابل را شکست دهی و آینده ایران را تغییر دهی. 
+                
+                در بازگشت به زابلستان، مردم شهر تو را نه فقط به عنوان یک پهلوان، بلکه به عنوان نجات‌دهنده ایران می‌ست
+
+
+
+

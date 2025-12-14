@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ماجراهای خنده‌دار ایرانی</title>
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --light-color: #F5DEB3;
+            --dark-color: #5D4037;
+            --text-color: #3E2723;
+            --paper-color: #FFF8E1;
+        }
+
+        body {
+            font-family: 'B Nazanin', Tahoma, sans-serif;
+            background-color: #E6D5B8;
+            background-image: url('https://www.transparenttextures.com/patterns/notebook.png');
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .paper {
+            background-color: var(--paper-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .paper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 40px;
+            right: 40px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        h1 {
+            border-bottom: 2px dashed var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 8px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'B Nazanin', Tahoma;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .character {
+            border: 2px solid var(--primary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+        }
+
+        .character:hover {
+            background-color: rgba(245, 222, 179, 0.9);
+            transform: scale(1.02);
+        }
+
+        .character h3 {
+            color: var(--dark-color);
+            margin-top: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .settings {
+            background-color: rgba(255, 248, 225, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid var(--primary-color);
+        }
+
+        .settings label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .settings select, .settings input {
+            padding: 5px;
+            border: 1px solid var(--primary-color);
+            border-radius: 3px;
+            font-family: 'B Nazanin';
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--dark-color);
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .version {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .game-log {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .print-btn {
+            background-color: #607D8B;
+            margin-top: 10px;
+        }
+
+        .timer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(139, 69, 19, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="timer" class="timer">زمان: 00:00</div>
+    </div>
+
+    <div class="container">
+        <div id="start-screen">
+            <h1>ماجراهای خنده‌دار ایرانی</h1>
+            <p class="version">نسخه بازی: ۱۴۰۳/۰۵/۱۳ - 1.0.0</p>
+            
+            <div class="settings">
+                <h3>تنظیمات بازی</h3>
+                <label>
+                    تم بازی:
+                    <select id="theme">
+                        <option value="default">پیش‌فرض (قهوه‌ای)</option>
+                        <option value="blue">آبی</option>
+                        <option value="green">سبز</option>
+                        <option value="dark">تیره</option>
+                    </select>
+                </label>
+                <label>
+                    سطح دشواری:
+                    <select id="difficulty">
+                        <option value="easy">آسان</option>
+                        <option value="medium">متوسط</option>
+                        <option value="hard">سخت</option>
+                    </select>
+                </label>
+            </div>
+
+            <h2>شخصیت خود را انتخاب کنید:</h2>
+            
+            <div class="character" onclick="selectCharacter('حسین', 'یک پسر جوان بی‌خیال که همیشه دردسر می‌سازد. مهارت: فرار از موقعیت‌های خطرناک!')">
+                <h3>حسین (ماجراجوی بی‌پروا)</h3>
+                <p>یک پسر جوان بی‌خیال که همیشه دردسر می‌سازد. مهارت: فرار از موقعیت‌های خطرناک!</p>
+            </div>
+            
+            <div class="character" onclick="selectCharacter('نرگس', 'دختری باهوش اما خرافاتی که مدام با موجودات عجیب روبرو می‌شود. مهارت: صحبت با ارواح!')">
+                <h3>نرگس (دختر روح‌زده)</h3>
+                <p>دختری باهوش اما خرافاتی که مدام با موجودات عجیب روبرو می‌شود. مهارت: صحبت با ارواح!</p>
+            </div>
+            
+            <div class="character" onclick="selectCharacter('عمو زنجیرباف', 'پیرمردی عجیب و غریب که ادعا می‌کند می‌تواند آینده را ببیند. مهارت: پیش‌بینی‌های اشتباه!')">
+                <h3>عمو زنجیرباف (پیشگو)</h3>
+                <p>پیرمردی عجیب و غریب که ادعا می‌کند می‌تواند آینده را ببیند. مهارت: پیش‌بینی‌های اشتباه!</p>
+            </div>
+
+            <div class="footer">
+                ساخته شده توسط <a href="https://instagram.com/hessamedien" target="_blank">HessamEdien</a>
+            </div>
+        </div>
+        
+        <div id="game-screen" class="hidden">
+            <div class="paper">
+                <h2 id="scene-title">شروع ماجرا</h2>
+                <p id="scene-text">...</p>
+                <div id="choices"></div>
+            </div>
+
+            <div id="game-log-container" class="hidden">
+                <h3>خلاصه ماجراجویی شما</h3>
+                <div class="game-log" id="game-log"></div>
+                <button onclick="window.print()" class="print-btn">چاپ ماجراجویی</button>
+                <button onclick="restartGame()">بازی دوباره</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // اطلاعات بازی
+        const story = {
+            حسین: {
+                scenes: {
+                    start: {
+                        title: "حسین در بازار",
+                        text: "حسین در بازار شلوغ تهران مشغول خرید است که ناگهان یک دزد کیف‌ها را می‌قاپد و فرار می‌کند! چه کار می‌کنی؟",
+                        choices: [
+                            { text: "دست‌هایت را بالا ببر و فریاد بزن 'دزد!'", next: "chase" },
+                            { text: "آرام به پلیس خبر بده", next: "police" },
+                            { text: "خودت دنبال دزد بدو!", next: "fight" }
+                        ]
+                    },
+                    chase: {
+                        title: "تعقیب دزد",
+                        text: "حسین شروع به دویدن می‌کند، اما دزد به یک کوچه بن‌بست می‌رسد. ناگهان دزد برگشته و یک چاقو در دست دارد!",
+                        choices: [
+                            { text: "با او مبارزه کن!", next: "fight" },
+                            { text: "سعی کن حرف بزنی و او را متقاعد کنی تسلیم شود", next: "talk" },
+                            { text: "فرار کن!", next: "escape" }
+                        ]
+                    },
+                    fight: {
+                        title: "درگیری با دزد",
+                        text: "حسین با حرکتی سریع چاقو را از دست دزد می‌قاپد، اما دزد ناگهان شروع به گریه می‌کند و می‌گوید: 'من فقط گرسنه‌ام!'",
+                        choices: [
+                            { text: "به او پول بده تا غذا بخرد", next: "good_ending" },
+                            { text: "بگو: 'باید به پلیس تحویلت بدم!'", next: "bad_ending" }
+                        ]
+                    },
+                    good_ending: {
+                        title: "پایان خوب",
+                        text: "حسین به دزد پول می‌دهد و او قول می‌دهد دیگر دزدی نکند. چند سال بعد، آن دزد یک مغازه‌دار موفق می‌شود و همیشه از حسین تشکر می‌کند!",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    },
+                    bad_ending: {
+                        title: "پایان بد",
+                        text: "پلیس می‌رسد و دزد را دستگیر می‌کند. اما همان شب، برادر دزد برای انتقام به سراغ حسین می‌آید و... (دیگر حسین را ندیدند!)",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    }
+                }
+            },
+            نرگس: {
+                scenes: {
+                    start: {
+                        title: "نرگس در خانه‌ای ترسناک",
+                        text: "نرگس به یک خانه قدیمی رفته که می‌گویند جن‌زده است. ناگهان صدای عجیبی از اتاق زیرشیروانی می‌آید...",
+                        choices: [
+                            { text: "به سمت صدا برو", next: "ghost" },
+                            { text: "فرار کن!", next: "escape" },
+                            { text: "با تلفن به دوستت زنگ بزن", next: "call" }
+                        ]
+                    },
+                    ghost: {
+                        title: "روبرو شدن با روح",
+                        text: "نرگس می‌بیند یک روح پیرزن در حال گریه است! روح می‌گوید: 'کسی گنج من را دزدیده!'",
+                        choices: [
+                            { text: "به او کمک کن تا گنجش را پیدا کند", next: "help" },
+                            { text: "با ترس فرار کن", next: "escape" }
+                        ]
+                    },
+                    help: {
+                        title: "کمک به روح",
+                        text: "نرگس متوجه می‌شود گنج زیر تخت مخفی شده. روح خوشحال می‌شود و به نرگس یک سکه طلای قدیمی هدیه می‌دهد!",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    },
+                    escape: {
+                        title: "فرار از خانه",
+                        text: "نرگس با ترس از خانه فرار می‌کند، اما در راه خروج، پایش به چیزی گیر می‌کند و زمین می‌خورد. وقتی بیدار می‌شود، می‌بیند در بیمارستان است و همه فکر می‌کنند او دچار توهم شده است!",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    }
+                }
+            },
+            "عمو زنجیرباف": {
+                scenes: {
+                    start: {
+                        title: "پیشگویی عمو زنجیرباف",
+                        text: "عمو زنجیرباف در حال پیشگویی برای مردم در میدان شهر است که ناگهان یک مأمور شهرداری می‌آید و می‌گوید: 'آقا اینجا اجازه کسب ندارید!'",
+                        choices: [
+                            { text: "به مأمور بگو این پیشگویی نیست، مشاوره روانشناسی است!", next: "psychology" },
+                            { text: "با التماس از او بخواه بگذارد کارت را ادامه دهی", next: "beg" },
+                            { text: "وسایلت را جمع کن و به جای دیگری برو", next: "move" }
+                        ]
+                    },
+                    psychology: {
+                        title: "مشاور روانشناسی!",
+                        text: "مأمور شهرداری می‌گوید: 'خب اگر روانشناسی می‌کنی، مدرکت کجاست؟' عمو زنجیرباف که مدرکی ندارد، چه کار می‌کند؟",
+                        choices: [
+                            { text: "بگو مدرک را در خانه گذاشته‌ای", next: "lie" },
+                            { text: "اعتراف کن که مدرک نداری", next: "confess" }
+                        ]
+                    },
+                    lie: {
+                        title: "دروغ مصلحتی",
+                        text: "عمو زنجیرباف می‌گوید مدرکش را در خانه گذاشته است. مأمور می‌گوید: 'پس برو بیار!' عمو که نمی‌خواهد اعتراف کند، چه کار می‌کند؟",
+                        choices: [
+                            { text: "به مأمور پیشنهاد رشوه بده", next: "bribe" },
+                            { text: "بگو الان می‌روی و فرار کن", next: "run_away" }
+                        ]
+                    },
+                    bribe: {
+                        title: "رشوه دادن",
+                        text: "عمو زنجیرباف به مأمور پیشنهاد می‌دهد که اگر بگذارد کارش را ادامه دهد، به او پول می‌دهد. مأمور که در واقع یک پلیس مخفی بوده، او را دستگیر می‌کند!",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    },
+                    run_away: {
+                        title: "فرار از صحنه",
+                        text: "عمو زنجیرباف وانمود می‌کند که می‌رود مدرکش را بیاورد، اما در واقع فرار می‌کند و دیگر هرگز به آن میدان برنمی‌گردد!",
+                        choices: [
+                            { text: "بازی را تمام کن", next: "end" }
+                        ]
+                    }
+                }
+            }
+        };
+
+        // متغیرهای بازی
+        let currentCharacter = null;
+        let currentScene = "start";
+        let gameLog = [];
+        let startTime = null;
+        let timerInterval = null;
+        let difficulty = "medium";
+
+        // انتخاب شخصیت
+        function selectCharacter(name, bio) {
+            currentCharacter = name;
+            document.getElementById("start-screen").classList.add("hidden");
+            document.getElementById("game-screen").classList.remove("hidden");
+            
+            // نمایش بیوگرافی شخصیت
+            const sceneText = document.getElementById("scene-text");
+            sceneText.innerHTML = `<strong>شما ${name} را انتخاب کردید!</strong><br><br>${bio}<br><br>${story[name].scenes.start.text}`;
+            
+            document.getElementById("scene-title").textContent = story[name].scenes.start.title;
+            
+            // ایجاد دکمه‌های انتخاب
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = "";
+            
+            story[name].scenes.start.choices.forEach(choice => {
+                const button = document.createElement("button");
+                button.textContent = choice.text;
+                button.onclick = () => {
+                    gameLog.push({scene: currentScene, choice: choice.text});
+                    if (choice.next === "end") {
+                        endGame();
+                    } else {
+                        currentScene = choice.next;
+                        loadScene(currentScene);
+                    }
+                };
+                choicesDiv.appendChild(button);
+            });
+            
+            // شروع تایمر
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // اضافه کردن اولین صحنه به لاگ بازی
+            gameLog.push({
+                scene: "start",
+                text: `شروع ماجرا با شخصیت ${name}: ${bio}`
+            });
+        }
+
+        // بارگذاری صحنه
+        function loadScene(sceneId) {
+            const scene = story[currentCharacter].scenes[sceneId];
+            document.getElementById("scene-title").textContent = scene.title;
+            document.getElementById("scene-text").textContent = scene.text;
+            
+            const choicesDiv = document.getElementById("choices");
+            choicesDiv.innerHTML = "";
+            
+            scene.choices.forEach(choice => {
+                const button = document.createElement("button");
+                button.textContent = choice.text;
+                button.onclick = () => {
+                    gameLog.push({scene: sceneId, choice: choice.text});
+                    if (choice.next === "end") {
+                        endGame();
+                    } else {
+                        currentScene = choice.next;
+                        loadScene(currentScene);
+                    }
+                };
+                choicesDiv.appendChild(button);
+            });
+            
+            // اضافه کردن صحنه به لاگ بازی
+            gameLog.push({
+                scene: sceneId,
+                text: scene.text
+            });
+        }
+
+        // پایان بازی
+        function endGame() {
+            clearInterval(timerInterval);
+            document.getElementById("game-log-container").classList.remove("hidden");
+            
+            const gameLogElement = document.getElementById("game-log");
+            gameLogElement.innerHTML = "";
+            
+            // محاسبه زمان بازی
+            const endTime = new Date();
+            const playTime = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(playTime / 60);
+            const seconds = playTime % 60;
+            
+            gameLogElement.innerHTML += `<p><strong>زمان بازی: ${minutes} دقیقه و ${seconds} ثانیه</strong></p>`;
+            
+            // نمایش تمام مراحل بازی
+            gameLog.forEach((log, index) => {
+                if (log.text) {
+                    gameLogElement.innerHTML += `<p><strong>${log.text}</strong></p>`;
+                }
+                if (log.choice) {
+                    gameLogElement.innerHTML += `<p>→ انتخاب شما: <em>${log.choice}</em></p>`;
+                }
+            });
+            
+            gameLogElement.innerHTML += `<p><strong>پایان ماجراجویی!</strong></p>`;
+        }
+
+        // ریست بازی
+        function restartGame() {
+            clearInterval(timerInterval);
+            currentCharacter = null;
+            currentScene = "start";
+            gameLog = [];
+            document.getElementById("game-screen").classList.add("hidden");
+            document.getElementById("game-log-container").classList.add("hidden");
+            document.getElementById("start-screen").classList.remove("hidden");
+            document.getElementById("timer").textContent = "زمان: 00:00";
+        }
+
+        // آپدیت تایمر
+        function updateTimer() {
+            const currentTime = new Date();
+            const elapsed = Math.floor((currentTime - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const seconds = (elapsed % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `زمان: ${minutes}:${seconds}`;
+        }
+
+        // تابع چاپ
+        window.print = function() {
+            const printContent = `
+                <div style="font-family: 'B Nazanin'; direction: rtl; padding: 20px;">
+                    <h1 style="text-align: center; color: #8B4513;">خلاصه ماجراجویی شما</h1>
+                    <p style="text-align: center;"><strong>شخصیت:</strong> ${currentCharacter}</p>
+                    ${document.getElementById("game-log").innerHTML}
+                    <p style="text-align: center; margin-top: 30px; font-size: 12px;">
+                        ساخته شده توسط HessamEdien - بازی ماجراهای خنده‌دار ایرانی
+                    </p>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
+        }
+
+        // تغییر تم
+        document.getElementById("theme").addEventListener("change", function() {
+            const root = document.documentElement;
+            switch(this.value) {
+                case "blue":
+                    root.style.setProperty("--primary-color", "#1E88E5");
+                    root.style.setProperty("--secondary-color", "#0D47A1");
+                    root.style.setProperty("--light-color", "#BBDEFB");
+                    root.style.setProperty("--paper-color", "#E3F2FD");
+                    break;
+                case "green":
+                    root.style.setProperty("--primary-color", "#2E7D32");
+                    root.style.setProperty("--secondary-color", "#1B5E20");
+                    root.style.setProperty("--light-color", "#C8E6C9");
+                    root.style.setProperty("--paper-color", "#E8F5E9");
+                    break;
+                case "dark":
+                    root.style.setProperty("--primary-color", "#424242");
+                    root.style.setProperty("--secondary-color", "#212121");
+                    root.style.setProperty("--light-color", "#757575");
+                    root.style.setProperty("--paper-color", "#EEEEEE");
+                    root.style.setProperty("--text-color", "#FAFAFA");
+                    document.body.style.backgroundColor = "#212121";
+                    break;
+                default:
+                    root.style.setProperty("--primary-color", "#8B4513");
+                    root.style.setProperty("--secondary-color", "#A0522D");
+                    root.style.setProperty("--light-color", "#F5DEB3");
+                    root.style.setProperty("--paper-color", "#FFF8E1");
+                    root.style.setProperty("--text-color", "#3E2723");
+                    document.body.style.backgroundColor = "#E6D5B8";
+            }
+        });
+
+        // تغییر سطح دشواری
+        document.getElementById("difficulty").addEventListener("change", function() {
+            difficulty = this.value;
+            // در اینجا می‌توانید منطق تغییر دشواری را پیاده‌
+        });
+
+        // تنظیم نسخه بازی بر اساس تاریخ
+        const today = new Date();
+        const persianDate = today.toLocaleDateString('fa-IR');
+        document.querySelector(".version").textContent = `نسخه بازی: ${persianDate} - 1.0.0`;
+    </script>
+</body>
+</html>
