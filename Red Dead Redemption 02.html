@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان کامل Red Dead Redemption</title>
+    <style>
+        /* استایل‌های کلی */
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #D4AF37;
+            --dark-color: #2C2C2C;
+            --light-color: #F5F5DC;
+            --font-size: 16px;
+            --font-family: 'Times New Roman', Times, serif;
+            --theme: 'dark';
+        }
+
+        [data-theme="light"] {
+            --primary-color: #8B0000;
+            --secondary-color: #D4AF37;
+            --dark-color: #F5F5DC;
+            --light-color: #2C2C2C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232C2C2C"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%233A3A3A" stroke-width="1"/></svg>');
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* صفحه اصلی */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+        }
+
+        .logo {
+            max-width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .logo-text {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-family: 'Old English Text MT', serif;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--light-color);
+            margin-bottom: 50px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .menu-button {
+            background: linear-gradient(to bottom, var(--primary-color), #600000);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(to bottom, #A00000, #700000);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* تنظیمات */
+        .settings-page {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .settings-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--light-color);
+        }
+
+        .setting-control {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--secondary-color);
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .online-options {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(44, 44, 44, 0.7);
+            border-radius: 5px;
+        }
+
+        .creators-page {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .creator-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .creator-name {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .social-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .social-link:hover {
+            text-decoration: underline;
+        }
+
+        /* صفحه داستان */
+        .story-page {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+
+        .story-title {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .story-content {
+            margin-bottom: 30px;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .story-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #A00000;
+        }
+
+        .chapter-title {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 30px 0 15px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        /* صفحه پایان */
+        .ending-page {
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .ending-title {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .ending-content {
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .share-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .share-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* واکنش‌گرایی */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .menu-buttons {
+                max-width: 250px;
+            }
+            
+            .menu-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .story-title {
+                font-size: 2rem;
+            }
+            
+            .share-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* افکت‌های صوتی */
+        .audio-controls {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اصلی -->
+    <div id="mainMenu" class="main-menu fade-in">
+        <div class="logo">
+            <h1 class="logo-text">Red Dead Redemption</h1>
+        </div>
+        <p class="subtitle">رمان کامل داستان بازی</p>
+        <div class="menu-buttons">
+            <button class="menu-button" onclick="startStory()">شروع داستان</button>
+            <button class="menu-button" onclick="showSettings()">تنظیمات</button>
+            <button class="menu-button" onclick="showCreators()">سازندگان</button>
+            <button class="menu-button" onclick="exitApp()">خروج</button>
+        </div>
+    </div>
+
+    <!-- صفحه تنظیمات -->
+    <div id="settingsPage" class="settings-page">
+        <h2 class="settings-title">تنظیمات</h2>
+        
+        <div class="setting-group">
+            <label class="setting-label" for="fontSize">سایز فونت:</label>
+            <select id="fontSize" class="setting-control" onchange="changeFontSize(this.value)">
+                <option value="14px">کوچک</option>
+                <option value="16px" selected>متوسط</option>
+                <option value="18px">بزرگ</option>
+                <option value="20px">خیلی بزرگ</option>
+            </select>
+        </div>
+        
+        <div class="setting-group">
+            <label class="setting-label" for="fontFamily">نوع فونت:</label>
+            <select id="fontFamily" class="setting-control" onchange="changeFontFamily(this.value)">
+                <option value="'Times New Roman', Times, serif" selected>Times New Roman</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'B Nazanin', serif">B Nazanin</option>
+                <option value="Tahoma, sans-serif">Tahoma</option>
+            </select>
+        </div>
+        
+        <div class="setting-group">
+            <label class="setting-label">تم:</label>
+            <div class="checkbox-group">
+                <input type="radio" id="darkTheme" name="theme" value="dark" checked onchange="changeTheme('dark')">
+                <label for="darkTheme">تیره</label>
+                <input type="radio" id="lightTheme" name="theme" value="light" onchange="changeTheme('light')">
+                <label for="lightTheme">روشن</label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <label class="setting-label">اتصال به اینترنت:</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="onlineMode" onchange="toggleOnlineOptions()">
+                <label for="onlineMode">فعال کردن موارد آنلاین</label>
+            </div>
+        </div>
+        
+        <div id="onlineOptions" class="online-options">
+            <div class="setting-group">
+                <label class="setting-label" for="bgMusic">موسیقی زمینه:</label>
+                <select id="bgMusic" class="setting-control" onchange="changeBackgroundMusic(this.value)">
+                    <option value="none" selected>بدون موسیقی</option>
+                    <option value="western">موسیقی وسترن</option>
+                    <option value="epic">موسیقی حماسی</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label class="setting-label">افکت‌های صوتی:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="soundEffects" checked>
+                    <label for="soundEffects">فعال کردن افکت‌های صوتی</label>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <label class="setting-label">نمایش تصاویر:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showImages" checked>
+                    <label for="showImages">نمایش تصاویر در داستان</label>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <label class="setting-label">حجم صدا:</label>
+                <input type="range" id="volumeControl" min="0" max="100" value="50" class="setting-control" onchange="changeVolume(this.value)">
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <button class="menu-button" onclick="saveSettings()">ذخیره تنظیمات</button>
+            <button class="menu-button" onclick="showMainMenu()">بازگشت به منو</button>
+        </div>
+        
+        <div class="creator-info">
+            <p class="creator-name">توسعه دهنده: حسام الدین</p>
+            <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">صفحه اینستاگرام: hessamedien</a>
+            <p>کلیه حقوق این اثر محفوظ است © 2023</p>
+        </div>
+    </div>
+
+    <!-- صفحه سازندگان -->
+    <div id="creatorsPage" class="creators-page">
+        <h2 class="settings-title">سازندگان</h2>
+        
+        <div class="creator-info">
+            <p class="creator-name">توسعه دهنده و برنامه‌نویس: حسام الدین</p>
+            <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">صفحه اینستاگرام: hessamedien</a>
+        </div>
+        
+        <div class="creator-info">
+            <h3>نویسندگان داستان:</h3>
+            <p>Rockstar Games - تیم نویسندگی اصلی</p>
+            <p>مترجم و بازنویس فارسی: حسام الدین</p>
+        </div>
+        
+        <div class="creator-info">
+            <h3>طراحی و توسعه:</h3>
+            <p>طراحی رابط کاربری: حسام الدین</p>
+            <p>برنامه‌نویسی Front-end: حسام الدین</p>
+            <p>بهینه‌سازی برای موبایل: حسام الدین</p>
+        </div>
+        
+        <div class="creator-info">
+            <h3>حقوق انتشار:</h3>
+            <p>داستان اصلی متعلق به Rockstar Games است</p>
+            <p>این رمان صرفاً برای اهداف آموزشی و غیرانتفاعی ایجاد شده است</p>
+            <p>کلیه حقوق این پیاده‌سازی محفوظ است © 2023</p>
+        </div>
+        
+        <button class="menu-button" onclick="showMainMenu()">بازگشت به منو</button>
+    </div>
+
+    <!-- صفحه داستان -->
+    <div id="storyPage" class="story-page">
+        <h2 class="story-title" id="storyChapterTitle">فصل اول: آغاز راه</h2>
+        
+        <div class="story-content" id="storyContent">
+            <!-- محتوای داستان اینجا بارگذاری می‌شود -->
+        </div>
+        
+        <div class="story-navigation">
+            <button class="nav-button" id="prevChapter" onclick="prevChapter()">فصل قبلی</button>
+            <button class="nav-button" id="nextChapter" onclick="nextChapter()">فصل بعدی</button>
+        </div>
+        
+        <button class="menu-button" style="margin-top: 20px;" onclick="showMainMenu()">بازگشت به منو</button>
+    </div>
+
+    <!-- صفحه پایان -->
+    <div id="endingPage" class="ending-page">
+        <h2 class="ending-title">پایان داستان</h2>
+        
+        <div class="ending-content" id="endingContent">
+            <!-- محتوای پایان داستان اینجا بارگذاری می‌شود -->
+        </div>
+        
+        <div class="share-options">
+            <button class="share-button" onclick="printStory()">
+                <span>چاپ داستان</span>
+            </button>
+            <button class="share-button" onclick="shareOnSocialMedia()">
+                <span>اشتراک‌گذاری در شبکه‌های اجتماعی</span>
+            </button>
+        </div>
+        
+        <button class="menu-button" style="margin-top: 30px;" onclick="showMainMenu()">بازگشت به منو</button>
+    </div>
+
+    <!-- کنترل‌های صوتی -->
+    <div class="audio-controls">
+        <audio id="backgroundMusic" loop>
+            <!-- موسیقی زمینه -->
+        </audio>
+        <audio id="soundEffect">
+            <!-- افکت‌های صوتی -->
+        </audio>
+    </div>
+
+    <script>
+        // متغیرهای جهانی
+        let currentChapter = 0;
+        let settings = {
+            fontSize: '16px',
+            fontFamily: "'Times New Roman', Times, serif",
+            theme: 'dark',
+            onlineMode: false,
+            bgMusic: 'none',
+            soundEffects: true,
+            showImages: true,
+            volume: 50
+        };
+
+        // فصل‌های داستان
+        const chapters = [
+            {
+                title: "پیشگفتار: جهان Red Dead Redemption",
+                content: `
+                    <p>داستان Red Dead Redemption در آخرین سال‌های عصر وسترن قدیمی و در آستانه مدرنیزه شدن آمریکا روایت می‌شود. این داستان درباره جان مارستون، یک یاغی سابق است که توسط دولت فدرال مجبور می‌شود تا برای نجات خانواده‌اش، اعضای سابق گروه خود را شکار کند.</p>
+                    
+                    ${document.getElementById('showImages').checked ? `
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption.jpg" alt="Red Dead Redemption" class="story-image">
+                    ` : ''}
+                    
+                    <p>داستان در سال ۱۹۱۱ و در ایالت‌های خیالی نیو آستین، وست الیزابث و نووو مکزیکو اتفاق می‌افتد. جان مارستون که زمانی عضو گروه وندل گانگ به رهبری داچ ون در لینده بود، اکنون می‌کوشد زندگی شرافتمندانه‌ای را در کنار خانواده‌اش پیش بگیرد.</p>
+                    
+                    <p>اما دولت فدرال که به گذشته جنایتکارانه جان پی برده، همسر و پسرش را به گروگان گرفته و به جان قول می‌دهد که در ازای دستگیری یا کشتن سه تن از اعضای سابق گروهش، آن‌ها را آزاد خواهد کرد.</p>
+                `
+            },
+            {
+                title: "فصل اول: آغاز مأموریت",
+                content: `
+                    <p>داستان با ورود جان مارستون به شهر آرمادیلو آغاز می‌شود. او توسط مأمورین دولت فدرال به دفتر مارشال لی جانسون برده می‌شود. در آنجا با ادگار راس، مأمور دولت فدرال و آرچر فوردهام، مأمور پلیس شیکاگو ملاقات می‌کند.</p>
+                    
+                    ${document.getElementById('showImages').checked ? `
+                    <img src="https://static.wikia.nocookie.net/reddeadredemption/images/6/6e/John_Marston_RDR.png" alt="جان مارستون" class="story-image">
+                    ` : ''}
+                    
+                    <p>راس به جان توضیح می‌دهد که خانواده‌اش در یک مزرعه دولتی نگهداری می‌شوند و تنها در صورتی آزاد خواهند شد که جان سه تن از یاغی‌های سابق گروهش را شکار کند: بیل ویلیامسون، خاویر اسکوئلا و داچ ون در لینده.</p>
+                    
+                    <p>اولین هدف، بیل ویلیامسون است که در قلعه فورت مرسر در نیو آستین پناه گرفته است. جان ابتدا باید اطلاعاتی درباره محل اختفای بیل جمع‌آوری کند.</p>
+                `
+            },
+            {
+                title: "فصل دوم: شکار بیل ویلیامسون",
+                content: `
+                    <p>جان مارستون برای یافتن بیل ویلیامسون به شهرهای مختلف نیو آستین سفر می‌کند. او با بانی مکفارلن، یک دامدار مستقل آشنا می‌شود که به او در تعقیب بیل کمک می‌کند.</p>
+                    
+                    ${document.getElementById('showImages').checked ? `
+                    <img src="https://static.wikia.nocookie.net/reddeadredemption/images/8/8d/Bill_Williamson_RDR.png" alt="بیل ویلیامسون" class="story-image">
+                    ` : ''}
+                    
+                    <p>جان پس از تعقیب و گریزهای متعدد، موفق می‌شود بیل ویلیامسون را در قلعه فورت مرسر به دام بیندازد. اما بیل به کمک یکی از همدستانش فرار می‌کند و به مکزیک می‌گریزد.</p>
+                    
+                    <p>ادگار راس به جان دستور می‌دهد که تعقیب بیل را در مکزیک ادامه دهد. جان مجبور است برای ورود به مکزیک با گروه‌های شورشی و دولتی آن منطقه همکاری کند.</p>
+                `
+            },
+            // فصل‌های بعدی...
+        ];
+
+        // توابع مدیریت صفحات
+        function showMainMenu() {
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('settingsPage').style.display = 'none';
+            document.getElementById('creatorsPage').style.display = 'none';
+            document.getElementById('storyPage').style.display = 'none';
+            document.getElementById('endingPage').style.display = 'none';
+        }
+
+        function showSettings() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('settingsPage').style.display = 'block';
+            document.getElementById('creatorsPage').style.display = 'none';
+            document.getElementById('storyPage').style.display = 'none';
+            document.getElementById('endingPage').style.display = 'none';
+            
+            // بارگذاری تنظیمات ذخیره شده
+            loadSettings();
+        }
+
+        function showCreators() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('settingsPage').style.display = 'none';
+            document.getElementById('creatorsPage').style.display = 'block';
+            document.getElementById('storyPage').style.display = 'none';
+            document.getElementById('endingPage').style.display = 'none';
+        }
+
+        function startStory() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('settingsPage').style.display = 'none';
+            document.getElementById('creatorsPage').style.display = 'none';
+            document.getElementById('storyPage').style.display = 'block';
+            document.getElementById('endingPage').style.display = 'none';
+            
+            currentChapter = 0;
+            loadChapter();
+        }
+
+        function showEnding() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('settingsPage').style.display = 'none';
+            document.getElementById('creatorsPage').style.display = 'none';
+            document.getElementById('storyPage').style.display = 'none';
+            document.getElementById('endingPage').style.display = 'block';
+            
+            document.getElementById('endingContent').innerHTML = `
+                <p>داستان Red Dead Redemption با مرگ تراژیک جان مارستون به پایان می‌رسد. پس از آنکه جان موفق می‌شود تمام اهداف خود را از بین ببرد و خانواده‌اش را نجات دهد، دولت فدرال به رهبری ادگار راس به مزرعه او حمله می‌برد.</p>
+                
+                ${document.getElementById('showImages').checked ? `
+                <img src="https://static.wikia.nocookie.net/reddeadredemption/images/1/1c/Johns_Death.png" alt="مرگ جان مارستون" class="story-image">
+                ` : ''}
+                
+                <p>جان برای اینکه به همسر و پسرش فرصت فرار بدهد، خود را قربانی می‌کند و در درگیری با مأموران دولتی کشته می‌شود. چند سال بعد، پسرش جک مارستون انتقام پدرش را از ادگار راس می‌گیرد.</p>
+                
+                <p>این داستان نمادی از پایان عصر وسترن و پیروزی مدرنیته بر شیوه زندگی قدیمی است. جان مارستون که نماد آخرین بازماندگان عصر وسترن بود، قربانی پیشرفت و تغییرات اجتماعی شد.</p>
+                
+                <p>داستان Red Dead Redemption نه تنها یک ماجراجویی اکشن، بلکه یک تراژدی عمیق درباره سرنوشت، فداکاری و هزینه‌های تغییر است.</p>
+            `;
+        }
+
+        // توابع مدیریت داستان
+        function loadChapter() {
+            if (currentChapter >= chapters.length) {
+                showEnding();
+                return;
+            }
+            
+            const chapter = chapters[currentChapter];
+            document.getElementById('storyChapterTitle').textContent = chapter.title;
+            document.getElementById('storyContent').innerHTML = chapter.content;
+            
+            // به‌روزرسانی وضعیت دکمه‌های ناوبری
+            document.getElementById('prevChapter').disabled = currentChapter === 0;
+            document.getElementById('nextChapter').textContent = currentChapter === chapters.length - 1 ? 'پایان داستان' : 'فصل بعدی';
+        }
+
+        function nextChapter() {
+            if (currentChapter < chapters.length - 1) {
+                currentChapter++;
+                loadChapter();
+            } else {
+                showEnding();
+            }
+        }
+
+        function prevChapter() {
+            if (currentChapter > 0) {
+                currentChapter--;
+                loadChapter();
+            }
+        }
+
+        // توابع تنظیمات
+        function toggleOnlineOptions() {
+            const onlineMode = document.getElementById('onlineMode').checked;
+            document.getElementById('onlineOptions').style.display = onlineMode ? 'block' : 'none';
+            settings.onlineMode = onlineMode;
+        }
+
+        function changeFontSize(size) {
+            document.documentElement.style.setProperty('--font-size', size);
+            settings.fontSize = size;
+        }
+
+        function changeFontFamily(family) {
+            document.documentElement.style.setProperty('--font-family', family);
+            settings.fontFamily = family;
+        }
+
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            settings.theme = theme;
+        }
+
+        function changeBackgroundMusic(music) {
+            settings.bgMusic = music;
+            // در اینجا کد برای تغییر موسیقی زمینه اضافه می‌شود
+        }
+
+        function changeVolume(volume) {
+            settings.volume = volume;
+            // در اینجا کد برای تغییر حجم صدا اضافه می‌شود
+        }
+
+        function saveSettings() {
+            // ذخیره تنظیمات در localStorage
+            localStorage.setItem('rdrSettings', JSON.stringify(settings));
+            alert('تنظیمات ذخیره شد!');
+            showMainMenu();
+        }
+
+        function loadSettings() {
+            // بارگذاری تنظیمات از localStorage
+            const savedSettings = localStorage.getItem('rdrSettings');
+            if (savedSettings) {
+                settings = JSON.parse(savedSettings);
+                
+                // اعمال تنظیمات بارگذاری شده
+                document.getElementById('fontSize').value = settings.fontSize;
+                document.getElementById('fontFamily').value = settings.fontFamily;
+                document.getElementById(settings.theme + 'Theme').checked = true;
+                document.getElementById('onlineMode').checked = settings.onlineMode;
+                document.getElementById('bgMusic').value = settings.bgMusic;
+                document.getElementById('soundEffects').checked = settings.soundEffects;
+                document.getElementById('showImages').checked = settings.showImages;
+                document.getElementById('volumeControl').value = settings.volume;
+                
+                changeFontSize(settings.fontSize);
+                changeFontFamily(settings.fontFamily);
+                changeTheme(settings.theme);
+                toggleOnlineOptions();
+                changeVolume(settings.volume);
+            }
+        }
+
+        // توابع دیگر
+        function exitApp() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟')) {
+                // در مرورگر، نمی‌توانیم برنامه را کاملاً ببندیم، اما می‌توانیم صفحه را ببندیم
+                window.close();
+            }
+        }
+
+        function printStory() {
+            window.print();
+        }
+
+        function shareOnSocialMedia() {
+            // در اینجا کد برای اشتراک‌گذاری در شبکه‌های اجتماعی اضافه می‌شود
+            alert('امکان اشتراک‌گذاری در نسخه دمو در دسترس نیست. در نسخه کامل، این قابلیت فعال خواهد بود.');
+        }
+
+        // بارگذاری اولیه
+        window.onload = function() {
+            loadSettings();
+        };
+    </script>
+</body>
+</html>

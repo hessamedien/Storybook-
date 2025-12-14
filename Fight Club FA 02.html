@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fight Club - رمان تعاملی</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #8B0000;
+            --accent-color: #C0C0C0;
+            --text-color: #e0e0e0;
+            --highlight-color: #ff3333;
+            --bg-color: #0d0d0d;
+            --card-bg: rgba(30, 30, 30, 0.8);
+            --header-bg: rgba(0, 0, 0, 0.9);
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-size: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --primary-color: #f5f5f5;
+            --secondary-color: #A52A2A;
+            --accent-color: #666666;
+            --text-color: #333333;
+            --highlight-color: #cc0000;
+            --bg-color: #e6e6e6;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --header-bg: rgba(245, 245, 245, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            transition: var(--transition);
+            font-size: var(--font-size);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* صفحه ورودی */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 26, 0.9) 100%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230d0d0d"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238B0000" stroke-width="2"/><circle cx="50" cy="50" r="15" fill="none" stroke="%238B0000" stroke-width="1.5"/></svg>');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 3s forwards 3s;
+        }
+
+        .splash-content {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .splash-content::before, .splash-content::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .splash-content::before {
+            top: -20px;
+        }
+
+        .splash-content::after {
+            bottom: -20px;
+        }
+
+        .splash-content h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            animation: slideIn 1.5s ease-out;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .splash-content h2 {
+            font-size: 2rem;
+            animation: slideIn 1.5s ease-out 0.5s both;
+            color: var(--secondary-color);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* منوی اصلی */
+        .main-menu {
+            display: none;
+            padding: 40px 0;
+            text-align: center;
+            min-height: 100vh;
+            background: 
+                linear-gradient(135deg, var(--bg-color) 0%, var(--primary-color) 100%);
+        }
+
+        .logo {
+            margin-bottom: 50px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+        }
+
+        .logo h1 {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        .logo h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .menu-btn {
+            padding: 18px 25px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .menu-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .menu-btn:hover::before {
+            left: 100%;
+        }
+
+        /* صفحات محتوا */
+        .content-page {
+            display: none;
+            padding: 20px 0;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            background-color: var(--header-bg);
+            padding: 25px 20px;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--secondary-color);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            color: var(--secondary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .page-content {
+            padding: 0 20px;
+        }
+
+        .character-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-right: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .novel-page {
+            padding: 30px;
+            margin-bottom: 40px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            position: relative;
+        }
+
+        .novel-page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--secondary-color);
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .novel-page h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--accent-color);
+            font-size: 1.8rem;
+        }
+
+        .novel-scene {
+            margin: 25px 0;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-right: 3px solid var(--accent-color);
+        }
+
+        .dialogue {
+            margin: 15px 0;
+            padding-right: 25px;
+            border-right: 3px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .dialogue::before {
+            content: "»";
+            position: absolute;
+            right: 10px;
+            top: 0;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+
+        .dialogue-character {
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 1px solid var(--accent-color);
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            background-color: var(--header-bg);
+        }
+
+        /* دکمه شناور */
+        .floating-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            transition: var(--transition);
+            font-size: 1.5rem;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .settings-panel {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 99;
+            width: 280px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            text-align: center;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .setting-option {
+            margin-bottom: 20px;
+        }
+
+        .setting-option label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+        }
+
+        /* ناوبری */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn:disabled:hover {
+            background-color: var(--primary-color);
+            box-shadow: none;
+        }
+
+        /* صفحه پایان */
+        .end-page {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .end-page h2 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+        }
+
+        .end-page p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .share-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .share-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(139, 0, 0, 0.3);
+        }
+
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2.8rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.5rem;
+            }
+            
+            .menu-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .settings-panel {
+                width: 250px;
+                left: 15px;
+            }
+            
+            .floating-btn {
+                left: 15px;
+                bottom: 15px;
+            }
+            
+            .splash-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .splash-content h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* استایل برای فهرست مطالب */
+        .toc-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            transition: var(--transition);
+            border-right: 3px solid transparent;
+        }
+
+        .toc-list li:hover {
+            border-right-color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+
+        .toc-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .toc-list a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* استایل برای صفحه سازندگان */
+        .credits-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .credits-list li {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border-right: 3px solid var(--secondary-color);
+        }
+
+        .credits-list h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 8px;
+        }
+
+        .social-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .social-link:hover {
+            color: var(--highlight-color);
+            transform: translateX(-5px);
+        }
+
+        /* استایل برای نقد و بررسی */
+        .review-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .reviewer {
+            font-style: italic;
+            color: var(--accent-color);
+            margin-top: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه ورودی -->
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1 class="pulse">حسام الدین تقدیم می‌کند:</h1>
+            <h2>Fight Club - باشگاه مبارزه</h2>
+        </div>
+    </div>
+
+    <!-- منوی اصلی -->
+    <div class="main-menu container">
+        <div class="logo">
+            <h1>FIGHT CLUB</h1>
+            <h2>باشگاه مبارزه - رمان تعاملی</h2>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-btn" data-page="novel">شروع رمان</button>
+            <button class="menu-btn" data-page="contents">فهرست مطالب</button>
+            <button class="menu-btn" data-page="preface">پیشگفتار</button>
+            <button class="menu-btn" data-page="characters">معرفی شخصیت‌ها</button>
+            <button class="menu-btn" data-page="reviews">نقد و بررسی</button>
+            <button class="menu-btn" data-page="settings">تنظیمات</button>
+            <button class="menu-btn" data-page="credits">سازندگان</button>
+            <button class="menu-btn" id="exit-btn">خروج</button>
+        </div>
+    </div>
+
+    <!-- محتوای رمان -->
+    <div id="novel-content" class="content-page">
+        <div class="page-header">
+            <h1>Fight Club - باشگاه مبارزه</h1>
+        </div>
+        
+        <div class="page-content">
+            <!-- فصل اول -->
+            <div class="novel-page" id="chapter-1">
+                <h2>فصل اول: بیخوابی</h2>
+                <div class="novel-scene">
+                    <p>راوی مردی است که از زندگی مادی و بی‌معنایش خسته شده است. او دچار بی‌خوابی مزمن است و برای فرار از این وضعیت، به شرکت در گروه‌های حمایتی مختلف روی می‌آورد.</p>
+                    
+                    <div class="novel-scene">
+                        <h3>صحنه 1: آپارتمان راوی</h3>
+                        <p>نور کم، اتاق تاریک است. صدای تیک تاک ساعت در پس‌زمینه به گوش می‌رسد. راوی در تخت خوابش دراز کشیده و به سقف خیره شده است. چهره‌اش خسته و بی‌حوصله است.</p>
+                        
+                        <div class="dialogue">
+                            <span class="dialogue-character">راوی:</span>
+                            <span>هیچ‌کس نمی‌داند چه احساسی دارم. هر شب، بی‌خوابی به سراغم می‌آید و خواب را از من می‌رباید. انگار زندگی‌ام به یک چرخه بی‌پایان تبدیل شده است.</span>
+                        </div>
+                        
+                        <p>راوی به آرامی از تخت بلند می‌شود و به سمت پنجره می‌رود. او بیرون را نگاه می‌کند، خیابان‌ها خالی و تاریک هستند.</p>
+                        
+                        <div class="dialogue">
+                            <span class="dialogue-character">راوی (در دل):</span>
+                            <span>زندگی من به یک آپارتمان بی‌روح و یک شغل بی‌معنی محدود شده است. هر روز صبح، به دفتر کار می‌روم و با اسنادی سر و کار دارم که زندگی یا مرگ افراد را تعیین می‌کند.</span>
+                        </div>
+                        
+                        <p>او به سمت کمدش می‌رود و تعدادی از اشیای بی‌استفاده را بیرون می‌آورد. آن‌ها را در دستش می‌چرخاند و با خود می‌گوید.</p>
+                        
+                        <div class="dialogue">
+                            <span class="dialogue-character">راوی:</span>
+                            <span>این‌ها همه چیزهایی هستند که روزی برایم مهم بودند. اما حالا، همه چیز بی‌معناست.</span>
+                        </div>
+                        
+                        <p>راوی به آینه می‌رود و به چهره‌اش نگاه می‌کند. او در آینه، چهره‌ای خسته و ناامید می‌بیند.</p>
+                        
+                        <div class="dialogue">
+                            <span class="dialogue-character">راوی:</span>
+                            <span>آیا من هم باید به این زندگی ادامه دهم؟ آیا من فقط یک مصرف‌کننده دیگر هستم؟</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- فصل دوم -->
+            <div class="novel-page" id="chapter-2" style="display:none;">
+                <h2>فصل دوم: گروه‌های حمایتی</h2>
+                <div class="novel-scene">
+                    <h3>صحنه 2: گروه حمایتی - اتاقی کوچک و تاریک</h3>
+                    <p>راوی در یک جلسه گروهی نشسته است. افراد مختلفی در حال صحبت هستند. باب، مرد بزرگ‌جثه، در وسط اتاق ایستاده و داستانش را می‌گوید.</p>
+                    
+                    <div class="dialogue">
+                        <span class="dialogue-character">باب:</span>
+                        <span>من به سرطان مبتلا شدم و سینه‌هایم را از دست دادم. اما هیچ‌کس نمی‌تواند درد من را درک کند. من اینجا هستم تا به دیگران کمک کنم.</span>
+                    </div>
+                    
+                    <p>راوی به باب نگاه می‌کند و احساس نزدیکی می‌کند. او ناگهان دستش را بلند می‌کند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="dialogue-character">راوی:</span>
+                        <span>من… من نمی‌دانم درد چه احساسی دارد. اما می‌خواهم بفهمم.</span>
+                    </div>
+                    
+                    <p>گروه به او نگاه می‌کنند. باب به سمت او می‌آید و دستش را روی شانه‌اش می‌گذارد.</p>
+                    
+                    <div class="dialogue">
+                        <span class="dialogue-character">باب:</span>
+                        <span>تو اینجا هستی تا یاد بگیری. همه ما اینجا هستیم تا کمک کنیم.</span>
+                    </div>
+                    
+                    <p>راوی در ادامه به دیگر اعضای گروه نگاه می‌کند. مردی با دست‌بندهایی از زنجیر، با چهره‌ای خسته، به او نزدیک می‌شود.</p>
+                    
+                    <div class="dialogue">
+                        <span class="dialogue-character">مرد دیگر:</span>
+                        <span>ما اینجا هستیم تا از دردهایمان صحبت کنیم. هیچ‌کس نمی‌خواهد بشنود، ولی ما می‌خواهیم به یکدیگر گوش دهیم.</span>
+                    </div>
+                    
+                    <p>راوی به این جمله فکر می‌کند و احساس می‌کند که در این جمع، جایی دارد.</p>
+                    
+                    <div class="dialogue">
+                        <span class="dialogue-character">راوی (در دل):</span>
+                        <span>اینجا حداقل کسی هست که به من گوش می‌دهد.</span>
+                    </div>
+                </div>
+            </div>
+            
+
+فصل سوم: آشنایی با تایلر
+صحنه 3: یک بار تاریک و شلوغ
+
+(راوی در یک بار نشسته است و در حال نوشیدن مشروبات الکلی است. تایلر به او نزدیک می‌شود و با اعتماد به نفس و جذابیت خاصی صحبت می‌کند.)
+
+تایلر: (با لبخند) تو به نظر می‌رسی که از زندگی‌ات خسته‌ای. چرا نمی‌خواهی خودت را آزاد کنی؟
+
+راوی: (با تعجب) آزاد؟ چطور می‌توانم آزاد شوم؟
+
+تایلر: (با خنده) آزادی، تنها در مبارزه و مواجهه با ترس‌هایت به دست می‌آید. بی‌خود با زندگی‌ات مثل یک ماشین رفتار نکن!
+
+(تایلر به راوی یک سیگار می‌دهد و به او نگاه می‌کند.)
+
+تایلر: بیایید، چیزی را امتحان کنیم که هرگز فکرش را هم نمی‌کردی.
+
+(راوی متوجه می‌شود که تایلر به چه دنیایی اشاره می‌کند. او به تایلر نگاه می‌کند و در دلش حس کنجکاوی و ترس را توأمان احساس می‌کند.)
+
+فصل چهارم: باشگاه مبارزه
+صحنه 4: باشگاه مبارزه - یک زیرزمین تاریک
+
+(مردان دور هم جمع شده‌اند و در حال تماشا هستند. تایلر و راوی در گوشه‌ای ایستاده‌اند.)
+
+تایلر: (با صدای بلند) اینجا جایی است که شما می‌توانید خودتان را پیدا کنید! هیچ چیزی به جز شما و حریفتان وجود ندارد.
+
+(مردان دیگر تشویق می‌کنند. تایلر به راوی اشاره می‌کند تا به جلو برود.)
+
+تایلر: (جدی) تو باید مبارزه کنی. تنها راهی که می‌توانی بفهمی چه کسی هستی، این است که با خودت بجنگی.
+
+(راوی به جلو می‌رود و با یکی از مردان دیگر مبارزه می‌کند. صدای مشت‌ها و فریادها فضای زیرزمین را پر می‌کند.)
+
+راوی: (در حین مبارزه) اینجا چه حسی دارم! انگار زندگی دوباره به من برمی‌گردد!
+
+(پس از چند دور مبارزه، راوی با چهره‌ای مملو از خستگی و شادی به سمت تایلر برمی‌گردد.)
+
+راوی: (با هیجان) اینجا واقعاً با زندگی‌ام در جنگ هستم!
+
+تایلر: (با لبخند) زندگی را فراموش کن. فقط مبارزه کن!
+
+فصل پنجم: بحران هویت
+صحنه 5: آپارتمان راوی - شب تاریک
+
+(راوی در آپارتمانش نشسته و به دیوار خیره شده است. او در حال فکر کردن به روابطش با تایلر و باب است. او احساس می‌کند که در یک بحران هویت قرار دارد.)
+
+راوی: (در دل) آیا این زندگی واقعی است؟ آیا من فقط یک ماشین بی‌احساس هستم؟ تایلر به من نشان داد که چگونه زندگی کنم، اما آیا این زندگی واقعی است؟
+
+(راوی به یاد روزهایی می‌افتد که در گروه‌های حمایتی شرکت می‌کرد و احساس نزدیکی به باب داشت.)
+
+راوی: (با صدای کم) من چه کسی هستم؟ آیا من با تایلر به سمت جنون می‌روم؟
+
+فصل ششم: آشنایی با مارلا سینگر
+صحنه 6: جلسه گروه حمایتی - اتاقی پر از افراد مختلف
+
+(راوی در یکی از جلسات گروه حمایتی نشسته است. ناگهان زنی به نام مارلا سینگر وارد می‌شود. او با ظاهری غیرمعمول و بی‌توجهی به دیگران، به سمت راوی می‌آید.)
+
+مارلا: (با صدای بلند) من هم اینجا هستم. اینجا چه خبر است؟
+
+(افراد در اتاق به او نگاه می‌کنند. راوی ناگهان احساس می‌کند که این زن باعث مختل شدن جلسه شده است.)
+
+راوی: (با ناراحتی) تو چرا اینجا هستی؟ اینجا جایی برای حمایت است!
+
+مارلا: (با طعنه) و تو چه کسی هستی؟ کسی که در حال فرار از خودش است؟
+
+(راوی در حالی که چهره‌اش به خشم می‌زند، از اتاق بیرون می‌رود و در خیابان قدم می‌زند.)
+
+راوی: (در دل) این زن کیست؟ چرا باید این‌قدر بر من تأثیر بگذارد؟
+
+فصل هفتم: تایلر و مارلا
+صحنه 7: بار تاریک - شب
+
+(راوی در بار نشسته و به تایلر نگاه می‌کند که در حال صحبت با مارلا است. او حس می‌کند که این دو در حال نزدیک شدن به یکدیگر هستند.)
+
+تایلر: (با لبخند) تو هم می‌توانی به ما بپیوندی. هیچ‌کس نمی‌تواند تو را متوقف کند.
+
+(مارلا با نگاهی کنجکاو به تایلر پاسخ می‌دهد.)
+
+مارلا: (با خنده) آیا واقعاً فکر می‌کنی که می‌توانی مرا متوقف کنی؟
+
+(راوی با حسادت به این دو نگاه می‌کند و احساس عدم امنیت می‌کند.)
+
+راوی: (با خود) او چه چیزی دارد که من ندارم؟ آیا تایلر به او بیشتر از من اهمیت می‌دهد؟
+
+فصل هشتم: بحران در باشگاه مبارزه
+صحنه 8: باشگاه مبارزه - زیرزمین
+
+(مردان دور هم نشسته‌اند و در حال بحث درباره‌ی فلسفه و زندگی هستند. تایلر در حال صحبت است.)
+
+تایلر: (با صدای بلند) ما به دنبال آزادی هستیم! ما از زنجیرهای مصرف‌گرایی رها می‌شویم!
+
+(راوی ناگهان احساس می‌کند که تایلر در حال افراط است و این جنبش به سمت خطر می‌رود.)
+
+راوی: (با نگرانی) اینجا چه می‌شود؟ آیا ما واقعاً به آزادی می‌رسیم یا در حال نابودی خود هستیم؟
+
+(تایلر به راوی نگاه می‌کند و با صدای آرام می‌گوید.)
+
+تایلر: تو هنوز نمی‌فهمی. اینجا برای رهایی است، نه برای انزوا.
+
+فصل نهم: رو به رویی با تایلر
+صحنه 9: یک اتاق خالی - شب
+
+(راوی و تایلر در حال بحث هستند. تنش در فضا احساس می‌شود.)
+
+راوی: (عصبانی) تو به من اجازه نمی‌دهی که خودم را پیدا کنم! تو فقط می‌خواهی که به حرف‌های تو گوش بدهم!
+
+تایلر: (با خنده) تو هنوز نمی‌فهمی. من تو هستم و تو من هستی. ما دو نیمه از یک کل هستیم.
+
+(راوی در حال غمگینی به تایلر نگاه می‌کند.)
+
+راوی: (با صدای لرزان) من نمی‌خواهم به این زندگی ادامه دهم. من باید خودم را پیدا کنم.
+
+(تایلر به راوی نزدیک می‌شود.)
+
+تایلر: (با صدای آرام) تو می‌توانی. تنها راه این است که با خودت روبرو شوی.
+
+فصل دهم: حقیقت را کشف کردن
+صحنه 10: خیابان‌های شهر - شب
+
+(راوی در خیابان‌ها قدم می‌زند و به زندگی‌اش فکر می‌کند. او متوجه می‌شود که باید با تایلر مقابله کند.)
+
+راوی: (با خود) من نمی‌توانم بیشتر از این ادامه دهم. باید این چرخه را بشکنم.
+
+(راوی به سمت تایلر می‌رود و با او درگیر می‌شود. مبارزه‌ای بین دو شخصیت در می‌گیرد. در نهایت، راوی به خود می‌رسد.)
+
+راوی: (با صدای بلند) من تو را متوقف می‌کنم! من خودم را پیدا کرده‌ام!
+
+(تایلر به آرامی محو می‌شود و راوی در حال نفس‌نفس زدن در خیابان تنها می‌ماند.)
+
+فصل یازدهم: پایان داستان
+صحنه 11: خیابان‌های شهر - روز
+
+(راوی در خیابان قدم می‌زند و به زندگی‌اش فکر می‌کند. او متوجه می‌شود که باید با تایلر مقابله کند.)
+
+راوی: (با خود) من تصمیمم را گرفتم. زندگی‌ام به من تعلق دارد.
+
+(او به سمت یک ساختمان بزرگ می‌رود و در آنجا با افراد دیگر مواجه می‌شود. آن‌ها در حال تماشای صحنه‌ای از تایلر هستند که در حال سخنرانی است.)
+
+تایلر: (با صدای بلند) ما اینجا هستیم تا نشان دهیم که ما می‌توانیم از زنجیرهای جامعه رها شویم!
+
+(راوی به آرامی به تایلر نزدیک می‌شود و با او روبرو می‌شود.)
+
+راوی: (با صدای محکم) تایلر! من دیگر نمی‌خواهم به این زندگی ادامه دهم.
+
+(تایلر به او نگاه می‌کند و لبخند می‌زند.)
+
+تایلر: (با تمسخر) تو واقعاً فکر می‌کنی می‌توانی اینجا را کنترل کنی؟
+
+(راوی با اراده به سمت تایلر می‌رود و در نهایت تصمیم می‌گیرد که چگونه با او روبرو شود.)
+
+نقد و بررسی
+تحلیل عمیق اثر
+
+“باشگاه مبارزه” به بررسی بحران هویت و جستجوی معنا در زندگی می‌پردازد. شخصیت اصلی، راوی، از زندگی مادی و بی‌معنی‌اش خسته شده است و به دنبال یافتن خود و هویت واقعی‌اش می‌باشد. تایلر به عنوان نماد آزادی و بی‌قید و شرط، راوی را به دنیای جدیدی می‌برد که در آن می‌تواند احساساتش را آزادانه ابراز کند.
+
+این فیلم به نقد جامعه مصرف‌گرا و فشارهای اجتماعی بر مردان و زنان می‌پردازد. راوی و تایلر به عنوان دو وجه از یک شخصیت، نشان‌دهنده تضاد بین هویت واقعی و هویت اجتماعی هستند. در نهایت، راوی با درک عمیق‌تری از خود و زندگی‌اش، به سمت رهایی و آزادی حرکت می‌کند.
+            
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prev-btn">قبلی</button>
+                <button class="nav-btn" id="next-btn">بعدی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- فهرست مطالب -->
+    <div id="contents-page" class="content-page">
+        <div class="page-header">
+            <h1>فهرست مطالب</h1>
+        </div>
+        <div class="page-content">
+            <ul class="toc-list">
+                <li><a href="#" data-chapter="1">فصل اول: بیخوابی</a></li>
+                <li><a href="#" data-chapter="2">فصل دوم: گروه‌های حمایتی</a></li>
+                <li><a href="#" data-chapter="3">فصل سوم: آشنایی با تایلر</a></li>
+                <li><a href="#" data-chapter="4">فصل چهارم: باشگاه مبارزه</a></li>
+                <li><a href="#" data-chapter="5">فصل پنجم: بحران هویت</a></li>
+                <li><a href="#" data-chapter="6">فصل ششم: آشنایی با مارلا سینگر</a></li>
+                <li><a href="#" data-chapter="7">فصل هفتم: تایلر و مارلا</a></li>
+                <li><a href="#" data-chapter="8">فصل هشتم: بحران در باشگاه مبارزه</a></li>
+                <li><a href="#" data-chapter="9">فصل نهم: رو به رویی با تایلر</a></li>
+                <li><a href="#" data-chapter="10">فصل دهم: حقیقت را کشف کردن</a></li>
+                <li><a href="#" data-chapter="11">فصل یازدهم: پایان داستان</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- پیشگفتار -->
+    <div id="preface-page" class="content-page">
+        <div class="page-header">
+            <h1>پیشگفتار</h1>
+        </div>
+        <div class="page-content">
+            <div class="character-card">
+                <p>"باشگاه مبارزه" (Fight Club) یکی از آثار برجسته دیوید فینچر است که در سال 1999 به نمایش درآمد. این فیلم بر اساس رمانی به همین نام اثر چاک پالانیک ساخته شده و به بررسی موضوعات پیچیده‌ای چون بحران هویت، مصرف‌گرایی، و جستجوی معنا در زندگی می‌پردازد.</p>
+            </div>
+            
+            <div class="character-card">
+                <h3>کارگردان: دیوید فینچر</h3>
+                <p>دیوید فینچر، کارگردان آمریکایی، با ساخت فیلم‌هایی چون "هفت" (Se7en)، "بازی" (The Game) و "شبکه اجتماعی" (The Social Network) شناخته می‌شود. سبک سینمایی او با استفاده از نورپردازی تاریک، تدوین دقیق و پرداختن به مضامین روانشناختی و اجتماعی مشخص می‌شود.</p>
+            </div>
+            
+            <div class="character-card">
+                <h3>بازیگران اصلی:</h3>
+                <ul>
+                    <li>ادوارد نورتون در نقش راوی</li>
+                    <li>برد پیت در نقش تایلر داردن</li>
+                    <li>هلنا بونهام کارتر در نقش مارلا سینگر</li>
+                    <li>متارد در نقش باب</li>
+                </ul>
+            </div>
+            
+            <div class="character-card">
+                <h3>خلاصه داستان:</h3>
+                <p>راوی، مردی بی‌نام که از زندگی مادی و بی‌معنایش خسته شده، با تایلر داردن مرموز آشنا می‌شود. این آشنایی او را به دنیای جدیدی می‌کشاند که در آن باشگاه مبارزه به عنوان محلی برای ابراز خشم و نارضایتی از جامعه مصرف‌گرا شکل می‌گیرد. اما این باشگاه به تدریج به جنبشی افراطی تبدیل می‌شود که کنترل آن از دست راوی خارج می‌شود.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- معرفی شخصیت‌ها -->
+    <div id="characters-page" class="content-page">
+        <div class="page-header">
+            <h1>معرفی شخصیت‌ها</h1>
+        </div>
+        <div class="page-content">
+            <div class="character-card">
+                <h3>راوی (شخصیت اصلی)</h3>
+                <p>مردی بی‌نام و بی‌هویت که در جستجوی معنا در زندگی است. او نماینده فردی است که با مشکلات بی‌خوابی دست و پنجه نرم می‌کند و از زندگی مادی و پوچ خود ناراضی است.</p>
+            </div>
+            
+            <div class="character-card">
+                <h3>تایلر داردن</h3>
+                <p>مردی مرموز و جذاب که به راوی کمک می‌کند تا به زندگی آزاد و بی‌قید و شرط نزدیک شود. او نماینده افکار انقلابی و ضد اجتماعی است و باشگاه مبارزه را تأسیس می‌کند.</p>
+            </div>
+            
+            <div class="character-card">
+                <h3>باب</h3>
+                <p>مردی بزرگ‌جثه و با قلبی بزرگ، که به راوی در گروه‌های حمایتی کمک می‌کند. او نماینده انسانیت و محبت در داستان است و از سرطان بیضه رنج می‌برد.</p>
+            </div>
+            
+            <div class="character-card">
+                <h3>مارلا سینگر</h3>
+                <p>زنی که در گروه‌های حمایتی شرکت می‌کند و به عنوان یک شخصیت چالش‌برانگیز و پیچیده وارد زندگی راوی می‌شود. او مانند راوی، در جستجوی معنا در زندگی است.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- نقد و بررسی -->
+    <div id="reviews-page" class="content-page">
+        <div class="page-header">
+            <h1>نقد و بررسی</h1>
+        </div>
+        <div class="page-content">
+            <div class="review-card">
+                <h3>تحلیل عمیق اثر</h3>
+                <p>"باشگاه مبارزه" به بررسی بحران هویت و جستجوی معنا در زندگی می‌پردازد. شخصیت اصلی، راوی، از زندگی مادی و بی‌معنی‌اش خسته شده است و به دنبال یافتن خود و هویت واقعی‌اش می‌باشد. تایلر به عنوان نماد آزادی و بی‌قید و شرط، راوی را به دنیای جدیدی می‌برد که در آن می‌تواند احساساتش را آزادانه ابراز کند.</p>
+                
+                <p>این فیلم به نقد جامعه مصرف‌گرا و فشارهای اجتماعی بر مردان و زنان می‌پردازد. راوی و تایلر به عنوان دو وجه از یک شخصیت، نشان‌دهنده تضاد بین هویت واقعی و هویت اجتماعی هستند. در نهایت، راوی با درک عمیق‌تری از خود و زندگی‌اش، به سمت رهایی و آزادی حرکت می‌کند.</p>
+            </div>
+            
+            <div class="review-card">
+                <h3>نظرات منتقدان:</h3>
+                <p>"باشگاه مبارزه یکی از تأثیرگذارترین فیلم‌های دهه 90 است که با نگاهی تیزبین به بحران هویت مردانه در جامعه مصرف‌گرا می‌پردازد."</p>
+                <p class="reviewer">- راجر ایبرت</p>
+            </div>
+            
+            <div class="review-card">
+                <p>"فیلمی که در ابتدا با استقبال سردی روبرو شد، اما به مرور زمان به یک اثر کالت تبدیل شد و تأثیر عمیقی بر فرهنگ عامه گذاشت."</p>
+                <p class="reviewer">- مجله امپایر</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- تنظیمات -->
+    <div id="settings-page" class="content-page">
+        <div class="page-header">
+            <h1>تنظیمات</h1>
+        </div>
+        <div class="page-content">
+            <div class="character-card">
+                <h3>تنظیمات نمایش</h3>
+                <div class="setting-option">
+                    <label for="theme-select">تم:</label>
+                    <select id="theme-select">
+                        <option value="dark">تیره (پیشفرض)</option>
+                        <option value="light">روشن</option>
+                    </select>
+                </div>
+                
+                <div class="setting-option">
+                    <label for="font-size">اندازه فونت:</label>
+                    <input type="range" id="font-size" min="12" max="24" value="16">
+                    <span id="font-size-value">16px</span>
+                </div>
+                
+                <div class="setting-option">
+                    <label for="font-family">نوع فونت:</label>
+                    <select id="font-family">
+                        <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI (پیشفرض)</option>
+                        <option value="'B Nazanin', Tahoma, sans-serif">B Nazanin</option>
+                        <option value="'B Yekan', Tahoma, sans-serif">B Yekan</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                    </select>
+                </div>
+                
+                <div class="setting-option">
+                    <label for="bg-music">موسیقی زمینه:</label>
+                    <select id="bg-music">
+                        <option value="none">بدون موسیقی</option>
+                        <option value="ambient">موسیقی محیطی</option>
+                    </select>
+                </div>
+                
+                <button class="nav-btn" id="apply-settings">اعمال تنظیمات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- سازندگان -->
+    <div id="credits-page" class="content-page">
+        <div class="page-header">
+            <h1>سازندگان</h1>
+        </div>
+        <div class="page-content">
+            <ul class="credits-list">
+                <li>
+                    <h3>گرد آورنده پروژه:</h3>
+                    <p>حسام‌الدین</p>
+                    <a href="https://instagram.com/hessamedien" target="_blank" class="social-link">صفحه اینستاگرام: hessamedien</a>
+                </li>
+                
+                <li>
+                    <h3>بر اساس اثر:</h3>
+                    <p>رمان "باشگاه مبارزه" نوشته چاک پالانیک</p>
+                    <p>فیلم "باشگاه مبارزه" به کارگردانی دیوید فینچر</p>
+                </li>
+                
+                <li>
+                    <h3>بازیگران اصلی:</h3>
+                    <ul>
+                        <li>ادوارد نورتون</li>
+                        <li>برد پیت</li>
+                        <li>هلنا بونهام کارتر</li>
+                        <li>متارد</li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <h3>حقوق نشر:</h3>
+                    <p>این پروژه صرفاً یک اثر هنری و آموزشی است و هیچ ادعایی در مورد مالکیت حقوقی محتوای اصلی ندارد. تمام حقوق اثر اصلی متعلق به نویسنده و استودیوهای مربوطه است.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- صفحه پایان -->
+    <div id="end-page" class="content-page end-page">
+        <div class="page-header">
+            <h1>پایان رمان</h1>
+        </div>
+        <div class="page-content">
+            <h2>با تشکر از مطالعه شما</h2>
+            <p>امیدواریم از خواندن این رمان تعاملی لذت برده باشید. این اثر با الهام از فیلم و رمان اصلی باشگاه مبارزه خلق شده تا تجربه‌ای متفاوت از داستان‌گویی دیجیتال ارائه دهد.</p>
+            
+            <div class="share-options">
+                <button class="share-btn" id="print-btn">چاپ رمان</button>
+                <button class="share-btn" id="share-btn">اشتراک‌گذاری</button>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn" id="back-to-menu">بازگشت به منوی اصلی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- دکمه شناور برای تنظیمات -->
+    <div class="floating-btn" id="settings-btn">
+        <span>⚙️</span>
+    </div>
+    
+    <div class="settings-panel" id="settings-panel">
+        <h3>تنظیمات سریع</h3>
+        
+        <div class="setting-option">
+            <label for="quick-theme">تم:</label>
+            <select id="quick-theme">
+                <option value="dark">تیره</option>
+                <option value="light">روشن</option>
+            </select>
+        </div>
+        
+        <div class="setting-option">
+            <label for="quick-font-size">اندازه فونت:</label>
+            <input type="range" id="quick-font-size" min="12" max="24" value="16">
+        </div>
+        
+        <button class="nav-btn" id="close-settings">بستن</button>
+    </div>
+
+    <script>
+        // متغیرهای جهانی
+        let currentPage = 'main-menu';
+        let currentChapter = 1;
+        const totalChapters = 11;
+
+        // نمایش صفحه پس از پایان انیمیشن اسپلش
+        setTimeout(() => {
+            document.querySelector('.splash-screen').style.display = 'none';
+            document.querySelector('.main-menu').style.display = 'block';
+            currentPage = 'main-menu';
+        }, 3000);
+
+        // مدیریت کلیک روی دکمه‌های منو
+        document.querySelectorAll('.menu-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetPage = this.getAttribute('data-page');
+                
+                if (targetPage === 'novel') {
+                    showPage('novel-content');
+                    showChapter(1);
+                    currentPage = 'novel';
+                } else if (targetPage === 'contents') {
+                    showPage('contents-page');
+                    currentPage = 'contents';
+                } else if (targetPage === 'preface') {
+                    showPage('preface-page');
+                    currentPage = 'preface';
+                } else if (targetPage === 'characters') {
+                    showPage('characters-page');
+                    currentPage = 'characters';
+                } else if (targetPage === 'reviews') {
+                    showPage('reviews-page');
+                    currentPage = 'reviews';
+                } else if (targetPage === 'settings') {
+                    showPage('settings-page');
+                    currentPage = 'settings';
+                } else if (targetPage === 'credits') {
+                    showPage('credits-page');
+                    currentPage = 'credits';
+                } else if (this.id === 'exit-btn') {
+                    if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+                        window.close();
+                    }
+                }
+            });
+        });
+
+        // مدیریت فهرست مطالب
+        document.querySelectorAll('#contents-page a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const chapter = this.getAttribute('data-chapter');
+                showChapter(parseInt(chapter));
+                showPage('novel-content');
+                currentPage = 'novel';
+            });
+        });
+
+        // مدیریت ناوبری فصل‌ها
+        document.getElementById('next-btn').addEventListener('click', function() {
+            if (currentChapter < totalChapters) {
+                showChapter(currentChapter + 1);
+            } else {
+                showPage('end-page');
+                currentPage = 'end';
+            }
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', function() {
+            if (currentChapter > 1) {
+                showChapter(currentChapter - 1);
+            }
+        });
+
+        // مدیریت دکمه بازگشت به منو
+        document.getElementById('back-to-menu').addEventListener('click', function() {
+            showPage('main-menu');
+            currentPage = 'main-menu';
+        });
+
+        // مدیریت دکمه چاپ
+        document.getElementById('print-btn').addEventListener('click', function() {
+            window.print();
+        });
+
+        // مدیریت دکمه اشتراک‌گذاری
+        document.getElementById('share-btn').addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Fight Club - رمان تعاملی',
+                    text: 'رمان تعاملی Fight Club اثر حسام الدین',
+                    url: window.location.href
+                });
+            } else {
+                alert('امکان اشتراک‌گذاری در این مرورگر وجود ندارد. می‌توانید از لینک صفحه استفاده کنید.');
+            }
+        });
+
+        // مدیریت دکمه تنظیمات
+        document.getElementById('settings-btn').addEventListener('click', function() {
+            const panel = document.getElementById('settings-panel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.getElementById('close-settings').addEventListener('click', function() {
+            document.getElementById('settings-panel').style.display = 'none';
+        });
+
+        // مدیریت تغییر تم در تنظیمات سریع
+        document.getElementById('quick-theme').addEventListener('change', function() {
+            if (this.value === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        });
+
+        // مدیریت تغییر اندازه فونت در تنظیمات سریع
+        document.getElementById('quick-font-size').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--font-size', this.value + 'px');
+        });
+
+        // مدیریت تغییر تم در صفحه تنظیمات
+        document.getElementById('theme-select').addEventListener('change', function() {
+            if (this.value === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        });
+
+        // مدیریت تغییر اندازه فونت در صفحه تنظیمات
+        const fontSizeSlider = document.getElementById('font-size');
+        const fontSizeValue = document.getElementById('font-size-value');
+        
+        fontSizeSlider.addEventListener('input', function() {
+            document.documentElement.style.setProperty('--font-size', this.value + 'px');
+            fontSizeValue.textContent = this.value + 'px';
+        });
+
+        // مدیریت تغییر فونت
+        document.getElementById('font-family').addEventListener('change', function() {
+            document.documentElement.style.setProperty('--font-family', this.value);
+        });
+
+        // اعمال تنظیمات
+        document.getElementById('apply-settings').addEventListener('click', function() {
+            alert('تنظیمات با موفقیت اعمال شدند.');
+            showPage('main-menu');
+        });
+
+        // توابع کمکی
+        function showPage(pageId) {
+            // مخفی کردن تمام صفحات
+            document.querySelectorAll('.content-page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // مخفی کردن منوی اصلی
+            document.querySelector('.main-menu').style.display = 'none';
+            
+            // نمایش صفحه مورد نظر
+            if (pageId === 'main-menu') {
+                document.querySelector('.main-menu').style.display = 'block';
+            } else {
+                document.getElementById(pageId).style.display = 'block';
+            }
+            
+            // بستن پنل تنظیمات شناور
+            document.getElementById('settings-panel').style.display = 'none';
+        }
+
+        function showChapter(chapterNum) {
+            currentChapter = chapterNum;
+            
+            // مخفی کردن تمام فصل‌ها
+            for (let i = 1; i <= totalChapters; i++) {
+                const chapterElement = document.getElementById(`chapter-${i}`);
+                if (chapterElement) {
+                    chapterElement.style.display = 'none';
+                }
+            }
+            
+            // نمایش فصل جاری
+            const currentChapterElement = document.getElementById(`chapter-${chapterNum}`);
+            if (currentChapterElement) {
+                currentChapterElement.style.display = 'block';
+            }
+            
+            // به روزرسانی وضعیت دکمه‌های ناوبری
+            document.getElementById('prev-btn').disabled = (chapterNum === 1);
+            document.getElementById('next-btn').textContent = (chapterNum === totalChapters) ? 'پایان' : 'بعدی';
+        }
+
+        // بارگذاری اولیه
+        showPage('main-menu');
+    </script>
+</body>
+</html>

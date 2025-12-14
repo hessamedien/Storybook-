@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان کامل Red Dead Redemption - تقدیم شده توسط حسام‌الدین</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&family=Reem+Kufi&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B0000;
+            --primary-dark: #5a0000;
+            --secondary-color: #D4AF37;
+            --secondary-dark: #b8941f;
+            --dark-bg: #1a1a1a;
+            --darker-bg: #0f0f0f;
+            --light-bg: #f5f5f5;
+            --paper-bg: #f0e6d2;
+            --text-dark: #333;
+            --text-light: #f5f5f5;
+            --text-muted: #aaa;
+            --font-size: 16px;
+            --font-family: 'Almarai', 'Tahoma', sans-serif;
+            --title-font: 'Reem Kufi', 'Bebas Neue', sans-serif;
+            --western-font: 'Reem Kufi', 'Times New Roman', serif;
+            --shadow: 0 4px 15px rgba(0,0,0,0.5);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            line-height: 1.6;
+            background-color: var(--darker-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            background-image: url('https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            z-index: -1;
+        }
+
+        /* استایل صفحه اول */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: 2000;
+            transition: opacity 1s ease;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .intro-text h1 {
+            font-family: var(--title-font);
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease forwards;
+        }
+
+        .intro-text h2 {
+            font-family: var(--western-font);
+            font-size: 3.5rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            opacity: 0;
+            animation: fadeInUp 1.5s ease 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* استایل منوی اصلی */
+        .main-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: 1500;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-logo {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .menu-logo h1 {
+            font-family: var(--title-font);
+            font-size: 4rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            margin-bottom: 1rem;
+        }
+
+        .menu-logo p {
+            font-family: var(--western-font);
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 300px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--western-font);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .menu-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-family: var(--title-font);
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: var(--western-font);
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .music-control {
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid var(--secondary-color);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .music-control:hover {
+            background: rgba(139, 0, 0, 0.5);
+        }
+
+        .novel-container {
+            max-width: 900px;
+            margin: 120px auto 40px;
+            padding: 2rem;
+            background: rgba(30,30,30,0.9);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .novel-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/old-map.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .novel-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .novel-title {
+            font-family: var(--title-font);
+            font-size: 3.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            letter-spacing: 1px;
+        }
+
+        .novel-subtitle {
+            font-family: var(--western-font);
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .novel-header p {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .table-of-contents {
+            background: linear-gradient(135deg, rgba(50,50,50,0.8) 0%, rgba(70,70,70,0.6) 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-of-contents::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .toc-title {
+            font-family: var(--western-font);
+            font-size: 1.7rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .toc-list {
+            list-style-type: none;
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.8rem;
+            padding-right: 1rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toc-list li::before {
+            content: '•';
+            color: var(--secondary-color);
+            position: absolute;
+            right: 0;
+        }
+
+        .toc-list a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .toc-list a:hover {
+            color: var(--secondary-color);
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .chapter-title {
+            font-family: var(--western-font);
+            font-size: 2.3rem;
+            color: var(--secondary-color);
+            margin: 3rem 0 1.5rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        .section-title {
+            font-family: var(--western-font);
+            font-size: 1.7rem;
+            color: var(--secondary-color);
+            margin: 2rem 0 1rem 0;
+            padding-right: 1rem;
+            border-right: 3px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .novel-content {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .novel-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .character-intro {
+            background: linear-gradient(135deg, rgba(70,70,70,0.7) 0%, rgba(90,90,90,0.5) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/light-wool.png');
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .character-name {
+            font-family: var(--western-font);
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .character-name i {
+            font-size: 1.2rem;
+        }
+
+        .dialogue {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(40,40,40,0.8);
+            border-right: 4px solid var(--secondary-color);
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .dialogue::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 3rem;
+            color: var(--secondary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .character {
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .action {
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            padding-right: 1rem;
+            border-right: 2px solid var(--primary-color);
+        }
+
+        .novel-image {
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .novel-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: -1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .location-desc {
+            background: rgba(60,60,60,0.6);
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            border-left: 3px solid var(--primary-color);
+            position: relative;
+            padding-right: 2rem;
+        }
+
+        .location-desc::before {
+            content: '📍';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .footnote {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            padding-right: 1rem;
+            border-right: 1px solid var(--text-muted);
+        }
+
+        .page-break {
+            page-break-after: always;
+            border-top: 1px dashed var(--secondary-color);
+            margin: 2rem 0;
+            padding-top: 2rem;
+            position: relative;
+        }
+
+        .page-break::after {
+            content: '•••';
+            position: absolute;
+            top: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            background: var(--dark-bg);
+            padding: 0 10px;
+            color: var(--secondary-color);
+        }
+
+        .novel-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--secondary-color);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .novel-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 1px;
+            background: var(--secondary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-link {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .print-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: var(--western-font);
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        /* استایل‌های صفحه‌های فرعی */
+        .subpage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1400;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .subpage-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(30,30,30,0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--secondary-color);
+            position: relative;
+        }
+
+        .subpage-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/old-map.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .subpage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .subpage-title {
+            font-family: var(--western-font);
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+
+        .close-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            background: var(--primary-dark);
+            transform: rotate(90deg);
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .setting-group {
+            background: rgba(50,50,50,0.7);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .setting-title {
+            font-family: var(--western-font);
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .setting-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-option, .font-option {
+            background: rgba(70,70,70,0.7);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover, .font-option:hover {
+            background: rgba(90,90,90,0.7);
+        }
+
+        .theme-option.active, .font-option.active {
+            border-color: var(--secondary-color);
+            background: rgba(100,100,100,0.7);
+        }
+
+        .credits-list {
+            list-style-type: none;
+        }
+
+        .credits-list li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(50,50,50,0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .credits-role {
+            font-family: var(--western-font);
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .credits-name {
+            font-size: 1.1rem;
+        }
+
+        .floating-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .floating-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .floating-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .floating-menu {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(30,30,30,0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .floating-menu.active {
+            display: flex;
+        }
+
+        .floating-menu .theme-option, .floating-menu .font-option {
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .novel-container {
+                padding: 1rem;
+                margin-top: 160px;
+            }
+            
+            .novel-title {
+                font-size: 2.2rem;
+            }
+            
+            .chapter-title {
+                font-size: 1.8rem;
+            }
+            
+            .toc-list {
+                columns: 1;
+            }
+            
+            .scroll-top {
+                bottom: 20px;
+                left: 20px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .menu-logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .intro-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .floating-controls {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* استایل‌های چاپ */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 12pt;
+            }
+            
+            .header, .scroll-top, .music-control, .progress-bar, .floating-controls {
+                display: none;
+            }
+            
+            .novel-container {
+                background: white;
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+            
+            .table-of-contents, .character-intro, .dialogue {
+                background: white;
+                border: 1px solid #ccc;
+            }
+            
+            .novel-image {
+                border: 1px solid #ccc;
+                box-shadow: none;
+            }
+            
+            .chapter-title, .section-title, .character-name {
+                color: #8B0000;
+            }
+            
+            .novel-footer {
+                border-top: 1px solid #ccc;
+            }
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .chapter-title, .section-title, .character-intro, .dialogue, .novel-image {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اول -->
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-text">
+            <h1>حسام الدین تقدیم می‌کند:</h1>
+            <h2>RED DEAD REDEMPTION</h2>
+        </div>
+    </div>
+
+    <!-- منوی اصلی -->
+    <div class="main-menu" id="mainMenu">
+        <div class="menu-logo">
+            <h1>RED DEAD REDEMPTION</h1>
+            <p>رمان کامل داستان بازی</p>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-btn" id="startNovelBtn">
+                <i class="fas fa-book-open"></i>
+                شروع رمان
+            </button>
+            <button class="menu-btn" id="contentsBtn">
+                <i class="fas fa-list"></i>
+                فهرست مطالب
+            </button>
+            <button class="menu-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+                تنظیمات
+            </button>
+            <button class="menu-btn" id="creditsBtn">
+                <i class="fas fa-users"></i>
+                سازندگان
+            </button>
+            <button class="menu-btn" id="exitBtn">
+                <i class="fas fa-door-open"></i>
+                خروج
+            </button>
+        </div>
+    </div>
+
+    <!-- هدر اصلی -->
+    <div class="header" id="mainHeader">
+        <div class="logo">
+            <i class="fas fa-hat-cowboy logo-icon"></i>
+            <div class="logo-text">RED DEAD REDEMPTION</div>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#prologue" class="nav-link">پیشگفتار</a>
+            <a href="#chapter1" class="nav-link">فصل اول</a>
+            <a href="#chapter2" class="nav-link">فصل دوم</a>
+            <a href="#chapter3" class="nav-link">فصل سوم</a>
+            <a href="#chapter4" class="nav-link">فصل چهارم</a>
+            <a href="#chapter5" class="nav-link">فصل پنجم</a>
+        </div>
+        
+        <div class="music-control" id="musicToggle">
+            <i class="fas fa-music"></i>
+            <span>موسیقی زمینه</span>
+        </div>
+    </div>
+
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar"></div>
+
+    <!-- دکمه اسکرول به بالا -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- کنترل‌های شناور -->
+    <div class="floating-controls">
+        <div class="floating-menu" id="floatingMenu">
+            <div class="setting-group">
+                <div class="setting-title">تم</div>
+                <div class="setting-options">
+                    <div class="theme-option active" data-theme="default">پیش‌فرض</div>
+                    <div class="theme-option" data-theme="light">روشن</div>
+                    <div class="theme-option" data-theme="sepia">سپیا</div>
+                </div>
+            </div>
+            <div class="setting-group">
+                <div class="setting-title">فونت</div>
+                <div class="setting-options">
+                    <div class="font-option active" data-font="almarai">آلمارای</div>
+                    <div class="font-option" data-font="tahoma">تهرانا</div>
+                    <div class="font-option" data-font="nazanin">نازنین</div>
+                </div>
+            </div>
+        </div>
+        <div class="floating-btn" id="floatingToggle">
+            <i class="fas fa-palette"></i>
+        </div>
+    </div>
+
+    <!-- محتوای رمان -->
+    <div class="novel-container" id="novelContainer">
+        <div class="novel-header">
+            <h1 class="novel-title">RED DEAD REDEMPTION</h1>
+            <p class="novel-subtitle">داستان کامل بازی - تقدیم شده توسط Hessamedien</p>
+            <p>رمان تعاملی بر اساس اثر راکستار گیمز</p>
+        </div>
+        
+        <div class="table-of-contents">
+            <h2 class="toc-title">فهرست مطالب</h2>
+            <ul class="toc-list">
+                <li><a href="#prologue">پیشگفتار: جهان Red Dead</a></li>
+                <li><a href="#chapter1">فصل اول: آخرین روزهای یک یاغی</a></li>
+                <li><a href="#chapter2">فصل دوم: شکار بی‌رحم</a></li>
+                <li><a href="#chapter3">فصل سوم: خیانت و انتقام</a></li>
+                <li><a href="#chapter4">فصل چهارم: سرنوشت یک قهرمان</a></li>
+                <li><a href="#chapter5">فصل پنجم: میراث جان مارستون</a></li>
+                <li><a href="#chapter6">فصل ششم: داستان جک مارستون</a></li>
+                <li><a href="#epilogue">پایان: میراث غرب وحشی</a></li>
+                <li><a href="#appendix">ضمیمه: شخصیت‌ها و مکان‌ها</a></li>
+            </ul>
+        </div>
+        
+        <div class="novel-content">
+            <!-- محتوای رمان از اینجا شروع می‌شود -->
+            <!-- پیشگفتار -->
+            <div id="prologue" class="chapter-title fade-in">پیشگفتار: جهان Red Dead</div>
+            <p>در اوایل قرن بیستم، دوران غرب وحشی به سرعت به پایان خود نزدیک می‌شد. پیشرفت تمدن، قانون و نظم جایگزین آزادی‌های بی‌قید و شرط سرزمین‌های مرزی شده بود. این داستان درباره مردانی است که در این گذار تاریخی گرفتار شدند.</p>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-globe-americas"></i> جهان بازی</div>
+                <p>داستان Red Dead Redemption در سال ۱۹۱۱ و در مناطق خیالی آمریکای غربی اتفاق می‌افتد. این مناطق شامل نیو هانوور، وست الیزابت، لمبانی، و امبارینو می‌شوند که هر کدام مناظر و فرهنگ خاص خود را دارند. از دشت‌های وسیع گرفته تا کوه‌های برفی، از شهرهای پرجنب‌وجوش تا شهرک‌های متروکه.</p>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Badlands_of_South_Dakota.jpg/1200px-Badlands_of_South_Dakota.jpg" alt="مناظر غرب آمریکا" class="novel-image fade-in">
+            <div class="image-caption">مناظر غرب آمریکا که الهام‌بخش محیط بازی بوده‌است</div>
+            
+            <!-- فصل اول -->
+            <div id="chapter1" class="chapter-title fade-in">فصل اول: آخرین روزهای یک یاغی</div>
+            
+            <div class="section-title fade-in">بلک‌واتر: ۱۹۱۱</div>
+            <p>داستان با ورود جان مارستون به شهر بلک‌واتر آغاز می‌شود. شهری که نماد پیشرفت و تمدن در غرب است. اما برای جان، این شهر خاطرات تاریکی را زنده می‌کند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">مامور ادگار راس:</span> "خب، آقای مارستون. بالاخره تصمیم گرفتید همکاری کنید؟"
+                <span class="action">(ادگار راس، مأمور دولت فدرال، با لبخندی شیطانی به جان نگاه می‌کند)</span>
+                <span class="character">جان مارستون:</span> "من انتخاب دیگری ندارم. شما ابیت و جک را گروگان گرفته‌اید."
+                <span class="character">مامور راس:</span> "درست است. و آن‌ها را تا زمانی که کارتان را تمام نکنید، در مکانی امن نگه می‌داریم."
+            </div>
+            
+            <p>ماموران دولت فدرال، جان را مجبور می‌کنند تا سه تن از همکاران سابقش در باند وندیکت را شکار کند: بیل ویلیامسون، خاویر اسکوئلا و داچ ون در لینده.</p>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user"></i> جان مارستون</div>
+                <p>یک یاغی سابق که سعی دارد زندگی جدیدی را به عنوان کشاورز آغاز کند. او در گذشته عضو باند ون در لینده بوده اما پس از ترک باند، سعی در شروع زندگی شرافتمندانه دارد. روی صورتش جای زخم عمیقی وجود دارد که نماد گذشته تاریک اوست.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-female"></i> ابیگیل مارستون</div>
+                <p>همسر جان که از گذشته او بی‌خبر نیست اما امیدوار است که جان بتواند از شر آن رها شود. او مادر جک است و عمیقاً نگران آینده خانواده‌اش می‌باشد.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-child"></i> جک مارستون</div>
+                <p>پسر نوجوان جان و ابیگیل که در آستانه بلوغ قرار دارد. او از گذشته پدرش اطلاع چندانی ندارد اما کم‌کم حقایق را کشف می‌کند.</p>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Cowboy_-_c._1887.jpg/800px-Cowboy_-_c._1887.jpg" alt="یک کابوی در غرب وحشی" class="novel-image fade-in">
+            <div class="image-caption">کابوی‌های غرب وحشی که الهام‌بخش طراحی جان مارستون بودند</div>
+            
+            <div class="section-title fade-in">سفر به آرامیس</div>
+            <p>جان به منطقه نیو هانوور سفر می‌کند و در آنجا با Bonnie MacFarlane آشنا می‌شود، زمینداری که به او کمک می‌کند تا رد بیل ویلیامسون را بگیرد.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">بانی مک‌فارلین:</span> "شنیدم دنبال بیل ویلیامسون می‌گردی. مرد خطرناکی شده."
+                <span class="character">جان مارستون:</span> "من او را از قدیم می‌شناسم. حالا باید پیداش کنم."
+                <span class="character">بانی:</span> "خب، من می‌تونم کمکت کنم. اما مراقب باش، اینجا مثل قدیم نیست. قانون داره میاد به این مناطق."
+            </div>
+            
+            <p>بانی به جان کمک می‌کند تا در مزرعه مک‌فارلین کار کند و در عین حال اطلاعاتی درباره حرکت‌های بیل جمع‌آوری کند.</p>
+            
+            <!-- فصل دوم -->
+            <div id="chapter2" class="chapter-title fade-in">فصل دوم: شکار بی‌رحم</div>
+            
+            <div class="section-title fade-in">تعقیب بیل ویلیامسون</div>
+            <p>جان پس از جمع‌آوری اطلاعات، متوجه می‌شود که بیل ویلیامسون در فورت مرسر پناه گرفته است. او با کمک مارشال لی جانسون و گروهش به فورت حمله می‌کند.</p>
+            
+            <div class="location-desc fade-in">
+                <strong>فورت مرسر:</strong> یک پست نظامی قدیمی که اکنون به مقر بیل ویلیامسون و دارودسته‌اش تبدیل شده است. این مکان در منطقه لمبانی واقع شده و شرایط آب‌وهوایی سختی دارد.
+            </div>
+            
+            <div class="dialogue fade-in">
+                <span class="character">بیل ویلیامسون:</span> "جان! پسرم! بالاخلی پیدات کردم!"
+                <span class="action">(بیل از بالای دیوارهای فورت فریاد می‌زند)</span>
+                <span class="character">جان مارستون:</span> "کارت تموم شده بیل. تسلیم شو!"
+                <span class="character">بیل ویلیامسون:</span> "همونقدر احمقی که همیشه بودی! فکر کردی می‌تونی از دست ما فرار کنی؟ از دست داچ؟"
+            </div>
+            
+            <p>در نهایت، بیل موفق به فرار می‌شود و به مکزیک می‌گریزد. جان مجبور می‌شود او را تا آنسوی مرز تعقیب کند.</p>
+            
+            <div class="section-title fade-in">مکزیک: سرزمین انقلاب</div>
+            <p>در مکزیک، جان درگیر جنگ داخلی بین نیروهای دولتی و شورشیان می‌شود. او با هر دو طرف همکاری می‌کند تا بتواند به بیل برسد.</p>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user-tie"></i> آبراهام ریس</div>
+                <p>رهبر نیروهای دولتی در مکزیک که سعی در حفظ نظم و قانون دارد اما روش‌هایش بسیار خشن است.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user-secret"></i> خوزه پوزا</div>
+                <p>فرمانده شورشیان که برای آزادی مکزیک می‌جنگد اما انگیزه‌های شخصی نیز دارد.</p>
+            </div>
+            
+            <div class="dialogue fade-in">
+                <span class="character">آبراهام ریس:</span> "بیل ویلیامسون با شورشیان همکاری می‌کند. اگر به من کمک کنی، کمکت می‌کنم پیداش کنی."
+                <span class="character">خوزه پوزا:</span> "ریس دروغ می‌گوید. بیل با ماست، اما ما به کسی خیانت نمی‌کنیم. مگر اینکه... دلیلی برای این کار داشته باشیم."
+            </div>
+            
+            <p>جان در نهایت موفق می‌شود بیل را در یک قلعه قدیمی پیدا کند و با او روبرو شود.</p>
+            
+            <!-- فصل سوم -->
+            <div id="chapter3" class="chapter-title fade-in">فصل سوم: خیانت و انتقام</div>
+            
+            <div class="section-title fade-in">رویارویی نهایی با بیل</div>
+            <p>جان در قلعه به بیل می‌رسد و درگیری شدیدی بین آن‌ها رخ می‌دهد.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">بیل ویلیامسون:</span> "همیشه می‌دونستم یه روز اینجوری میشه. اما فکر کردم داچ میاد دنبالم، نه تو!"
+                <span class="character">جان مارستون:</span> "داچ رفت. ما هم باید بریم. اما تو راهتو انتخاب کردی."
+                <span class="character">بیل ویلیامسون:</span> "انتخاب؟ ما هیچوقت انتخاب نداشتیم جان! این دنیا به ما خیانت کرد!"
+            </div>
+            
+            <p>جان در نهایت بیل را شکست می‌دهد و او را دستگیر می‌کند. اما قبل از اینکه بتواند او را تحویل دولت دهد، بیل بر اثر جراحات وارده می‌میرد.</p>
+            
+            <div class="section-title fade-in">شکار خاویر اسکوئلا</div>
+            <p>پس از مرگ بیل، جان باید خاویر اسکوئلا را پیدا کند. او به منطقه وست الیزابت سفر می‌کند و در آنجا با شخصیت‌های جدیدی آشنا می‌شود.</p>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user-ninja"></i> خیم‌ری رز</div>
+                <p>شکارچی جایزه‌بگیری که اطلاعات ارزشمندی درباره جنایتکاران منطقه دارد.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user-alt"></i> سث براییرز</div>
+                <p>فروشنده عجیب و غریبی که در سرتاسر غرب مسافرت می‌کند و کالاهای عجیبی می‌فروشد.</p>
+            </div>
+            
+            <p>جان با کمک این افراد موفق می‌شود خاویر را در یک پناهگاه کوهستانی پیدا کند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">خاویر اسکوئلا:</span> "جان! برادر! چرا علیه ما جنگیدی؟ ما خانواده بودیم!"
+                <span class="character">جان مارستون:</span> "خانواده؟ خانواده گروگان نمی‌گیره، خاویر. تو و دیگران مارو رها کردید وقتی بهتون نیاز داشتیم."
+                <span class="character">خاویر اسکوئلا:</span> "داچ گفت باید بریم! اون گفت تو برای ما خطرناکی!"
+            </div>
+            
+            <p>خاویر دستگیر می‌شود و به زندان منتقل می‌گردد.</p>
+            
+            <!-- فصل چهارم -->
+            <div id="chapter4" class="chapter-title fade-in">فصل چهارم: سرنوشت یک قهرمان</div>
+            
+            <div class="section-title fade-in">تعقیب نهایی: داچ ون در لینده</div>
+            <p>با دستگیری خاویر، تنها داچ ون در لینده باقی می‌ماند. جان متوجه می‌شود که داچ در منطقه کوهستانی و دورافتاده‌ای به نام تالول پناه گرفته است.</p>
+            
+            <div class="location-desc fade-in">
+                <strong>تالول:</strong> منطقه‌ای کوهستانی و برفی در امبارینو که دسترسی به آن بسیار دشوار است. این مکان آخرین پناهگاه باند ون در لینده محسوب می‌شود.
+            </div>
+            
+            <p>جان به همراه نیروهای دولت فدرال به تالول حمله می‌کنند. درگیری شدیدی درمی‌گیرد و بسیاری از اعضای باقی‌مانده باند کشته می‌شوند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">داچ ون در لینده:</span> "جان! پسر من! آنها تو را هم فریب دادند؟ آنها تو را هم به بردگی کشیدند؟"
+                <span class="character">جان مارستون:</span> "من برده کسی نیستم داچ. من فقط می‌خواهم خانواده‌ام را نجات دهم."
+                <span class="character">داچ ون در لینده:</span> "ما یک بار خانواده بودیم! ما رویایی داشتیم! اما تو و دیگران آن را نابود کردید!"
+            </div>
+            
+            <p>پس از درگیری شدید، داچ خود را از صخره پرت می‌کند و جان پس از سال‌ها، آزادی خود و خانواده‌اش را به دست می‌آورد.</p>
+            
+            <div class="section-title fade-in">زندگی جدید در خانه</div>
+            <p>جان به مزرعه خانواده‌اش بازمی‌گردد و سعی می‌کند زندگی عادی‌ای را با ابیگیل و جک آغاز کند. او به دامداری و کشاورزی مشغول می‌شود و سعی می‌کند گذشته را فراموش کند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">ابیگیل مارستون:</span> "فکر کردی دیگه برنمی‌گردی. جک هر روز منتظرت بود."
+                <span class="character">جان مارستون:</span> "قول دادم برمی‌گشتم. حالا دیگه تمام شده. می‌تونیم زندگی جدیدمون رو شروع کنیم."
+                <span class="character">جک مارستون:</span> "بابا! دوباره با هم می‌تونیم اسب سواری بریم؟"
+            </div>
+            
+            <p>برای مدتی، به نظر می‌رسد که جان finalmente به آرامش رسیده است. اما این آرامش دوام چندانی ندارد.</p>
+            
+            <!-- فصل پنجم -->
+            <div id="chapter5" class="chapter-title fade-in">فصل پنجم: میراث جان مارستون</div>
+            
+            <div class="section-title fade-in">خیانت نهایی</div>
+            <p>اگرچه جان تمام شرایط دولت فدرال را انجام داده، اما مأمور راس به قول خود وفا نمی‌کند. او می‌داند که جان شاهد جنایات دولت بوده و نمی‌تواند زنده بماند.</p>
+            
+            <p>نیروهای دولت فدرال به فرماندهی ادگار راس به مزرعه مارستون حمله می‌کنند. ابیگیل و جک موفق به فرار می‌شوند اما جان در مزرعه می‌ماند تا به آن‌ها زمان بدهد.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">مامور ادگار راس:</span> "متأسفم جان. واقعاً متأسفم. اما تو بسیار خطرناکی."
+                <span class="character">جان مارستون:</span> "قسم خوردید. گفتید اگر کارم رو انجام بدم آزادم."
+                <span class="character">مامور راس:</span> "دنیا اینطوری کار نمی‌کنه. تو یه نمادی از گذشته‌ای هستی که باید فراموش بشه."
+            </div>
+            
+            <p>جان می‌داند که راه فراری ندارد. او آخرین ایستادگی خود را انجام می‌دهد و در نهایت، در مزرعه خودش کشته می‌شود.</p>
+            
+            <div class="section-title fade-in">عواقب مرگ جان</div>
+            <p>مرگ جان تأثیر عمیقی بر ابیگیل و جک می‌گذارد. ابیگیل که از غم و اندوه فرسوده شده، تنها چند سال پس از مرگ جان می‌میرد و جک را تنها می‌گذارد.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">ابیگیل مارستون:</span> "جک عزیزم، باید قوی باشی. پدرت همیشه بهت افتخار می‌کرد."
+                <span class="character">جک مارستون:</span> "مامان، نرو! نمی‌تونم تنهام بمونم!"
+                <span class="character">ابیگیل مارستون:</span> "مجبوری پسرَم. دنیا جای سختیه. اما تو از پدرت قوی‌تری."
+            </div>
+            
+            <!-- فصل ششم -->
+            <div id="chapter6" class="chapter-title fade-in">فصل ششم: داستان جک مارستون</div>
+            
+            <div class="section-title fade-in">سال‌های تنهایی</div>
+            <p>جک پس از مرگ والدینش، تنها و بی‌پناه می‌ماند. او ابتدا سعی می‌کند به زندگی عادی ادامه دهد اما خاطرات گذشته و نفرت از کسانی که پدرش را کشتند، او را رها نمی‌کند.</p>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user"></i> جک مارستون (بزرگسال)</div>
+                <p>جک که اکنون جوانی بالغ شده، شباهت بسیاری به پدرش دارد. او مهارت‌های تیراندازی و بقا را از پدرش به ارث برده اما فاقد خرد و تجربه جان است.</p>
+            </div>
+            
+            <p>جک تصمیم می‌گیرد انتقام مرگ پدرش را بگیرد. او شروع به جمع‌آوری اطلاعات درباره مأمور ادگار راس می‌کند.</p>
+            
+            <div class="section-title fade-in">شکار ادگار راس</div>
+            <p>جک متوجه می‌شود که ادگار راس اکنون بازنشسته شده و در منطقه ای دورافتاده زندگی می‌کند. او به آن منطقه سفر می‌کند و در نهایت راس را پیدا می‌کند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">ادگار راس:</span> "پسر مارستون. می‌دونستم یه روز میایی. پدرت مرد خوبی بود. متأسفم که کار به اونجا کشید."
+                <span class="character">جک مارستون:</span> "متأسف؟ تو پدرم رو کشتی! خانوادم رو نابود کردی!"
+                <span class="character">ادگار راس:</span> "من فقط وظیفم رو انجام دادم. پدرت نماد دنیایی بود که باید می‌مرد."
+            </div>
+            
+            <p>درگیری بین جک و راس رخ می‌دهد و در نهایت جک راس را می‌کشد. اما این پیروزی برای جک پوچ و توخالی است.</p>
+            
+            <div class="section-title fade-in">سرنوشت جک</div>
+            <p>پس از کشتن راس، جک درمی‌یابد که انتقام نه تنها آرامش به ارمغان نمی‌آورد، بلکه او را به دامی می‌اندازد که پدرش سعی داشت از آن فرار کند.</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">جک مارستون:</span> "حالا چی؟ پدر، انتقامت رو گرفتم. اما هنوز احساس پوچی می‌کنم."
+                <span class="action">(جک به یاد خاطراتی از پدرش می‌افتد)</span>
+                <span class="character">جان مارستون (در خاطرات):</span> "پسرم، مهم نیست چی پیش میاد، سعی کن آدم بهتری از من بشی. راه من رو تکرار نکن."
+            </div>
+            
+            <p>جک در نهایت درمی‌یابد که راه پدرش راه درستی نبوده و او باید مسیر خودش را پیدا کند. اما با مهارت‌هایی که دارد و گذشته‌ای که با او همراه است، این کار بسیار دشوار خواهد بود.</p>
+            
+            <!-- پایان -->
+            <div id="epilogue" class="chapter-title fade-in">پایان: میراث غرب وحشی</div>
+            
+            <p>داستان Red Dead Redemption روایتی است از پایان یک era. غرب وحشی در حال نابودی است و مردانی مانند جان مارستون نماد این گذار دردناک هستند.</p>
+            
+            <p>جان سعی کرد از گذشته فرار کند، اما گذشته او را تعقیب کرد. او در نهایت قربانی دنیایی شد که خودش در ساختن آن نقش داشت.</p>
+            
+            <p>جک، نماد نسل جدید است. نسلی که بار گذشته را به دوش می‌کشد اما باید راه جدیدی پیدا کند. آیا او می‌تواند از چرخه خشونت و انتقام فرار کند؟ یا مانند پدرش، قربانی گذشته خواهد شد؟</p>
+            
+            <div class="dialogue fade-in">
+                <span class="character">راوی:</span> "غرب وحشی مرده است. اما روح آن هنوز در این سرزمین‌ها پرسه می‌زند. در باد که از میان کوه‌ها می‌وزد، در رودخانه‌هایی که از میان دره‌ها جاری می‌شوند، و در دل‌های کسانی که هنوز به آزادی باورد دارند."
+            </div>
+            
+            <!-- ضمیمه -->
+            <div id="appendix" class="chapter-title fade-in">ضمیمه: شخصیت‌ها و مکان‌ها</div>
+            
+            <div class="section-title fade-in">شخصیت‌های اصلی</div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user"></i> جان مارستون</div>
+                <p>قهرمان اصلی داستان. یاغی سابق که سعی دارد برای خانواده‌اش زندگی جدیدی بسازد. او مردی است با گذشته تاریک اما با اصالت و شرافت.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-female"></i> ابیگیل مارستون</div>
+                <p>همسر جان و مادر جک. زنی قوی که در شرایط سخت از خانواده‌اش محافظت می‌کند.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-child"></i> جک مارستون</div>
+                <p>پسر جان و ابیگیل که مجبور می‌شود با میراث پیچیده پدرش کنار بیاید.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-crown"></i> داچ ون در لینده</div>
+                <p>رهبر سابق باند وندیکت. مردی کاریزماتیک اما خطرناک که فلسفه‌های خود را درباره آزادی و جامعه دارد.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user"></i> بیل ویلیامسون</div>
+                <p>یکی از اعضای سابق باند وندیکت که پس از فرار داچ، گروه خود را تشکیل می‌دهد.</p>
+            </div>
+            
+            <div class="character-intro fade-in">
+                <div class="character-name"><i class="fas fa-user"></i> خاویر اسکوئلا</div>
+                <p>عضو سابق باند وندیکت که به یک شکارچی جایزه‌بگیر خطرناک تبدیل می‌شود.</p>
+            </div>
+            
+            <div class="section-title fade-in">مکان‌های مهم</div>
+            
+            <div class="location-desc fade-in">
+                <strong>بلک‌واتر:</strong> شهری پیشرفته در کنار رودخانه که نماد تمدن و قانون است.
+            </div>
+            
+            <div class="location-desc fade-in">
+                <strong>آرامیس:</strong> منطقه‌ای روستایی در نیو هانوور که مزرعه مک‌فارلین در آن واقع شده است.
+            </div>
+            
+            <div class="location-desc fade-in">
+                <strong>فورت مرسر:</strong> پست نظامی قدیمی در لمبانی که به مقر بیل ویلیامسون تبدیل شده است.
+            </div>
+            
+            <div class="location-desc fade-in">
+                <strong>تالول:</strong> منطقه‌ای کوهستانی و برفی در امبارینو که آخرین پناهگاه باند ون در لینده است.
+            </div>
+            
+            <div class="novel-footer">
+                <p>این رمان تعاملی توسط حسام الدین توسعه یافته است</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                <p>تمامی حقوق برای سازندگان اصلی بازی محفوظ است. این پروژه یک اثر طرفدارانه و غیرانتفاعی است.</p>
+                <button class="print-btn" onclick="window.print()">
+                    <i class="fas fa-print"></i>
+                    چاپ داستان کامل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه‌های فرعی -->
+    
+    <!-- صفحه فهرست مطالب -->
+    <div class="subpage" id="contentsPage">
+        <div class="subpage-content">
+            <div class="subpage-header">
+                <h2 class="subpage-title">فهرست مطالب</h2>
+                <button class="close-btn" id="closeContents">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="table-of-contents">
+                <ul class="toc-list">
+                    <li><a href="#prologue" class="content-link">پیشگفتار: جهان Red Dead</a></li>
+                    <li><a href="#chapter1" class="content-link">فصل اول: آخرین روزهای یک یاغی</a></li>
+                    <li><a href="#chapter2" class="content-link">فصل دوم: شکار بی‌رحم</a></li>
+                    <li><a href="#chapter3" class="content-link">فصل سوم: خیانت و انتقام</a></li>
+                    <li><a href="#chapter4" class="content-link">فصل چهارم: سرنوشت یک قهرمان</a></li>
+                    <li><a href="#chapter5" class="content-link">فصل پنجم: میراث جان مارستون</a></li>
+                    <li><a href="#chapter6" class="content-link">فصل ششم: داستان جک مارستون</a></li>
+                    <li><a href="#epilogue" class="content-link">پایان: میراث غرب وحشی</a></li>
+                    <li><a href="#appendix" class="content-link">ضمیمه: شخصیت‌ها و مکان‌ها</a></li>
+                </ul>
+            </div>
+            <div class="character-intro">
+                <div class="character-name"><i class="fas fa-info-circle"></i> درباره این رمان</div>
+                <p>این رمان تعاملی بر اساس داستان بازی Red Dead Redemption ساخته شده است. داستان در مورد جان مارستون، یک یاغی سابق است که توسط دولت فدرال مجبور می‌شود تا سه تن از همکاران سابقش در باند وندیکت را شکار کند.</p>
+                <p>داستان در سال ۱۹۱۱ و در مناطق خیالی آمریکای غربی اتفاق می‌افتد و روایتی است از پایان دوران غرب وحشی و گذار به دوران مدرن.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه تنظیمات -->
+    <div class="subpage" id="settingsPage">
+        <div class="subpage-content">
+            <div class="subpage-header">
+                <h2 class="subpage-title">تنظیمات</h2>
+                <button class="close-btn" id="closeSettings">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="settings-options">
+                <div class="setting-group">
+                    <div class="setting-title">تم نمایش</div>
+                    <div class="setting-options">
+                        <div class="theme-option active" data-theme="default">پیش‌فرض</div>
+                        <div class="theme-option" data-theme="light">روشن</div>
+                        <div class="theme-option" data-theme="sepia">سپیا</div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-title">فونت متن</div>
+                    <div class="setting-options">
+                        <div class="font-option active" data-font="almarai">آلمارای</div>
+                        <div class="font-option" data-font="tahoma">تهرانا</div>
+                        <div class="font-option" data-font="nazanin">نازنین</div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-title">اندازه فونت</div>
+                    <div class="setting-options">
+                        <div class="font-option active" data-size="small">کوچک</div>
+                        <div class="font-option" data-size="medium">متوسط</div>
+                        <div class="font-option" data-size="large">بزرگ</div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <div class="setting-title">صدا</div>
+                    <div class="setting-options">
+                        <div class="music-control">
+                            <i class="fas fa-music"></i>
+                            <span>موسیقی زمینه</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه سازندگان -->
+    <div class="subpage" id="creditsPage">
+        <div class="subpage-content">
+            <div class="subpage-header">
+                <h2 class="subpage-title">سازندگان</h2>
+                <button class="close-btn" id="closeCredits">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="credits-list">
+                <li>
+                    <div class="credits-role">گردآورنده و توسعه‌دهنده پروژه</div>
+                    <div class="credits-name">حسام‌الدین</div>
+                    <div class="footnote">صفحه اینستاگرام: <a href="https://instagram.com/hessamedien" target="_blank">@hessamedien</a></div>
+                </li>
+                <li>
+                    <div class="credits-role">بر اساس اثر اصلی</div>
+                    <div class="credits-name">Red Dead Redemption</div>
+                    <div class="footnote">تولید راکستار گیمز</div>
+                </li>
+                <li>
+                    <div class="credits-role">کارگردان بازی اصلی</div>
+                    <div class="credits-name">دن هوسر</div>
+                </li>
+                <li>
+                    <div class="credits-role">تهیه‌کننده</div>
+                    <div class="credits-name">لسلی بنزین</div>
+                </li>
+                <li>
+                    <div class="credits-role">نویسندگان</div>
+                    <div class="credits-name">دن هوسر، مایکل آنسورث</div>
+                </li>
+                <li>
+                    <div class="credits-role">آهنگساز</div>
+                    <div class="credits-name">وودی جکسون</div>
+                </li>
+                <li>
+                    <div class="credits-role">صداپیشگان اصلی</div>
+                    <div class="credits-name">راب ویتوف (جان مارستون)</div>
+                    <div class="credits-name">سوفیا مارزولا (ابیگیل مارستون)</div>
+                    <div class="credits-name">جاش بلایت (جک مارستون)</div>
+                </li>
+            </div>
+            <div class="novel-footer">
+                <p>تمامی حقوق برای سازندگان اصلی بازی محفوظ است. این پروژه یک اثر طرفدارانه و غیرانتفاعی است.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- موزیک پلیر -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        مرورگر شما از تگ audio پشتیبانی نمی‌کند.
+    </audio>
+
+    <script>
+        // مدیریت صفحه اول
+        const introScreen = document.getElementById('introScreen');
+        const mainMenu = document.getElementById('mainMenu');
+        
+        // بعد از 3 ثانیه صفحه اول ناپدید می‌شود و منوی اصلی نمایش داده می‌شود
+        setTimeout(() => {
+            introScreen.style.opacity = '0';
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                mainMenu.style.display = 'flex';
+            }, 1000);
+        }, 3000);
+
+        // مدیریت دکمه‌های منوی اصلی
+        document.getElementById('startNovelBtn').addEventListener('click', function() {
+            mainMenu.style.display = 'none';
+            document.getElementById('mainHeader').style.display = 'flex';
+            document.getElementById('novelContainer').style.display = 'block';
+            window.scrollTo(0, 0);
+        });
+
+        document.getElementById('contentsBtn').addEventListener('click', function() {
+            document.getElementById('contentsPage').style.display = 'block';
+        });
+
+        document.getElementById('settingsBtn').addEventListener('click', function() {
+            document.getElementById('settingsPage').style.display = 'block';
+        });
+
+        document.getElementById('creditsBtn').addEventListener('click', function() {
+            document.getElementById('creditsPage').style.display = 'block';
+        });
+
+        document.getElementById('exitBtn').addEventListener('click', function() {
+            if(confirm('آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟')) {
+                window.close();
+            }
+        });
+
+        // مدیریت دکمه‌های بستن صفحات فرعی
+        document.getElementById('closeContents').addEventListener('click', function() {
+            document.getElementById('contentsPage').style.display = 'none';
+        });
+
+        document.getElementById('closeSettings').addEventListener('click', function() {
+            document.getElementById('settingsPage').style.display = 'none';
+        });
+
+        document.getElementById('closeCredits').addEventListener('click', function() {
+            document.getElementById('creditsPage').style.display = 'none';
+        });
+
+        // مدیریت لینک‌های فهرست مطالب
+        document.querySelectorAll('.content-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // بستن صفحه فهرست مطالب
+                document.getElementById('contentsPage').style.display = 'none';
+                
+                // اگر رمان هنوز نمایش داده نشده، آن را نمایش بده
+                if(mainMenu.style.display === 'flex') {
+                    mainMenu.style.display = 'none';
+                    document.getElementById('mainHeader').style.display = 'flex';
+                    document.getElementById('novelContainer').style.display = 'block';
+                }
+                
+                // اسکرول به بخش مورد نظر
+                setTimeout(() => {
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }, 300);
+            });
+        });
+
+        // مدیریت موزیک زمینه
+        const musicToggle = document.getElementById('musicToggle');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let musicPlaying = false;
+
+        musicToggle.addEventListener('click', function() {
+            if (musicPlaying) {
+                backgroundMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-music"></i><span>موسیقی زمینه</span>';
+            } else {
+                backgroundMusic.play();
+                musicToggle.innerHTML = '<i class="fas fa-pause"></i><span>توقف موسیقی</span>';
+            }
+            musicPlaying = !musicPlaying;
+        });
+
+        // اسکریپت برای پیمایش روان به بخش‌های مختلف
+        document.querySelectorAll('.nav-link, .toc-list a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // مدیریت تصاویر - در صورت عدم اتصال به اینترنت
+        window.addEventListener('load', function() {
+            const images = document.querySelectorAll('.novel-image');
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    this.alt = 'تصویر در دسترس نیست';
+                    this.style.display = 'none';
+                });
+            });
+        });
+
+        // دکمه اسکرول به بالا
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+            
+            // نوار پیشرفت
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+        
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // انیمیشن‌های اسکرول
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = function() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.style.opacity = "1";
+                    element.style.transform = "translateY(0)";
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        
+        // اجرای اولیه برای عناصری که در حال حاضر در viewport هستند
+        fadeInOnScroll();
+
+        // مدیریت کنترل‌های شناور
+        const floatingToggle = document.getElementById('floatingToggle');
+        const floatingMenu = document.getElementById('floatingMenu');
+        
+        floatingToggle.addEventListener('click', function() {
+            floatingMenu.classList.toggle('active');
+        });
+
+        // مدیریت تغییر تم
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // حذف کلاس active از همه گزینه‌ها
+                document.querySelectorAll('.theme-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // اضافه کردن کلاس active به گزینه انتخاب شده
+                this.classList.add('active');
+                
+                // تغییر تم
+                const theme = this.getAttribute('data-theme');
+                document.body.className = '';
+                document.body.classList.add(theme + '-theme');
+                
+                // ذخیره تنظیمات در localStorage
+                localStorage.setItem('theme', theme);
+            });
+        });
+
+        // مدیریت تغییر فونت
+        document.querySelectorAll('.font-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // حذف کلاس active از همه گزینه‌ها
+                document.querySelectorAll('.font-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                
+                // اضافه کردن کلاس active به گزینه انتخاب شده
+                this.classList.add('active');
+                
+                // تغییر فونت
+                const font = this.getAttribute('data-font');
+                document.documentElement.style.setProperty('--font-family', getFontFamily(font));
+                
+                // ذخیره تنظیمات در localStorage
+                localStorage.setItem('font', font);
+            });
+        });
+
+        // تابع کمکی برای دریافت خانواده فونت
+        function getFontFamily(font) {
+            switch(font) {
+                case 'almarai':
+                    return "'Almarai', 'Tahoma', sans-serif";
+                case 'tahoma':
+                    return "'Tahoma', 'Almarai', sans-serif";
+                case 'nazanin':
+                    return "'B Nazanin', 'Almarai', sans-serif";
+                default:
+                    return "'Almarai', 'Tahoma', sans-serif";
+            }
+        }
+
+        // بارگذاری تنظیمات ذخیره شده
+        window.addEventListener('load', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const savedFont = localStorage.getItem('font');
+            
+            if(savedTheme) {
+                document.querySelector(`.theme-option[data-theme="${savedTheme}"]`).click();
+            }
+            
+            if(savedFont) {
+                document.querySelector(`.font-option[data-font="${savedFont}"]`).click();
+            }
+        });
+
+        // اضافه کردن قابلیت جستجو در متن
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'f') {
+                e.preventDefault();
+                const searchTerm = prompt('عبارت مورد نظر برای جستجو:');
+                if (searchTerm) {
+                    const content = document.querySelector('.novel-content');
+                    const text = content.innerText;
+                    const index = text.indexOf(searchTerm);
+                    
+                    if (index !== -1) {
+                        // ایجاد highlight برای عبارت یافت شده
+                        const highlighted = text.replace(new RegExp(searchTerm, 'gi'), match => {
+                            return `<mark style="background-color: ${getRandomColor()}; color: black; padding: 2px 4px; border-radius: 3px;">${match}</mark>`;
+                        });
+                        
+                        content.innerHTML = highlighted;
+                        
+                        // اسکرول به اولین occurrence
+                        const mark = document.querySelector('mark');
+                        if (mark) {
+                            mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    } else {
+                        alert('عبارت مورد نظر یافت نشد.');
+                    }
+                }
+            }
+        });
+
+        function getRandomColor() {
+            const colors = ['#FFD700', '#90EE90', '#87CEEB', '#FFB6C1', '#DDA0DD'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>

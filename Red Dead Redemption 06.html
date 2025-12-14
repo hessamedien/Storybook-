@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان Red Dead Redemption</title>
+    <style>
+        /* استایل کلی و تم وسترن */
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #CD853F;
+            --dark-color: #2F1E0A;
+            --light-color: #F5DEB3;
+            --text-color: #3A2A0E;
+            --background-color: #F5F5DC;
+            --font-size: 16px;
+            --font-family: 'Times New Roman', Times, serif;
+        }
+
+        .dark-theme {
+            --primary-color: #2F1E0A;
+            --secondary-color: #3A2A0E;
+            --accent-color: #8B4513;
+            --dark-color: #F5DEB3;
+            --light-color: #2F1E0A;
+            --text-color: #F5DEB3;
+            --background-color: #1A1206;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* صفحه اصلی */
+        #main-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23404' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23404'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .logo {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 4rem;
+            color: #D4AF37;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.5);
+            margin-bottom: 2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+        }
+
+        .menu-button {
+            background: linear-gradient(to bottom, var(--primary-color), var(--dark-color));
+            color: var(--light-color);
+            border: 2px solid var(--accent-color);
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-family: var(--font-family);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* صفحه تنظیمات */
+        #settings-screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .settings-container {
+            background-color: rgba(245, 222, 179, 0.9);
+            border: 5px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .settings-group {
+            margin-bottom: 20px;
+        }
+
+        .settings-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+
+        .settings-select, .settings-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            font-family: var(--font-family);
+        }
+
+        .settings-button {
+            background: linear-gradient(to bottom, var(--primary-color), var(--dark-color));
+            color: var(--light-color);
+            border: 2px solid var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: var(--font-family);
+        }
+
+        .credits-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .credits-link:hover {
+            text-decoration: underline;
+        }
+
+        /* صفحه داستان */
+        #story-screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .story-container {
+            background-color: rgba(245, 222, 179, 0.95);
+            border: 5px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .story-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .story-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            border-bottom: 3px double var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .story-content {
+            font-size: var(--font-size);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .story-chapter {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--primary-color);
+        }
+
+        .chapter-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid var(--primary-color);
+            border-radius: 5px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .story-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* صفحه سازندگان */
+        #credits-screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23404' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23404'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+            color: var(--light-color);
+        }
+
+        .credits-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .credits-title {
+            font-size: 3rem;
+            color: #D4AF37;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .credits-content {
+            background-color: rgba(139, 69, 19, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid #D4AF37;
+        }
+
+        .credits-item {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .credits-name {
+            font-weight: bold;
+            color: #D4AF37;
+        }
+
+        .credits-role {
+            color: var(--light-color);
+        }
+
+        .credits-scroll {
+            margin-top: 30px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .credits-scroll-content {
+            position: absolute;
+            width: 100%;
+            animation: creditsScroll 20s linear infinite;
+        }
+
+        @keyframes creditsScroll {
+            0% { top: 100%; }
+            100% { top: -200%; }
+        }
+
+        /* رسپانسیو برای موبایل */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .menu-buttons {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .menu-button {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .story-title {
+                font-size: 2rem;
+            }
+            
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+            
+            .settings-container, .story-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اصلی -->
+    <div id="main-screen">
+        <div class="container">
+            <h1 class="logo">Red Dead Redemption</h1>
+            <div class="menu-buttons">
+                <button class="menu-button" onclick="showScreen('story-screen')">شروع رمان</button>
+                <button class="menu-button" onclick="showScreen('settings-screen')">تنظیمات</button>
+                <button class="menu-button" onclick="showScreen('credits-screen')">سازندگان</button>
+                <button class="menu-button" onclick="exitApp()">خروج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه تنظیمات -->
+    <div id="settings-screen">
+        <div class="container">
+            <div class="settings-container">
+                <h2 class="settings-title">تنظیمات</h2>
+                
+                <div class="settings-group">
+                    <label class="settings-label">سایز فونت</label>
+                    <select class="settings-select" id="font-size">
+                        <option value="16px">کوچک</option>
+                        <option value="18px" selected>متوسط</option>
+                        <option value="20px">بزرگ</option>
+                        <option value="22px">خیلی بزرگ</option>
+                    </select>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">نوع فونت</label>
+                    <select class="settings-select" id="font-family">
+                        <option value="'Times New Roman', Times, serif" selected>Times New Roman</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="'B Nazanin', serif">B Nazanin</option>
+                        <option value="'B Yekan', sans-serif">B Yekan</option>
+                    </select>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">تم</label>
+                    <select class="settings-select" id="theme">
+                        <option value="light" selected>روشن</option>
+                        <option value="dark">تاریک</option>
+                        <option value="western">وسترن</option>
+                    </select>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">موسیقی زمینه</label>
+                    <input type="range" class="settings-input" id="music-volume" min="0" max="100" value="50">
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">افکت‌های صوتی</label>
+                    <input type="checkbox" id="sound-effects" checked>
+                </div>
+                
+                <div class="settings-group">
+                    <label class="settings-label">نمایش تصاویر</label>
+                    <input type="checkbox" id="show-images" checked>
+                </div>
+                
+                <button class="settings-button" onclick="applySettings()">اعمال تنظیمات</button>
+                <button class="settings-button" onclick="showScreen('main-screen')">بازگشت</button>
+                
+                <div class="settings-group">
+                    <h3>سازندگان</h3>
+                    <p>توسعه دهنده: <a href="https://www.instagram.com/hessamedien" class="credits-link" target="_blank">حسام الدین</a></p>
+                    <p>اینستاگرام: <a href="https://www.instagram.com/hessamedien" class="credits-link" target="_blank">hessamedien</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه داستان -->
+    <div id="story-screen">
+        <div class="container">
+            <div class="story-container">
+                <h2 class="story-title">رمان Red Dead Redemption</h2>
+                
+                <div class="story-content">
+                    <div class="story-chapter">
+                        <h3 class="chapter-title">فصل اول: آغاز راه</h3>
+                        <p>در سال ۱۹۱۱، جان مارستون، یک یاغی سابق، توسط عوامل دولت فدرال دستگیر شده است. آنها همسر و پسرش را به گروگان گرفته‌اند و برای آزادی آن‌ها، جان باید سه تن از اعضای سابق گروهش را شکار کند: بیل ویلیامسون، خاویر اسکوئلا و داچ وندرب Linde.</p>
+                        <p>تصویری از جان مارستون در اینجا قرار می‌گیرد</p>
+                        <p>جان به منطقه فراموش‌شدهٔ وست الیزابت می‌رود، جایی که بیل ویلیامسون پناه گرفته است. پس از درگیری‌های متعدد، بیل به مکزیک فرار می‌کند و جان به دنبال او می‌رود.</p>
+                    </div>
+                    
+                    <div class="story-chapter">
+                        <h3 class="chapter-title">فصل دوم: سرزمین بی‌قانون</h3>
+                        <p>در مکزیک، جان بین شورشیان به رهبری آبراهام ریس و نیروهای دولتی به رهبری کلنل آگوستین آلنده گرفتار می‌شود. هر دو طرف قول کمک در پیدا کردن بیل را به او می‌دهند، اما در نهایت هر دو به او خیانت می‌کنند.</p>
+                        <p>تصویری از منظره مکزیک در اینجا قرار می‌گیرد</p>
+                        <p>پس از نبردهای فراوان، جان finally موفق می‌شود بیل ویلیامسون و خاویر اسکوئلا را پیدا کند. بیل کشته می‌شود و خاویر دستگیر می‌شود.</p>
+                    </div>
+                    
+                    <!-- فصول دیگر داستان به همین صورت اضافه خواهند شد -->
+                    
+                    <div class="story-controls">
+                        <button class="menu-button" onclick="printStory()">چاپ داستان</button>
+                        <button class="menu-button" onclick="shareStory()">اشتراک‌گذاری</button>
+                        <button class="menu-button" onclick="showScreen('main-screen')">بازگشت</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه سازندگان -->
+    <div id="credits-screen">
+        <div class="container">
+            <div class="credits-container">
+                <h2 class="credits-title">سازندگان</h2>
+                
+                <div class="credits-content">
+                    <div class="credits-item">
+                        <span class="credits-name">حسام الدین</span> - 
+                        <span class="credits-role">توسعه‌دهنده و طراح</span>
+                    </div>
+                    
+                    <div class="credits-item">
+                        <span class="credits-name">اینستاگرام:</span> - 
+                        <span class="credits-role"><a href="https://www.instagram.com/hessamedien" class="credits-link">hessamedien</a></span>
+                    </div>
+                    
+                    <div class="credits-item">
+                        <span class="credits-name">نویسندگان داستان:</span> - 
+                        <span class="credits-role">تیم روکستار گیمز</span>
+                    </div>
+                    
+                    <div class="credits-item">
+                        <span class="credits-name">منابع تصاویر:</span> - 
+                        <span class="credits-role">ویکی‌پدیا و منابع آزاد</span>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px; color: #D4AF37;">لیست کامل عوامل</h3>
+                    
+                    <div class="credits-scroll">
+                        <div class="credits-scroll-content">
+                            <div class="credits-item">مدیر پروژه: حسام الدین</div>
+                            <div class="credits-item">طراح رابط کاربری: حسام الدین</div>
+                            <div class="credits-item">برنامه‌نویس: حسام الدین</div>
+                            <div class="credits-item">تست‌کننده: حسام الدین</div>
+                            <div class="credits-item">مشاور فنی: حسام الدین</div>
+                            <div class="credits-item">تیم پشتیبانی: حسام الدین</div>
+                            <div class="credits-item">تیم گرافیک: حسام الدین</div>
+                            <div class="credits-item">تیم محتوا: حسام الدین</div>
+                            <div class="credits-item">تیم QA: حسام الدین</div>
+                            <div class="credits-item">تیم بازاریابی: حسام الدین</div>
+                            <div class="credits-item">تیم شبکه‌های اجتماعی: حسام الدین</div>
+                            <div class="credits-item">Special Thanks: Rockstar Games</div>
+                            <div class="credits-item">Special Thanks: Wikipedia Community</div>
+                            <div class="credits-item">Special Thanks: Open Source Community</div>
+                            <div class="credits-item">© 2023 HessamEdien. All Rights Reserved.</div>
+                            <div class="credits-item">Red Dead Redemption is a trademark of Rockstar Games.</div>
+                            <div class="credits-item">This project is for educational purposes only.</div>
+                        </div>
+                    </div>
+                    
+                    <button class="menu-button" style="margin-top: 30px;" onclick="showScreen('main-screen')">بازگشت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // توابع مدیریت نمایش صفحات
+        function showScreen(screenId) {
+            // مخفی کردن تمام صفحات
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('settings-screen').style.display = 'none';
+            document.getElementById('story-screen').style.display = 'none';
+            document.getElementById('credits-screen').style.display = 'none';
+            
+            // نمایش صفحه درخواستی
+            document.getElementById(screenId).style.display = 'block';
+        }
+
+        function exitApp() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+                // در مرورگر بسته نمی‌شود، اما می‌توانیم یک پیام نشان دهیم
+                alert('با تشکر از استفاده شما از رمان Red Dead Redemption');
+            }
+        }
+
+        function applySettings() {
+            // اعمال تنظیمات فونت
+            const fontSize = document.getElementById('font-size').value;
+            const fontFamily = document.getElementById('font-family').value;
+            document.documentElement.style.setProperty('--font-size', fontSize);
+            document.documentElement.style.setProperty('--font-family', fontFamily);
+            
+            // اعمال تم
+            const theme = document.getElementById('theme').value;
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+            
+            alert('تنظیمات اعمال شد');
+        }
+
+        function printStory() {
+            window.print();
+        }
+
+        function shareStory() {
+            alert('امکان اشتراک‌گذاری از طریق شبکه‌های اجتماعی');
+            // در حالت واقعی، اینجا کدهای اشتراک‌گذاری اضافه می‌شوند
+        }
+
+        // نمایش صفحه اصلی هنگام بارگذاری
+        document.addEventListener('DOMContentLoaded', function() {
+            showScreen('main-screen');
+        });
+    </script>
+</body>
+</html>

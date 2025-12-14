@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان تعاملی The Last Of Us - داستان کامل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* استایل‌های کلی */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #8b0000;
+            --secondary-color: #d4a017;
+            --dark-bg: #1a1a1a;
+            --darker-bg: #0f0f0f;
+            --light-text: #e0e0e0;
+            --medium-text: #aaaaaa;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --border-color: #444444;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(212, 160, 23, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        /* صفحه اصلی */
+        .main-menu {
+            background: 
+                linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.9)),
+                url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%238b0000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .logo-container {
+            position: relative;
+            margin-bottom: 3rem;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-size: 5.5rem;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(139, 0, 0, 0.7);
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.9);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--medium-text);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 320px;
+            max-width: 90%;
+            z-index: 2;
+        }
+        
+        .menu-btn {
+            background: rgba(50, 50, 50, 0.7);
+            border: 2px solid var(--border-color);
+            color: #fff;
+            padding: 18px 25px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .menu-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .menu-btn:hover::before {
+            left: 100%;
+        }
+        
+        .menu-btn:hover {
+            background: rgba(80, 80, 80, 0.7);
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .start-btn {
+            background: rgba(139, 0, 0, 0.7);
+            border-color: var(--primary-color);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .start-btn:hover {
+            background: rgba(160, 0, 0, 0.8);
+        }
+        
+        .btn-icon {
+            margin-left: 10px;
+        }
+        
+        /* صفحه داستان - طراحی کتاب */
+        .story-container {
+            display: none;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .book-cover {
+            background: 
+                linear-gradient(rgba(20, 20, 20, 0.9), rgba(20, 20, 20, 0.9)),
+                url('https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            border-radius: 10px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            bottom: 10px;
+            left: 10px;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+        
+        .story-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .story-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .story-subtitle {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .story-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        .chapter {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chapter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        
+        .chapter-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .chapter-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .chapter-number {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: var(--secondary-color);
+            border-bottom: 1px dotted var(--secondary-color);
+        }
+        
+        .dialogue {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: rgba(60, 60, 60, 0.5);
+            border-radius: 8px;
+            border-right: 4px solid var(--border-color);
+            position: relative;
+        }
+        
+        .dialogue::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-color);
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            opacity: 0.3;
+        }
+        
+        .story-image {
+            width: 100%;
+            max-width: 700px;
+            margin: 25px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: var(--medium-text);
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .nav-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .nav-btn:hover {
+            background: #a00;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .nav-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: var(--border-color);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* صفحه تنظیمات */
+        .settings-container {
+            display: none;
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .settings-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .settings-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-family: 'Cinzel', serif;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        
+        .settings-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .settings-label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+        }
+        
+        .settings-input {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .settings-select {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input {
+            margin-left: 12px;
+            transform: scale(1.2);
+        }
+        
+        .online-options {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(60, 60, 60, 0.5);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .volume-icon {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        /* صفحه سازندگان */
+        .credits-container {
+            display: none;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .credits-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .credits-title {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-family: 'Cinzel', serif;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        
+        .credit-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .credit-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .credit-role {
+            font-size: 1.2rem;
+            color: var(--medium-text);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: #a00;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* صفحه پایان */
+        .ending-container {
+            display: none;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .ending-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .ending-title {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .ending-content {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            text-align: justify;
+            padding: 0 20px;
+        }
+        
+        .ending-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: #a00;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* صفحه متن کامل */
+        .full-text-container {
+            display: none;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .full-text-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .full-text-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .full-text-title {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .full-text-subtitle {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+        
+        .full-text-content {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            text-align: justify;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .full-text-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* نوار وضعیت */
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .music-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-control {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .current-time {
+            font-size: 0.9rem;
+            color: var(--medium-text);
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .menu-buttons {
+                width: 90%;
+            }
+            
+            .story-title, .settings-title, .credits-title, .ending-title, .full-text-title {
+                font-size: 2.2rem;
+            }
+            
+            .chapter-title {
+                font-size: 1.7rem;
+            }
+            
+            .story-content, .full-text-content {
+                font-size: 1.05rem;
+            }
+            
+            .navigation, .full-text-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn, .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .ending-actions {
+                flex-direction: column;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .social-link {
+                width: 80%;
+                justify-content: center;
+            }
+            
+            .full-text-content {
+                max-height: 60vh;
+            }
+        }
+        
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.7s ease-out;
+        }
+        
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px rgba(139, 0, 0, 0.7); }
+            50% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.9); }
+            100% { text-shadow: 0 0 5px rgba(139, 0, 0, 0.7); }
+        }
+        
+        .glow {
+            animation: glow 3s infinite;
+        }
+        
+        /* اسکرول بار */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #333;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a00;
+        }
+        
+        /* حالت‌های مختلف تم */
+        .light-theme {
+            --dark-bg: #f5f5f5;
+            --darker-bg: #e0e0e0;
+            --light-text: #333333;
+            --medium-text: #666666;
+            --card-bg: rgba(240, 240, 240, 0.9);
+            --border-color: #cccccc;
+        }
+        
+        .sepia-theme {
+            --dark-bg: #f4ecd8;
+            --darker-bg: #e8dcc0;
+            --light-text: #5b4636;
+            --medium-text: #7a634d;
+            --card-bg: rgba(240, 230, 210, 0.9);
+            --border-color: #d4b78c;
+        }
+        
+        /* استایل‌های چاپ */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 12pt;
+                line-height: 1.5;
+            }
+            
+            .main-menu, .settings-container, .credits-container, .ending-container, 
+            .status-bar, .navigation, .full-text-actions {
+                display: none !important;
+            }
+            
+            .story-container, .full-text-container {
+                display: block !important;
+                padding: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            
+            .book-cover, .full-text-card {
+                box-shadow: none;
+                border: none;
+                padding: 20px;
+            }
+            
+            .story-title, .full-text-title {
+                color: black;
+                font-size: 24pt;
+            }
+            
+            .chapter-title {
+                color: #8b0000;
+                font-size: 18pt;
+                page-break-after: avoid;
+            }
+            
+            .chapter {
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+            }
+            
+            .dialogue {
+                border-left: 3px solid #8b0000;
+                border-right: none;
+                margin: 15px 0;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اصلی -->
+    <div class="main-menu" id="mainMenu">
+        <div class="logo-container">
+            <h1 class="logo glow">THE LAST <span>OF US</span></h1>
+            <p class="subtitle">داستان کامل - Part I & Part II</p>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-btn start-btn" onclick="startStory()">
+                شروع داستان <i class="btn-icon fas fa-play"></i>
+            </button>
+            <button class="menu-btn" onclick="showSettings()">
+                تنظیمات <i class="btn-icon fas fa-cog"></i>
+            </button>
+            <button class="menu-btn" onclick="showCredits()">
+                سازندگان <i class="btn-icon fas fa-users"></i>
+            </button>
+            <button class="menu-btn" onclick="showFullText()">
+                متن کامل <i class="btn-icon fas fa-book"></i>
+            </button>
+            <button class="menu-btn" onclick="exitApp()">
+                خروج <i class="btn-icon fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- صفحه داستان -->
+    <div class="story-container" id="storyContainer">
+        <div class="book-cover">
+            <div class="story-header">
+                <h1 class="story-title">داستان کامل The Last Of Us</h1>
+                <p class="story-subtitle">یک رمان تعاملی بر اساس بازی معروف ناتی داگ</p>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="storyProgress"></div>
+            </div>
+            
+            <div class="story-content" id="storyContent">
+                <!-- محتوای داستان اینجا بارگذاری می‌شود -->
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="previousChapter()" disabled>
+                    <i class="fas fa-arrow-right"></i> فصل قبلی
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="nextChapter()">
+                    فصل بعدی <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="nav-btn" onclick="backToMenu()">
+                    بازگشت به منو <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه تنظیمات -->
+    <div class="settings-container" id="settingsContainer">
+        <div class="settings-card">
+            <h1 class="settings-title">تنظیمات</h1>
+            
+            <div class="settings-group">
+                <label class="settings-label">سایز فونت</label>
+                <select class="settings-select" id="fontSize" onchange="updateFontSize()">
+                    <option value="1rem">کوچک</option>
+                    <option value="1.15rem" selected>متوسط</option>
+                    <option value="1.3rem">بزرگ</option>
+                    <option value="1.5rem">خیلی بزرگ</option>
+                </select>
+            </div>
+            
+            <div class="settings-group">
+                <label class="settings-label">نوع فونت</label>
+                <select class="settings-select" id="fontFamily" onchange="updateFontFamily()">
+                    <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" selected>استاندارد</option>
+                    <option value="'B Nazanin', 'Times New Roman', serif">نستعلیق</option>
+                    <option value="'B Titr', 'Arial Black', sans-serif">عنوانی</option>
+                </select>
+            </div>
+            
+            <div class="settings-group">
+                <label class="settings-label">تم نمایش</label>
+                <select class="settings-select" id="theme" onchange="updateTheme()">
+                    <option value="dark" selected>تیره (پیش‌فرض)</option>
+                    <option value="light">روشن</option>
+                    <option value="sepia">سپیا</option>
+                </select>
+            </div>
+            
+            <div class="settings-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="onlineContent" onchange="toggleOnlineOptions()">
+                    <label for="onlineContent">اتصال به اینترنت برای دریافت محتوای آنلاین</label>
+                </div>
+                
+                <div class="online-options" id="onlineOptions">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="bgMusic" checked>
+                        <label for="bgMusic">موسیقی زمینه</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="soundEffects" checked>
+                        <label for="soundEffects">افکت‌های صوتی</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="showImages" checked>
+                        <label for="showImages">نمایش تصاویر</label>
+                    </div>
+                    
+                    <label class="settings-label">حجم صدا</label>
+                    <div class="volume-control">
+                        <i class="volume-icon fas fa-volume-down"></i>
+                        <input type="range" id="volume" min="0" max="100" value="50" class="settings-input">
+                        <i class="volume-icon fas fa-volume-up"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="showCredits()">
+                    سازندگان <i class="fas fa-users"></i>
+                </button>
+                <button class="nav-btn" onclick="backToMenu()">
+                    بازگشت به منو <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه سازندگان -->
+    <div class="credits-container" id="creditsContainer">
+        <div class="credits-card">
+            <h1 class="credits-title">سازندگان</h1>
+            
+            <div class="credit-section">
+                <h2 class="credit-name">توسعه دهنده</h2>
+                <p class="credit-role">طراحی و پیاده‌سازی</p>
+                <p>حسام الدین</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">
+                        <i class="fab fa-instagram"></i> صفحه اینستاگرام
+                    </a>
+                    <a href="mailto:hessam@example.com" class="social-link">
+                        <i class="fas fa-envelope"></i> ایمیل
+                    </a>
+                </div>
+            </div>
+            
+            <div class="credit-section">
+                <h2 class="credit-name">نویسندگان داستان</h2>
+                <p class="credit-role">اقتباس و بازنویسی</p>
+                <p>نیل دراکمن (Neil Druckmann)</p>
+                <p>هالی گراس (Halley Gross) - Part II</p>
+                <p>تیم نویسندگان ناتی داگ</p>
+            </div>
+            
+            <div class="credit-section">
+                <h2 class="credit-name">حقوق نشر</h2>
+                <p class="credit-role">کلیه حقوق محفوظ است</p>
+                <p>این پروژه یک اثر غیرانتفاعی و صرفاً برای مقاصد آموزشی و فرهنگی می‌باشد.</p>
+                <p>The Last Of Us یک اثر متعلق به Naughty Dog و Sony Interactive Entertainment است.</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="backToMenu()">
+                    بازگشت به منو <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه پایان -->
+    <div class="ending-container" id="endingContainer">
+        <div class="ending-card">
+            <h1 class="ending-title">پایان داستان</h1>
+            
+            <div class="ending-content">
+                <p>با تشکر از شما برای همراهی در این سفر فراموش‌نشدنی. داستان جوئل و الی یکی از تاثیرگذارترین روایت‌های تاریخ بازی‌های ویدیویی است که مرزهای میان سرگرمی و هنر را درنوردید.</p>
+                
+                <p>این داستان درباره عشق، فداکاری، بقا و انتخاب‌های دشوار است. انتخاب‌هایی که گاهی بین خوب و خوب‌تر نیستند، بلکه بین بد و بدتر هستند.</p>
+                
+                <p>امیدواریم از این رمان تعاملی لذت برده باشید. شما می‌توانید این داستان را با دیگران به اشتراک بگذارید یا آن را چاپ کنید.</p>
+            </div>
+            
+            <div class="ending-actions">
+                <button class="action-btn" onclick="showFullText()">
+                    <i class="fas fa-book"></i> مشاهده متن کامل
+                </button>
+                <button class="action-btn" onclick="shareStory()">
+                    <i class="fas fa-share-alt"></i> اشتراک‌گذاری
+                </button>
+                <button class="action-btn" onclick="printStory()">
+                    <i class="fas fa-print"></i> چاپ داستان
+                </button>
+                <button class="action-btn" onclick="backToMenu()">
+                    <i class="fas fa-home"></i> بازگشت به منو
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه متن کامل -->
+    <div class="full-text-container" id="fullTextContainer">
+        <div class="full-text-card">
+            <div class="full-text-header">
+                <h1 class="full-text-title">متن کامل رمان The Last Of Us</h1>
+                <p class="full-text-subtitle">نسخه متنی کامل برای چاپ و اشتراک‌گذاری</p>
+            </div>
+            
+            <div class="full-text-content" id="fullTextContent">
+                <!-- محتوای متنی کامل اینجا بارگذاری می‌شود -->
+            </div>
+            
+            <div class="full-text-actions">
+                <button class="action-btn" onclick="printFullText()">
+                    <i class="fas fa-print"></i> چاپ متن کامل
+                </button>
+                <button class="action-btn" onclick="shareFullText()">
+                    <i class="fas fa-share-alt"></i> اشتراک‌گذاری متن
+                </button>
+                <button class="action-btn" onclick="backToMenu()">
+                    <i class="fas fa-home"></i> بازگشت به منو
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- نوار وضعیت -->
+    <div class="status-bar" id="statusBar" style="display: none;">
+        <div class="music-player">
+            <button class="music-control" onclick="toggleMusic()">
+                <i class="fas fa-pause" id="musicIcon"></i>
+            </button>
+            <span class="current-time" id="currentTime">00:00</span>
+        </div>
+        <div>
+            <span id="currentChapter">فصل 1: آغاز</span>
+        </div>
+    </div>
+
+    <script>
+        // متغیرهای جهانی
+        let currentChapter = 0;
+        let totalChapters = 0;
+        let storyData = [];
+        let backgroundMusic = null;
+        let isMusicPlaying = false;
+        
+        // داده‌های داستان (خلاصه‌شده برای نمونه)
+        const storyChapters = [
+            {
+                title: "پیش‌درآمد: همه‌گیری",
+                content: `
+                    <p>داستان در سال ۲۰۱۳ آغاز می‌شود، زمانی که یک بیماری قارچی مرگبار به نام <span class="character">Cordyceps</span> در سراسر جهان گسترش می‌یابد. این قارچ که در واقعیت بر روی حشرات تأثیر می‌گذارد، در بازی جهش یافته و انسان‌ها را آلوده می‌کند، آن‌ها را به موجوداتی وحشی و غیرمنطقی تبدیل می‌کند.</p>
+                    
+                    <p>ما با <span class="character">جوئل میلر</span> آشنا می‌شویم، یک پدر تنها که با دخترش <span class="character">سارا</span> زندگی می‌کند. در شب شیوع بیماری، جوئل و سارا سعی می‌کنند از شهر فرار کنند، اما در این فرار تراژیک، سارا توسط یک سرباز کشته می‌شود و جوئل قلب‌شکسته تنها می‌ماند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">جوئل</span>: سارا! نه... لطفاً نه...
+                    </div>
+                    
+                    <p>بیست سال بعد، جهان به مکانی تاریک و خطرناک تبدیل شده است. جوئل اکنون در یکی از مناطق قرنطینه شده بوستون زندگی می‌کند و به عنوان یک قاچاقچی کار می‌کند.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "ملاقات با الی",
+                content: `
+                    <p>جوئل و شریکش <span class="character">تس</span> مأموریت می‌گیرند تا یک محموله قاچاق را از گروهی شورشی به نام <span class="character">کرم‌شکاریان</span> تحویل بگیرند. اما این محموله یک چیز غیرمنتظره است: یک دختر نوجوان به نام <span class="character">الی</span>.</p>
+                    
+                    <p>الی ادعا می‌کند که در برابر عفونت قارچی مصون است و گروه شورشیان می‌خواهند او را به گروهی به نام <span class="character">پروانه‌ها</span> برسانند، گروهی که معتقدند می‌توانند از مصونیت الی برای ساخت واکسن استفاده کنند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span>: من گاز گرفته شدم. بیش از سه هفته پیش. و هنوز بیمار نشده‌ام.
+                    </div>
+                    
+                    <div class="dialogue">
+                        <span class="character">جوئل</span>: این غیرممکنه. هیچکس نمی‌تونه اینقدر در برابر عفونت مقاومت کنه.
+                    </div>
+                    
+                    <p>پس از یک درگیری مرگبار، تس آلوده می‌شود و جوئل مجبور می‌شود او را بکشد. حالا او باید به تنهایی مسئولیت رساندن الی به پروانه‌ها را بر عهده بگیرد.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "سفر پرخطر",
+                content: `
+                    <p>جوئل و الی سفری طولانی و خطرناک را به سمت غرب آغاز می‌کنند. در طول راه، آن‌ها با خطرات مختلفی روبرو می‌شوند: از جمله عفونی‌شده‌ها، شکارچیان انسان و گروه‌های شورشی.</p>
+                    
+                    <p>در طول این سفر، رابطه جوئل و الی به تدریج از یک رابطه کاری به یک پیوند عاطفی عمیق تبدیل می‌شود. جوئل که هنوز از مرگ دخترش بهبود نیافته، به تدریج الی را به عنوان دختر خود می‌پذیرد.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span>: تو تنها کسی هستی که تا به حال به فکر من بوده‌ای. همه بقیا یا مردن یا می‌خوان ازم استفاده کنن.
+                    </div>
+                    
+                    <div class="dialogue">
+                        <span class="character">جوئل</span>: ما به همدیگه نیاز داریم. این تنها راه بقای ماست.
+                    </div>
+                    
+                    <p>آن‌ها از شهرهای ویران شده، جنگل‌های متراکم و ساختمان‌های قدیمی عبور می‌کنند و در این راه با شخصیت‌های مختلفی ملاقات می‌کنند که برخی دوست و برخی دشمن می‌شوند.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "پایان سفر و یک تصمیم سرنوشت‌ساز",
+                content: `
+                    <p>پس از ماه‌ها سفر، جوئل و الی finalmente به بیمارستان محل استقرار پروانه‌ها می‌رسند. اما در آنجا جوئل با یک حقیقت هولناک روبرو می‌شود: برای ساخت واکسن از الی، دکترها مجبورند مغز او را بردارند که این کار به مرگ الی منجر خواهد شد.</p>
+                    
+                    <p>جوئل که نمی‌خواهد الی را از دست بدهد، تصمیم می‌گیرد او را نجات دهد. او به تنهایی به بیمارستان حمله می‌کند، تمام دکترها و محافظان را می‌کشد و الی را نجات می‌دهد.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span>: راستش رو بگو. پروانه‌ها چی گفتن؟ آیا می‌تونن واکسن بسازن؟
+                    </div>
+                    
+                    <div class="dialogue">
+                        <span class="character">جوئل</span>: نه. مثل خیلی‌های دیگه بودن. چیزی پیدا نکردن.
+                    </div>
+                    
+                    <p>جوئل به الی دروغ می‌گوید تا او از حقیقت مطلع نشود. آن‌ها به شهرک تامی، برادر جوئل، می‌روند و در آنجا ساکن می‌شوند. پایان Part I با این صحنه به پایان می‌رسد که الی از جوئل می‌پرسد آیا راست گفته است و جوئل قسم می‌خورد که راست گفته است.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "چهار سال بعد: آغاز انتقام",
+                content: `
+                    <p>در Part II، چهار سال پس از ماجراهای Part I، جوئل و الی در جکسون، وایومینگ زندگی نسبتاً آرامی دارند. اما این آرامی دیری نمی‌پاید. یک گروه شکارچی به رهبری <span class="character">ابی</span> به جکسون حمله می‌کنند.</p>
+                    
+                    <p>ابی که در واقع دختر یکی از دکترهایی است که جوئل در بیمارستان کشته است، برای انتقام به دنبال جوئل است. او جوئل را به دام می‌اندازد و به طرز فجیعی به قتل می‌رساند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span>: نه! جوئل! چرا این کار رو کردی؟
+                    </div>
+                    
+                    <div class="dialogue">
+                        <span class="character">ابی</span>: او پدرم رو کشت. این انتقامه.
+                    </div>
+                    
+                    <p>الی که شاهد مرگ جوئل است، قسم می‌خورد انتقام او را بگیرد. او به همراه دوستش <span class="character">جسی</span> عازم سیتل می‌شود تا Abby و گروهش را پیدا کند.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "چرخه انتقام",
+                content: `
+                    <p>در سیتل، الی و جسی با خطرات زیادی روبرو می‌شوند. آن‌ها متوجه می‌شوند که Abby عضو گروه بزرگی به نام <span class="character">WLF</span> است که با گروه دیگری به نام <span class="character">Seraphites</span> در جنگ است.</p>
+                    
+                    <p>الی در طول مسیر با شخصیت‌های جدیدی آشنا می‌شود، از جمله <span class="character">لوا</span> و <span class="character">یارا</span>، دو خواهر و برادر که از Seraphites فرار کرده‌اند. این آشنایی‌ها به الی کمک می‌کند تا از دیدگاه‌های مختلفی به ماجرا نگاه کند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">لوا</span>: انتقام هیچ چیز رو درست نمی‌کنه. فقط درد بیشتری میاره.
+                    </div>
+                    
+                    <p>در نهایت، الی Abby را پیدا می‌کند، اما درگیری آن‌ها به نتیجه‌ای نمی‌رسد. Abby که اکنون از گروه WLF جدا شده، به دنبال کمک برای دوستش <span class="character">لو</span> است.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "درک متقابل و پایان درد",
+                content: `
+                    <p>داستان از دیدگاه Abby نیز روایت می‌شود و بازیکن با انگیزه‌ها و دردهای او آشنا می‌شود. Abby نیز مانند الی، کسی را که دوست داشته از دست داده است و فقط به دنبال عدالت است.</p>
+                    
+                    <p>در نهایت، الی دوباره Abby را پیدا می‌کند، اما این بار Abby ضعیف و زخمی است. با این حال، الی همچنان مصمم به انتقام است و Abby را به یک دوئل نهایی می‌کشاند.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span>: نمی‌تونم بذارم بری. نمی‌تونم فراموش کنم چی کردی.
+                    </div>
+                    
+                    <div class="dialogue">
+                        <span class="character">ابی</span>: منم نمی‌تونم فراموش کنم چی کردی. ما هر دو آدم‌های زیادی رو از دست دادیم.
+                    </div>
+                    
+                    <p>در لحظه نهایی، الی متوجه می‌شود که انتقام چیزی را حل نمی‌کند و Abby را رها می‌کند. اما این پیروزی پرهزینه است: الی تقریباً همه چیز را از دست داده است.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                title: "فرجام کار",
+                content: `
+                    <p>در پایان داستان، الی به خانه خالی جوئل بازمی‌گردد. او دیگر آن دختر معصوم گذشته نیست، بلکه زنی است که درد و رنج زیادی را تجربه کرده است.</p>
+                    
+                    <p>الی گیتار جوئل را برمی‌دارد و سعی می‌کند آهنگی را که جوئل به او یاد داده بود بنوازد، اما به دلیل آسیب‌دیدگی انگشتانش در نبرد با Abby، نمی‌تواند این کار را انجام دهد. او گیتار را رها می‌کند و خانه را ترک می‌کند، نمادی از رها کردن گذشته و حرکت به سمت آینده‌ای نامعلوم.</p>
+                    
+                    <div class="dialogue">
+                        <span class="character">الی</span> (در خاطره‌ای از جوئل): من هرگز نمی‌تونم تو رو ببخشم، اما می‌خوام سعی کنم.
+                    </div>
+                    
+                    <p>داستان The Last of Us Part II با این پیام به پایان می‌رسد که انتقام یک چرخه بی‌پایان از خشونت است که تنها درد بیشتری به همراه می‌آورد، و گاهی بخشش - حتی اگر غیرممکن به نظر برسد - تنها راه رهایی است.</p>
+                `,
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+        
+        // تابع شروع داستان
+        function startStory() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('storyContainer').style.display = 'block';
+            document.getElementById('statusBar').style.display = 'flex';
+            
+            // بارگذاری داده‌های داستان
+            storyData = [...storyChapters];
+            totalChapters = storyData.length;
+            currentChapter = 0;
+            
+            // شروع موسیقی زمینه
+            if (document.getElementById('bgMusic').checked) {
+                playBackgroundMusic();
+            }
+            
+            // نمایش فصل اول
+            loadChapter(currentChapter);
+        }
+        
+        // تابع بارگذاری فصل
+        function loadChapter(chapterIndex) {
+            const chapter = storyData[chapterIndex];
+            const storyContent = document.getElementById('storyContent');
+            
+            // به روزرسانی عنوان فصل
+            document.getElementById('currentChapter').textContent = `فصل ${chapterIndex + 1}: ${chapter.title}`;
+            
+            // ساخت محتوای فصل
+            let contentHTML = `
+                <div class="chapter fade-in">
+                    <h2 class="chapter-title">
+                        <span class="chapter-number">${chapterIndex + 1}</span>
+                        ${chapter.title}
+                    </h2>
+                    <div class="chapter-content">
+                        ${chapter.content}
+            `;
+            
+            // اضافه کردن تصویر اگر فعال باشد
+            if (document.getElementById('showImages').checked && chapter.image) {
+                contentHTML += `
+                    <img src="${chapter.image}" alt="${chapter.title}" class="story-image">
+                    <p class="image-caption">تصویر مرتبط با ${chapter.title}</p>
+                `;
+            }
+            
+            contentHTML += `</div></div>`;
+            
+            storyContent.innerHTML = contentHTML;
+            
+            // به روزرسانی پیشرفت
+            updateProgress(chapterIndex);
+            
+            // به روزرسانی دکمه‌های ناوبری
+            document.getElementById('prevBtn').disabled = chapterIndex === 0;
+            
+            if (chapterIndex === totalChapters - 1) {
+                document.getElementById('nextBtn').innerHTML = 'پایان داستان <i class="fas fa-flag-checkered"></i>';
+                document.getElementById('nextBtn').onclick = showEnding;
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'فصل بعدی <i class="fas fa-arrow-left"></i>';
+                document.getElementById('nextBtn').onclick = nextChapter;
+                document.getElementById('nextBtn').disabled = false;
+            }
+            
+            // پخش افکت صوتی اگر فعال باشد
+            if (document.getElementById('soundEffects').checked) {
+                playPageTurnSound();
+            }
+            
+            // اسکرول به بالای صفحه
+            window.scrollTo(0, 0);
+        }
+        
+        // تابع به روزرسانی پیشرفت
+        function updateProgress(chapterIndex) {
+            const progress = ((chapterIndex + 1) / totalChapters) * 100;
+            document.getElementById('storyProgress').style.width = `${progress}%`;
+        }
+        
+        // تابع فصل بعدی
+        function nextChapter() {
+            if (currentChapter < totalChapters - 1) {
+                currentChapter++;
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // تابع فصل قبلی
+        function previousChapter() {
+            if (currentChapter > 0) {
+                currentChapter--;
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // تابع نمایش صفحه پایان
+        function showEnding() {
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('endingContainer').style.display = 'block';
+        }
+        
+        // تابع نمایش متن کامل
+        function showFullText() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('settingsContainer').style.display = 'none';
+            document.getElementById('creditsContainer').style.display = 'none';
+            document.getElementById('endingContainer').style.display = 'none';
+            document.getElementById('fullTextContainer').style.display = 'block';
+            document.getElementById('statusBar').style.display = 'none';
+            
+            // بارگذاری متن کامل
+            loadFullText();
+        }
+        
+        // تابع بارگذاری متن کامل
+        function loadFullText() {
+            const fullTextContent = document.getElementById('fullTextContent');
+            let fullTextHTML = '';
+            
+            storyChapters.forEach((chapter, index) => {
+                fullTextHTML += `
+                    <div class="chapter">
+                        <h2 class="chapter-title">
+                            <span class="chapter-number">${index + 1}</span>
+                            ${chapter.title}
+                        </h2>
+                        <div class="chapter-content">
+                            ${chapter.content}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            fullTextContent.innerHTML = fullTextHTML;
+        }
+        
+        // تابع نمایش تنظیمات
+        function showSettings() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('settingsContainer').style.display = 'block';
+        }
+        
+        // تابع نمایش سازندگان
+        function showCredits() {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('creditsContainer').style.display = 'block';
+            document.getElementById('settingsContainer').style.display = 'none';
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('endingContainer').style.display = 'none';
+            document.getElementById('fullTextContainer').style.display = 'none';
+        }
+        
+        // تابع بازگشت به منو
+        function backToMenu() {
+            document.getElementById('mainMenu').style.display = 'flex';
+            document.getElementById('settingsContainer').style.display = 'none';
+            document.getElementById('creditsContainer').style.display = 'none';
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('endingContainer').style.display = 'none';
+            document.getElementById('fullTextContainer').style.display = 'none';
+            document.getElementById('statusBar').style.display = 'none';
+            
+            // توقف موسیقی
+            if (backgroundMusic) {
+                backgroundMusic.pause();
+                isMusicPlaying = false;
+                document.getElementById('musicIcon').className = 'fas fa-play';
+            }
+        }
+        
+        // تابع خروج
+        function exitApp() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟')) {
+                // در مرورگر، این فقط پنجره را می‌بندد
+                window.close();
+                
+                // اگر پنجره بسته نشد، یک پیام نشان می‌دهیم
+                alert('برای بستن برنامه، لطفاً پنجره مرورگر را ببندید.');
+            }
+        }
+        
+        // تابع به روزرسانی سایز فونت
+        function updateFontSize() {
+            const fontSize = document.getElementById('fontSize').value;
+            document.querySelector('.story-content').style.fontSize = fontSize;
+            document.querySelector('.full-text-content').style.fontSize = fontSize;
+        }
+        
+        // تابع به روزرسانی نوع فونت
+        function updateFontFamily() {
+            const fontFamily = document.getElementById('fontFamily').value;
+            document.body.style.fontFamily = fontFamily;
+        }
+        
+        // تابع به روزرسانی تم
+        function updateTheme() {
+            const theme = document.getElementById('theme').value;
+            document.body.className = theme + '-theme';
+        }
+        
+        // تابع نمایش/پنهان کردن گزینه‌های آنلاین
+        function toggleOnlineOptions() {
+            const onlineOptions = document.getElementById('onlineOptions');
+            if (document.getElementById('onlineContent').checked) {
+                onlineOptions.style.display = 'block';
+            } else {
+                onlineOptions.style.display = 'none';
+            }
+        }
+        
+        // تابع پخش موسیقی زمینه
+        function playBackgroundMusic() {
+            // در یک محیط واقعی، اینجا موسیقی واقعی بارگذاری می‌شود
+            // برای نمونه، از یک موسیقی عمومی استفاده می‌کنیم
+            backgroundMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = document.getElementById('volume').value / 100;
+            
+            backgroundMusic.play().then(() => {
+                isMusicPlaying = true;
+                document.getElementById('musicIcon').className = 'fas fa-pause';
+            }).catch(error => {
+                console.log('Autoplay prevented: ', error);
+                // اگر اتوپلی جلوگیری شد، دکمه پخش نشان داده می‌شود
+                isMusicPlaying = false;
+                document.getElementById('musicIcon').className = 'fas fa-play';
+            });
+            
+            // به روزرسانی حجم صدا هنگام تغییر
+            document.getElementById('volume').addEventListener('input', function() {
+                if (backgroundMusic) {
+                    backgroundMusic.volume = this.value / 100;
+                }
+            });
+        }
+        
+        // تابع کنترل موسیقی
+        function toggleMusic() {
+            if (!backgroundMusic) return;
+            
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                document.getElementById('musicIcon').className = 'fas fa-play';
+            } else {
+                backgroundMusic.play();
+                document.getElementById('musicIcon').className = 'fas fa-pause';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+        
+        // تابع پخش افکت ورق زدن
+        function playPageTurnSound() {
+            // در یک محیط واقعی، اینجا افکت صوتی پخش می‌شود
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 200;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        
+        // تابع اشتراک‌گذاری داستان
+        function shareStory() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'داستان کامل The Last Of Us',
+                    text: 'این داستان تعاملی را بخوانید: The Last Of Us',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('داستان با موفقیت به اشتراک گذاشته شد');
+                }).catch(error => {
+                    console.log('خطا در اشتراک‌گذاری:', error);
+                    fallbackShare();
+                });
+            } else {
+                fallbackShare();
+            }
+        }
+        
+        // تابع اشتراک‌گذاری متن کامل
+        function shareFullText() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'متن کامل رمان The Last Of Us',
+                    text: 'متن کامل رمان The Last Of Us را بخوانید',
+                    url: window.location.href + '#fulltext'
+                }).then(() => {
+                    console.log('متن کامل با موفقیت به اشتراک گذاشته شد');
+                }).catch(error => {
+                    console.log('خطا در اشتراک‌گذاری:', error);
+                    fallbackShareFullText();
+                });
+            } else {
+                fallbackShareFullText();
+            }
+        }
+        
+        // تابع جایگزین برای اشتراک‌گذاری
+        function fallbackShare() {
+            const shareText = 'داستان کامل The Last Of Us - یک رمان تعاملی\n' + window.location.href;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('لینک داستان در کلیپ‌بورد کپی شد!');
+                }).catch(err => {
+                    prompt('لطفاً این لینک را کپی کنید:', shareText);
+                });
+            } else {
+                prompt('لطفاً این لینک را کپی کنید:', shareText);
+            }
+        }
+        
+        // تابع جایگزین برای اشتراک‌گذاری متن کامل
+        function fallbackShareFullText() {
+            const shareText = 'متن کامل رمان The Last Of Us\n' + window.location.href + '#fulltext';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('لینک متن کامل در کلیپ‌بورد کپی شد!');
+                }).catch(err => {
+                    prompt('لطفاً این لینک را کپی کنید:', shareText);
+                });
+            } else {
+                prompt('لطفاً این لینک را کپی کنید:', shareText);
+            }
+        }
+        
+        // تابع چاپ داستان
+        function printStory() {
+            window.print();
+        }
+        
+        // تابع چاپ متن کامل
+        function printFullText() {
+            // ذخیره وضعیت فعلی
+            const currentDisplay = document.getElementById('fullTextContainer').style.display;
+            
+            // نمایش صفحه متن کامل برای چاپ
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('storyContainer').style.display = 'none';
+            document.getElementById('settingsContainer').style.display = 'none';
+            document.getElementById('creditsContainer').style.display = 'none';
+            document.getElementById('endingContainer').style.display = 'none';
+            document.getElementById('fullTextContainer').style.display = 'block';
+            document.getElementById('statusBar').style.display = 'none';
+            
+            // چاپ
+            window.print();
+            
+            // بازگشت به وضعیت قبلی
+            document.getElementById('fullTextContainer').style.display = currentDisplay;
+            document.getElementById('mainMenu').style.display = 'flex';
+        }
+        
+        // مقداردهی اولیه هنگام بارگذاری صفحه
+        window.onload = function() {
+            // بارگذاری تنظیمات ذخیره شده (اگر وجود دارد)
+            if (localStorage.getItem('tlooSettings')) {
+                const settings = JSON.parse(localStorage.getItem('tlooSettings'));
+                document.getElementById('fontSize').value = settings.fontSize || '1.15rem';
+                document.getElementById('fontFamily').value = settings.fontFamily || "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+                document.getElementById('theme').value = settings.theme || 'dark';
+                document.getElementById('onlineContent').checked = settings.onlineContent || false;
+                document.getElementById('bgMusic').checked = settings.bgMusic || true;
+                document.getElementById('soundEffects').checked = settings.soundEffects || true;
+                document.getElementById('showImages').checked = settings.showImages || true;
+                document.getElementById('volume').value = settings.volume || 50;
+                
+                // اعمال تنظیمات
+                updateFontSize();
+                updateFontFamily();
+                updateTheme();
+                toggleOnlineOptions();
+            }
+            
+            // ذخیره تنظیمات هنگام بسته شدن صفحه
+            window.addEventListener('beforeunload', function() {
+                const settings = {
+                    fontSize: document.getElementById('fontSize').value,
+                    fontFamily: document.getElementById('fontFamily').value,
+                    theme: document.getElementById('theme').value,
+                    onlineContent: document.getElementById('onlineContent').checked,
+                    bgMusic: document.getElementById('bgMusic').checked,
+                    soundEffects: document.getElementById('soundEffects').checked,
+                    showImages: document.getElementById('showImages').checked,
+                    volume: document.getElementById('volume').value
+                };
+                localStorage.setItem('tlooSettings', JSON.stringify(settings));
+            });
+            
+            // بررسی هش برای نمایش مستقیم صفحه متن کامل
+            if (window.location.hash === '#fulltext') {
+                showFullText();
+            }
+        };
+    </script>
+</body>
+</html>

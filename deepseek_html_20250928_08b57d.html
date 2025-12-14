@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان تعاملی Red Dead Redemption</title>
+    <style>
+        /* فونت‌ها */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;500;600&display=swap');
+        
+        /* متغیرهای CSS برای تم‌ها */
+        :root {
+            /* تم پیش‌فرض (وسترن) */
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #A52A2A;
+            --background-color: #2C1810;
+            --text-color: #E8D8C3;
+            --card-bg: #3E2723;
+            --border-color: #5D4037;
+            --header-bg: linear-gradient(to bottom, #5D4037, #3E2723);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            --font-main: 'Raleway', sans-serif;
+            --font-heading: 'Cinzel', serif;
+            --font-size: 16px;
+        }
+        
+        /* تم تاریک */
+        .dark-theme {
+            --primary-color: #121212;
+            --secondary-color: #1E1E1E;
+            --accent-color: #BB86FC;
+            --background-color: #000000;
+            --text-color: #E0E0E0;
+            --card-bg: #1E1E1E;
+            --border-color: #333333;
+            --header-bg: linear-gradient(to bottom, #1E1E1E, #121212);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* تم روشن */
+        .light-theme {
+            --primary-color: #D7CCC8;
+            --secondary-color: #EFEBE9;
+            --accent-color: #8D6E63;
+            --background-color: #FAFAFA;
+            --text-color: #3E2723;
+            --card-bg: #FFFFFF;
+            --border-color: #D7CCC8;
+            --header-bg: linear-gradient(to bottom, #D7CCC8, #BCAAA4);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* استایل‌های پایه */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: var(--font-size);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* استایل صفحه اصلی */
+        #main-menu {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232C1810"/><path d="M0 0L100 100M100 0L0 100" stroke="%235D4037" stroke-width="1"/></svg>');
+            background-size: cover;
+            position: relative;
+        }
+        
+        #main-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        
+        #main-menu > * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #D2691E;
+            text-shadow: 3px 3px 0 #000, 5px 5px 10px rgba(0, 0, 0, 0.8);
+            letter-spacing: 3px;
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .menu-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            background: var(--header-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* استایل تنظیمات */
+        #settings {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .settings-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .setting-item label {
+            flex: 1;
+        }
+        
+        .setting-control {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-container input {
+            margin-left: 0.5rem;
+        }
+        
+        /* استایل رمان */
+        #novel-container {
+            background-color: var(--card-bg);
+            margin: 2rem auto;
+            max-width: 900px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .novel-header {
+            background: var(--header-bg);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .novel-content {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .chapter {
+            margin-bottom: 3rem;
+        }
+        
+        .chapter-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .scene {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .dialogue {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: rgba(139, 69, 19, 0.1);
+            border-radius: 4px;
+            border-right: 3px solid var(--accent-color);
+        }
+        
+        .character {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .novel-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 1rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .novel-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: var(--header-bg);
+            border-top: 2px solid var(--border-color);
+        }
+        
+        /* استایل صفحه سازندگان */
+        #credits {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .credits-list {
+            margin: 2rem 0;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .credits-scroll {
+            animation: scrollCredits 30s linear infinite;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .credit-item {
+            margin: 1rem 0;
+            padding: 0.5rem;
+        }
+        
+        .credit-role {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .credit-name {
+            margin-top: 0.25rem;
+        }
+        
+        @keyframes scrollCredits {
+            0% {
+                top: 100%;
+            }
+            100% {
+                top: -300%;
+            }
+        }
+        
+        /* استایل صفحه پایان */
+        #end-page {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .end-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .menu-buttons {
+                max-width: 90%;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .setting-control {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            
+            .novel-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .novel-navigation button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه اصلی -->
+    <section id="main-menu" class="active-section">
+        <h1 class="logo">RED DEAD REDEMPTION</h1>
+        <div class="menu-buttons">
+            <button class="menu-button" onclick="showSection('novel-container')">شروع رمان</button>
+            <button class="menu-button" onclick="showSection('settings')">تنظیمات</button>
+            <button class="menu-button" onclick="showSection('credits')">سازندگان</button>
+            <button class="menu-button" onclick="exitApp()">خروج</button>
+        </div>
+    </section>
+
+    <!-- تنظیمات -->
+    <section id="settings" class="container hidden">
+        <h2>تنظیمات</h2>
+        
+        <div class="settings-section">
+            <h3>ظاهر</h3>
+            <div class="setting-item">
+                <label for="theme-select">تم:</label>
+                <div class="setting-control">
+                    <select id="theme-select" onchange="changeTheme(this.value)">
+                        <option value="default">پیش‌فرض (وسترن)</option>
+                        <option value="dark">تاریک</option>
+                        <option value="light">روشن</option>
+                    </select>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label for="font-size">سایز فونت:</label>
+                <div class="setting-control">
+                    <input type="range" id="font-size" min="12" max="24" value="16" onchange="changeFontSize(this.value)">
+                    <span id="font-size-value">16px</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label for="font-family">نوع فونت:</label>
+                <div class="setting-control">
+                    <select id="font-family" onchange="changeFontFamily(this.value)">
+                        <option value="Raleway">Raleway</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Tahoma">Tahoma</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>صدا</h3>
+            <div class="setting-item">
+                <label for="music-volume">موسیقی زمینه:</label>
+                <div class="setting-control">
+                    <input type="range" id="music-volume" min="0" max="100" value="50" onchange="changeMusicVolume(this.value)">
+                    <span id="music-volume-value">50%</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label for="sfx-volume">افکت‌های صوتی:</label>
+                <div class="setting-control">
+                    <input type="range" id="sfx-volume" min="0" max="100" value="70" onchange="changeSfxVolume(this.value)">
+                    <span id="sfx-volume-value">70%</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="enable-sounds" checked onchange="toggleSounds(this.checked)">
+                    <label for="enable-sounds">فعال کردن صداها</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>نمایش</h3>
+            <div class="setting-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="show-images" checked onchange="toggleImages(this.checked)">
+                    <label for="show-images">نمایش تصاویر</label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="show-effects" checked onchange="toggleEffects(this.checked)">
+                    <label for="show-effects">نمایش افکت‌های بصری</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <h3>آنلاین</h3>
+            <div class="setting-item">
+                <button onclick="enableOnlineFeatures()">فعال‌سازی ویژگی‌های آنلاین</button>
+            </div>
+            <div id="online-features" class="hidden">
+                <div class="setting-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="download-images" onchange="toggleDownloadImages(this.checked)">
+                        <label for="download-images">دریافت تصاویر از اینترنت</label>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="download-audio" onchange="toggleDownloadAudio(this.checked)">
+                        <label for="download-audio">دریافت صداها از اینترنت</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <button onclick="showSection('main-menu')">بازگشت به منوی اصلی</button>
+        </div>
+    </section>
+
+    <!-- رمان -->
+    <section id="novel-container" class="hidden">
+        <div class="novel-header">
+            <h1>رمان Red Dead Redemption</h1>
+            <p>داستان کامل بازی به صورت رمان تعاملی</p>
+        </div>
+        
+        <div class="novel-content" id="novel-content">
+            <!-- محتوای رمان اینجا لود می‌شود -->
+        </div>
+        
+        <div class="novel-navigation">
+            <button onclick="previousChapter()">فصل قبلی</button>
+            <button onclick="showSection('main-menu')">بازگشت به منو</button>
+            <button onclick="nextChapter()">فصل بعدی</button>
+        </div>
+    </section>
+
+    <!-- سازندگان -->
+    <section id="credits" class="container hidden">
+        <h2>سازندگان</h2>
+        <p>این رمان تعاملی توسط تیم زیر ایجاد شده است:</p>
+        
+        <div class="credits-list">
+            <div class="credits-scroll">
+                <div class="credit-item">
+                    <div class="credit-role">توسعه‌دهنده و برنامه‌نویس</div>
+                    <div class="credit-name">حسام الدین</div>
+                    <div class="credit-link">
+                        <a href="https://instagram.com/hessamedien" target="_blank">اینستاگرام: hessamedien</a>
+                    </div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">نویسنده داستان</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">طراح رابط کاربری</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">مشاور فنی</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">منابع صوتی و تصویری</div>
+                    <div class="credit-name">ویکی‌پدیا و منابع آزاد</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">بازبین محتوا</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">تست کننده</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+                
+                <div class="credit-item">
+                    <div class="credit-role">حقوقی</div>
+                    <div class="credit-name">حسام الدین</div>
+                </div>
+            </div>
+        </div>
+        
+        <p>کلیه حقوق این اثر محفوظ است © 2023</p>
+        
+        <button onclick="showSection('main-menu')">بازگشت به منوی اصلی</button>
+    </section>
+
+    <!-- صفحه پایان -->
+    <section id="end-page" class="container hidden">
+        <h2>پایان رمان</h2>
+        <p>با تشکر از شما برای خواندن این رمان تعاملی.</p>
+        
+        <div class="end-options">
+            <button onclick="printNovel()">چاپ رمان</button>
+            <button onclick="shareNovel()">اشتراک‌گذاری</button>
+            <button onclick="showSection('main-menu')">بازگشت به منو</button>
+        </div>
+    </section>
+
+    <script>
+        // متغیرهای全局
+        let currentChapter = 0;
+        const totalChapters = 10; // تعداد کل فصل‌ها
+        
+        // تابع برای نمایش بخش‌های مختلف
+        function showSection(sectionId) {
+            // مخفی کردن تمام بخش‌ها
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // نمایش بخش مورد نظر
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // اگر بخش رمان است، محتوای آن را بارگذاری کن
+            if (sectionId === 'novel-container') {
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // تابع برای خروج
+        function exitApp() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟')) {
+                // در مرورگر واقعی، این کار پنجره را می‌بندد
+                // اما در این محیط فقط یک پیام نشان می‌دهیم
+                alert('برنامه بسته شد. در یک محیط واقعی، این کار پنجره مرورگر را می‌بندد.');
+            }
+        }
+        
+        // تابع برای تغییر تم
+        function changeTheme(theme) {
+            document.body.classList.remove('dark-theme', 'light-theme');
+            
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            }
+            
+            // ذخیره تنظیمات
+            localStorage.setItem('theme', theme);
+        }
+        
+        // تابع برای تغییر سایز فونت
+        function changeFontSize(size) {
+            document.documentElement.style.setProperty('--font-size', size + 'px');
+            document.getElementById('font-size-value').textContent = size + 'px';
+            
+            // ذخیره تنظیمات
+            localStorage.setItem('fontSize', size);
+        }
+        
+        // تابع برای تغییر نوع فونت
+        function changeFontFamily(font) {
+            document.documentElement.style.setProperty('--font-main', font);
+            
+            // ذخیره تنظیمات
+            localStorage.setItem('fontFamily', font);
+        }
+        
+        // تابع برای تغییر حجم موسیقی
+        function changeMusicVolume(volume) {
+            document.getElementById('music-volume-value').textContent = volume + '%';
+            
+            // ذخیره تنظیمات
+            localStorage.setItem('musicVolume', volume);
+        }
+        
+        // تابع برای تغییر حجم افکت‌های صوتی
+        function changeSfxVolume(volume) {
+            document.getElementById('sfx-volume-value').textContent = volume + '%';
+            
+            // ذخیره تنظیمات
+            localStorage.setItem('sfxVolume', volume);
+        }
+        
+        // تابع برای فعال/غیرفعال کردن صداها
+        function toggleSounds(enabled) {
+            // ذخیره تنظیمات
+            localStorage.setItem('soundsEnabled', enabled);
+        }
+        
+        // تابع برای فعال/غیرفعال کردن تصاویر
+        function toggleImages(enabled) {
+            // ذخیره تنظیمات
+            localStorage.setItem('imagesEnabled', enabled);
+            
+            // اگر در حال نمایش رمان هستیم، محتوا را دوباره بارگذاری کن
+            if (!document.getElementById('novel-container').classList.contains('hidden')) {
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // تابع برای فعال/غیرفعال کردن افکت‌ها
+        function toggleEffects(enabled) {
+            // ذخیره تنظیمات
+            localStorage.setItem('effectsEnabled', enabled);
+        }
+        
+        // تابع برای فعال‌سازی ویژگی‌های آنلاین
+        function enableOnlineFeatures() {
+            document.getElementById('online-features').classList.remove('hidden');
+        }
+        
+        // تابع برای فعال/غیرفعال کردن دانلود تصاویر
+        function toggleDownloadImages(enabled) {
+            // ذخیره تنظیمات
+            localStorage.setItem('downloadImages', enabled);
+        }
+        
+        // تابع برای فعال/غیرفعال کردن دانلود صداها
+        function toggleDownloadAudio(enabled) {
+            // ذخیره تنظیمات
+            localStorage.setItem('downloadAudio', enabled);
+        }
+        
+        // تابع برای بارگذاری فصل
+        function loadChapter(chapterIndex) {
+            const novelContent = document.getElementById('novel-content');
+            novelContent.innerHTML = '';
+            
+            // محتوای فصل (این فقط نمونه است)
+            const chapterContent = createChapterContent(chapterIndex);
+            novelContent.innerHTML = chapterContent;
+        }
+        
+        // تابع برای ایجاد محتوای فصل
+        function createChapterContent(chapterIndex) {
+            // این فقط یک نمونه ساده است
+            // در نسخه کامل، محتوای واقعی هر فصل اینجا قرار می‌گیرد
+            let content = `<div class="chapter">
+                <h2 class="chapter-title">فصل ${chapterIndex + 1}: آغاز ماجرا</h2>
+                
+                <div class="scene">
+                    <p>این یک نمونه از محتوای رمان است. در نسخه کامل، داستان کامل بازی Red Dead Redemption با جزئیات کامل در اینجا قرار خواهد گرفت.</p>
+                    
+                    <div class="dialogue">
+                        <div class="character">جان مارستون</div>
+                        <p>من فقط می‌خواهم زندگی آرامی داشته باشم و خانواده‌ام را نجات دهم.</p>
+                    </div>
+                    
+                    <div class="dialogue">
+                        <div class="character">عامل دولت</div>
+                        <p>اگر می‌خواهی خانواده‌ات آزاد شود، باید اعضای سابق گروهت را شکار کنی.</p>
+                    </div>
+                </div>
+                
+                <p>داستان ادامه دارد...</p>
+            </div>`;
+            
+            return content;
+        }
+        
+        // تابع برای رفتن به فصل بعدی
+        function nextChapter() {
+            if (currentChapter < totalChapters - 1) {
+                currentChapter++;
+                loadChapter(currentChapter);
+            } else {
+                // اگر آخرین فصل بود، به صفحه پایان برو
+                showSection('end-page');
+            }
+        }
+        
+        // تابع برای رفتن به فصل قبلی
+        function previousChapter() {
+            if (currentChapter > 0) {
+                currentChapter--;
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // تابع برای چاپ رمان
+        function printNovel() {
+            window.print();
+        }
+        
+        // تابع برای اشتراک‌گذاری رمان
+        function shareNovel() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'رمان تعاملی Red Dead Redemption',
+                    text: 'داستان کامل بازی Red Dead Redemption به صورت رمان تعاملی',
+                    url: window.location.href
+                })
+                .then(() => console.log('اشتراک‌گذاری موفقیت‌آمیز بود'))
+                .catch((error) => console.log('خطا در اشتراک‌گذاری', error));
+            } else {
+                alert('اشتراک‌گذاری در این مرورگر پشتیبانی نمی‌شود. می‌توانید لینک را کپی کنید: ' + window.location.href);
+            }
+        }
+        
+        // بارگذاری تنظیمات ذخیره شده
+        function loadSettings() {
+            // تم
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            document.getElementById('theme-select').value = savedTheme;
+            changeTheme(savedTheme);
+            
+            // سایز فونت
+            const savedFontSize = localStorage.getItem('fontSize') || '16';
+            document.getElementById('font-size').value = savedFontSize;
+            changeFontSize(savedFontSize);
+            
+            // نوع فونت
+            const savedFontFamily = localStorage.getItem('fontFamily') || 'Raleway';
+            document.getElementById('font-family').value = savedFontFamily;
+            changeFontFamily(savedFontFamily);
+            
+            // حجم موسیقی
+            const savedMusicVolume = localStorage.getItem('musicVolume') || '50';
+            document.getElementById('music-volume').value = savedMusicVolume;
+            changeMusicVolume(savedMusicVolume);
+            
+            // حجم افکت‌ها
+            const savedSfxVolume = localStorage.getItem('sfxVolume') || '70';
+            document.getElementById('sfx-volume').value = savedSfxVolume;
+            changeSfxVolume(savedSfxVolume);
+            
+            // صداها
+            const savedSoundsEnabled = localStorage.getItem('soundsEnabled') !== 'false';
+            document.getElementById('enable-sounds').checked = savedSoundsEnabled;
+            
+            // تصاویر
+            const savedImagesEnabled = localStorage.getItem('imagesEnabled') !== 'false';
+            document.getElementById('show-images').checked = savedImagesEnabled;
+            
+            // افکت‌ها
+            const savedEffectsEnabled = localStorage.getItem('effectsEnabled') !== 'false';
+            document.getElementById('show-effects').checked = savedEffectsEnabled;
+            
+            // ویژگی‌های آنلاین
+            const savedDownloadImages = localStorage.getItem('downloadImages') === 'true';
+            document.getElementById('download-images').checked = savedDownloadImages;
+            
+            const savedDownloadAudio = localStorage.getItem('downloadAudio') === 'true';
+            document.getElementById('download-audio').checked = savedDownloadAudio;
+        }
+        
+        // بارگذاری تنظیمات هنگام لود صفحه
+        window.onload = function() {
+            loadSettings();
+        };
+    </script>
+</body>
+</html>

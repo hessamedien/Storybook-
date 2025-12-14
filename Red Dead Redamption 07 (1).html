@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رمان تعاملی Red Dead Redemption</title>
+    <style>
+        /* فونت‌ها و استایل‌های کلی */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #D4AF37;
+            --dark-color: #1A1A1A;
+            --light-color: #E8E8E8;
+            --font-size: 16px;
+            --font-family: 'Raleway', 'Tahoma', sans-serif;
+            --heading-font: 'Cinzel', 'Times New Roman', serif;
+        }
+        
+        /* تم تاریک */
+        .dark-theme {
+            --bg-color: #121212;
+            --text-color: #E8E8E8;
+            --card-bg: #1E1E1E;
+            --border-color: #333;
+        }
+        
+        /* تم روشن */
+        .light-theme {
+            --bg-color: #F5F5F5;
+            --text-color: #333;
+            --card-bg: #FFFFFF;
+            --border-color: #DDD;
+        }
+        
+        /* تم وسترن */
+        .western-theme {
+            --bg-color: #2C1A0F;
+            --text-color: #E8D8C3;
+            --card-bg: #3D2818;
+            --border-color: #8B4513;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><rect width="100" height="100" fill="none" stroke="%238B0000" stroke-width="2"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* صفحه اصلی */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="%23121212"/><path d="M200,50 L250,150 L350,150 L275,225 L300,325 L200,275 L100,325 L125,225 L50,150 L150,150 Z" fill="none" stroke="%238B0000" stroke-width="5"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .logo {
+            font-family: var(--heading-font);
+            font-size: 4rem;
+            color: var(--secondary-color);
+            text-shadow: 3px 3px 0 #000, 6px 6px 0 rgba(139, 0, 0, 0.7);
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--light-color);
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .menu-btn {
+            background: linear-gradient(to bottom, var(--primary-color), #600);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-family: var(--font-family);
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 0 #400, 0 6px 10px rgba(0,0,0,0.3);
+        }
+        
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #400, 0 8px 15px rgba(0,0,0,0.4);
+        }
+        
+        .menu-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #400, 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        /* صفحه تنظیمات */
+        .settings-page {
+            display: none;
+            padding: 20px;
+        }
+        
+        .settings-title {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .settings-group {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .settings-group h3 {
+            font-family: var(--heading-font);
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .setting-label {
+            flex: 1;
+        }
+        
+        .setting-control {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        select, input[type="range"], input[type="number"] {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 200px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        /* صفحه داستان */
+        .story-page {
+            display: none;
+            padding: 20px;
+        }
+        
+        .story-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .chapter-title {
+            font-family: var(--heading-font);
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .story-content {
+            font-size: var(--font-size);
+            line-height: 1.8;
+        }
+        
+        .story-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .dialogue {
+            background-color: rgba(139, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(to bottom, var(--primary-color), #600);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-family: var(--font-family);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(to bottom, #A00, #700);
+        }
+        
+        .nav-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        /* صفحه سازندگان */
+        .credits-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .credits-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .credits-title {
+            font-family: var(--heading-font);
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+        }
+        
+        .credits-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+        
+        .credits-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .social-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .social-link:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .rolling-credits {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            margin: 30px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+        }
+        
+        .credits-content {
+            position: absolute;
+            width: 100%;
+            animation: scrollCredits 30s linear infinite;
+        }
+        
+        @keyframes scrollCredits {
+            0% { top: 100%; }
+            100% { top: -300%; }
+        }
+        
+        .credit-item {
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        .credit-role {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        /* صفحه چاپ */
+        .print-page {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            color: black;
+        }
+        
+        .print-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #8B0000;
+            padding-bottom: 20px;
+        }
+        
+        .print-logo {
+            font-family: var(--heading-font);
+            font-size: 3rem;
+            color: #8B0000;
+            margin-bottom: 10px;
+        }
+        
+        .print-content {
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .print-footer {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #CCC;
+            padding-top: 20px;
+            font-style: italic;
+        }
+        
+        /* دکمه بازگشت */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* رسپانسیو برای موبایل */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .menu-buttons {
+                max-width: 100%;
+            }
+            
+            .menu-btn {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+            
+            .settings-group {
+                padding: 15px;
+            }
+            
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .setting-control {
+                margin-top: 10px;
+                width: 100%;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .chapter-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="western-theme">
+    <!-- صفحه اصلی -->
+    <div class="main-menu active-page">
+        <div class="container">
+            <h1 class="logo">RED DEAD REDEMPTION</h1>
+            <p class="subtitle">رمان تعاملی کامل داستان بازی</p>
+            
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="showPage('story-page')">شروع رمان</button>
+                <button class="menu-btn" onclick="showPage('settings-page')">تنظیمات</button>
+                <button class="menu-btn" onclick="showPage('credits-page')">سازندگان</button>
+                <button class="menu-btn" onclick="printStory()">چاپ رمان</button>
+                <button class="menu-btn" onclick="exitApp()">خروج</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه تنظیمات -->
+    <div class="settings-page">
+        <button class="back-btn" onclick="showPage('main-menu')">بازگشت</button>
+        <div class="container">
+            <h2 class="settings-title">تنظیمات</h2>
+            
+            <div class="settings-group">
+                <h3>ظاهر</h3>
+                <div class="setting-item">
+                    <span class="setting-label">تم</span>
+                    <div class="setting-control">
+                        <select id="theme-selector">
+                            <option value="western-theme">وسترن</option>
+                            <option value="dark-theme">تاریک</option>
+                            <option value="light-theme">روشن</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">سایز فونت</span>
+                    <div class="setting-control">
+                        <input type="range" id="font-size" min="12" max="24" value="16">
+                        <span id="font-size-value">16px</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">نوع فونت</span>
+                    <div class="setting-control">
+                        <select id="font-family-selector">
+                            <option value="Raleway">Raleway</option>
+                            <option value="Tahoma">Tahoma</option>
+                            <option value="Arial">Arial</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <h3>صدا و موسیقی</h3>
+                <div class="setting-item">
+                    <span class="setting-label">موسیقی زمینه</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="bg-music">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">حجم موسیقی</span>
+                    <div class="setting-control">
+                        <input type="range" id="music-volume" min="0" max="100" value="50" disabled>
+                        <span id="music-volume-value">50%</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">افکت‌های صوتی</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="sound-effects">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <h3>نمایش</h3>
+                <div class="setting-item">
+                    <span class="setting-label">نمایش تصاویر</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="show-images" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">نمایش گیف‌ها</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="show-gifs" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <h3>اتصال اینترنتی</h3>
+                <div class="setting-item">
+                    <span class="setting-label">دریافت محتوای آنلاین</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="online-content">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div id="online-options" style="display: none;">
+                    <div class="setting-item">
+                        <span class="setting-label">دانلود موسیقی</span>
+                        <div class="setting-control">
+                            <button class="nav-btn">دریافت</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span class="setting-label">دانلود تصاویر</span>
+                        <div class="setting-control">
+                            <button class="nav-btn">دریافت</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <span class="setting-label">دانلود افکت‌ها</span>
+                        <div class="setting-control">
+                            <button class="nav-btn">دریافت</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="settings-group">
+                <h3>سازندگان</h3>
+                <div class="setting-item">
+                    <span class="setting-label">توسعه‌دهنده: حسام‌الدین</span>
+                    <div class="setting-control">
+                        <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">صفحه اینستاگرام</a>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">نسخه: 1.0</span>
+                    <div class="setting-control">
+                        <button class="nav-btn" onclick="showPage('credits-page')">مشاهده کامل سازندگان</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه داستان -->
+    <div class="story-page">
+        <button class="back-btn" onclick="showPage('main-menu')">بازگشت</button>
+        <div class="container">
+            <div class="story-container">
+                <h2 class="chapter-title" id="chapter-title">فصل اول: آغاز پایان</h2>
+                
+                <div class="story-content" id="story-content">
+                    <!-- محتوای داستان اینجا بارگذاری می‌شود -->
+                </div>
+                
+                <div class="navigation">
+                    <button class="nav-btn" id="prev-btn" onclick="prevChapter()">فصل قبلی</button>
+                    <button class="nav-btn" id="next-btn" onclick="nextChapter()">فصل بعدی</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه سازندگان -->
+    <div class="credits-page">
+        <button class="back-btn" onclick="showPage('main-menu')">بازگشت</button>
+        <div class="container">
+            <div class="credits-container">
+                <h2 class="credits-title">سازندگان</h2>
+                
+                <div class="rolling-credits">
+                    <div class="credits-content">
+                        <div class="credit-item">
+                            <div class="credit-role">توسعه‌دهنده و برنامه‌نویس</div>
+                            <div>حسام‌الدین</div>
+                            <div>
+                                <a href="https://instagram.com/hessamedien" class="social-link" target="_blank">
+                                    اینستاگرام: hessamedien
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">نویسنده داستان</div>
+                            <div>حسام‌الدین</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">طراحی رابط کاربری</div>
+                            <div>حسام‌الدین</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">منابع تصویری</div>
+                            <div>ویکی‌پدیا</div>
+                            <div>منابع آزاد اینترنتی</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">موسیقی و افکت‌های صوتی</div>
+                            <div>منابع آزاد اینترنتی</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">مشاور فنی</div>
+                            <div>تیم پشتیبانی</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">بازبین محتوا</div>
+                            <div>تیم بازبینی</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">تست و اشکال‌زدایی</div>
+                            <div>تیم QA</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">حق نشر</div>
+                            <div>© 2023 حسام‌الدین</div>
+                            <div>تمامی حقوق محفوظ است</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">تشکر ویژه</div>
+                            <div>از Rockstar Games برای خلق دنیای شگفت‌انگیز Red Dead Redemption</div>
+                        </div>
+                        
+                        <div class="credit-item">
+                            <div class="credit-role">با تشکر از شما</div>
+                            <div>برای خواندن این رمان تعاملی</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-buttons">
+                    <button class="menu-btn" onclick="showPage('main-menu')">بازگشت به صفحه اصلی</button>
+                    <button class="menu-btn" onclick="printStory()">چاپ رمان کامل</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- صفحه چاپ -->
+    <div class="print-page" id="print-page">
+        <div class="print-header">
+            <h1 class="print-logo">RED DEAD REDEMPTION</h1>
+            <h2>رمان کامل داستان بازی</h2>
+            <p>توسعه‌دهنده: حسام‌الدین</p>
+        </div>
+        
+        <div class="print-content" id="print-content">
+            <!-- محتوای چاپ اینجا بارگذاری می‌شود -->
+        </div>
+        
+        <div class="print-footer">
+            <p>© 2023 حسام‌الدین - تمامی حقوق محفوظ است</p>
+            <p>این رمان بر اساس بازی Red Dead Redemption ساخته شده است</p>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های داستان
+        const storyData = [
+            {
+                title: "فصل اول: آغاز پایان",
+                content: `
+                    <p>سال ۱۹۱۱ بود. دوران غرب وحشی به سرعت به پایان خود نزدیک می‌شد. دولت در حال گسترش به سمت غرب بود و تمدن در حال جایگزینی با زندگی آزاد و بی‌قانون گذشته.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جان مارستون:</span> "من یک آدم بد بودم. این را می‌دانم. اما سعی کردم جبران کنم. برای خانواده‌ام."</p>
+                    </div>
+                    
+                    <p>داستان با جان مارستون، یک یاغی سابق آغاز می‌شود که توسط مأموران دولتی دستگیر شده است. آن‌ها همسر و پسرش را به گروگان گرفته‌اند و در ازای آزادی آن‌ها، از جان می‌خواهند که سه تن از همکاران سابقش در باند وند دیکث را شکار کند.</p>
+                    
+                    <p>اولین هدف او، بیل ویلیامسون است که در قلعه‌ای در منطقه وست الیزابث پناه گرفته است. جان به آن منطقه سفر می‌کند و با کمک کلانتر و شریف محلی، به قلعه حمله می‌کند.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">بیل ویلیامسون:</span> "جان؟ تو؟ بعد از همه این سال‌ها؟ فکر کردم مرده‌ای!"</p>
+                        <p><span class="character">جان مارستون:</span> "تقریباً. اما هنوز نفس می‌کشم، بیل. و آمده‌ام تا تو را تحویل بدهم."</p>
+                    </div>
+                    
+                    <p>در نهایت، جان موفق می‌شود بیل را دستگیر کند، اما متوجه می‌شود که بیل تنها اولین هدف است و دو هدف دیگر نیز وجود دارند: خاویر اسکوئلا و داچ وند دیکث.</p>
+                `
+            },
+            {
+                title: "فصل دوم: شکار خاویر",
+                content: `
+                    <p>با دستگیری بیل، جان به مکزیک سفر می‌کند تا خاویر اسکوئلا را پیدا کند. در مکزیک، او درگیر جنگ داخلی بین دولت و شورشیان می‌شود.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">خاویر اسکوئلا:</span> "جان، جان، جان... هنوز هم سگ وفادار آن‌ها هستی؟ فکر کردی با تحویل دادن ما می‌توانی زندگی عادی داشته باشی؟"</p>
+                    </div>
+                    
+                    <p>خاویر که اکنون یک انقلابی شده است، در ابتدا از جان استقبال می‌کند، اما به زودی متوجه نیت واقعی او می‌شود. پس از یک تعقیب و گریز طولانی، جان موفق می‌شود خاویر را دستگیر کند.</p>
+                    
+                    <p>در طول این سفر، جان با افراد مختلفی ملاقات می‌کند و کمک‌های زیادی به آن‌ها می‌کند، از حل اختلافات محلی تا مبارزه با باندهای جنایتکار.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">یک کشاورز محلی:</span> "ممنونم، غریبه. بدون کمک تو، مزرعه‌ام را از دست داده بودم."</p>
+                        <p><span class="character">جان مارستون:</span> "کاری نکردم. فقط سعی می‌کنم راه درست را بروم."</p>
+                    </div>
+                    
+                    <p>با دستگیری خاویر، تنها یک هدف باقی می‌ماند: داچ وند دیکث، رهبر سابق باند.</p>
+                `
+            },
+            {
+                title: "فصل سوم: تعقیب داچ",
+                content: `
+                    <p>داچ وند دیکث، باهوش‌ترین و خطرناک‌ترین عضو باند سابق، در منطقه بلک واتر پناه گرفته است. جان به آن منطقه سفر می‌کند و با کمک مأموران دولتی، به تعقیب داچ می‌پردازد.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">داچ وند دیکث:</span> "آنها ما را فریب داده‌اند، جان! آنها وعده دادند اگر تسلیم شویم، آزادیمان را به ما می‌دهند. اما دروغ گفتند!"</p>
+                        <p><span class="character">جان مارستون:</span> "می‌دانم، داچ. اما الان دیر شده. باید پاسخ کارهایمان را بدهیم."</p>
+                    </div>
+                    
+                    <p>داچ که اکنون رهبر یک باند جدید شده است، نقشه‌های بزرگی در سر دارد. او قصد دارد یک سرقت بزرگ انجام دهد و سپس از کشور فرار کند.</p>
+                    
+                    <p>جان در نهایت موفق می‌شود داچ را پیدا کند و پس از یک درگیری شدید، او را دستگیر می‌کند. با دستگیری داچ، جان فکر می‌کند که مأموریتش به پایان رسیده و می‌تواند به خانواده‌اش برگردد.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">مأمور دولتی:</span> "کارت خوب بود، مارستون. اما هنوز کارمان تمام نشده."</p>
+                        <p><span class="character">جان مارستون:</span> "چه منظوری؟ من سه نفر را تحویل دادم. قرار بود خانواده‌ام را آزاد کنید."</p>
+                        <p><span class="character">مأمور دولتی:</span> "باید چند کار دیگر برایمان انجام دهی. بعد از آن، آزاد خواهی بود."</p>
+                    </div>
+                `
+            },
+            {
+                title: "فصل چهارم: بازگشت به خانه",
+                content: `
+                    <p>پس از انجام چند مأموریت دیگر، جان finalmente آزاد می‌شود و به مزرعه خانواده‌اش در بیمشران رانچ بازمی‌گردد. او با همسرش ابیگیل و پسرش جک دوباره متحد می‌شود.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">ابیگیل مارستون:</span> "جان... واقعاً توئی؟ فکر کردم دیگر تو را نخواهم دید."</p>
+                        <p><span class="character">جان مارستون:</span> "قول دادم برمی‌گردم. و برگشتم."</p>
+                    </div>
+                    
+                    <p>جان سعی می‌کند زندگی عادی و صلح‌آمیزی را در مزرعه آغاز کند. او به جک آموزش می‌دهد که چگونه از مزرعه مراقبت کند و چگونه شکار کند.</p>
+                    
+                    <p>اما صلح طولانی نمی‌ماند. باندهای جنایتکار محلی شروع به ایجاد مشکل برای ساکنان منطقه می‌کنند و جان مجبور می‌شود برای محافظت از خانواده و همسایگانش، دوباره اسلحه به دست بگیرد.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جک مارستون:</span> "پدر، می‌توانی به من تیراندازی یاد بدهی؟"</p>
+                        <p><span class="character">جان مارستون:</span> "امیدوارم هرگز مجبور نشوی از اسلحه استفاده کنی، پسر. اما بله، باید یاد بگیری."</p>
+                    </div>
+                    
+                    <p>جان با کمک همسایگانش، موفق می‌شود باندهای جنایتکار را از منطقه بیرون کند و آرامش را به بیمشران رانچ بازگرداند.</p>
+                `
+            },
+            {
+                title: "فصل پنجم: پایان راه",
+                content: `
+                    <p>چند سال می‌گذرد. جان و خانواده‌اش زندگی نسبتاً آرامی را در مزرعه سپری می‌کنند. اما گذشته هرگز کاملاً رهایشان نمی‌کند.</p>
+                    
+                    <p>یک روز، سربازان دولت به مزرعه حمله می‌کنند. آن‌ها می‌گویند که جان هنوز باید برای جنایات گذشته‌اش پاسخگو باشد.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">افسر ارتش:</span> "مارستون، می‌دانیم که در این سال‌ها سعی کرده‌ای زندگی بهتری داشته باشی. اما قانون باید اجرا شود."</p>
+                        <p><span class="character">جان مارستون:</span> "من کارم را کردم. شما قول دادید اگر آن سه را تحویل دهم، آزاد خواهم بود."</p>
+                        <p><span class="character">افسر ارتش:</span> "سیاست تغییر کرده، مارستون. باید پاسخ تمام جنایاتت را بدهی."</p>
+                    </div>
+                    
+                    <p>جان می‌داند که نمی‌تواند از این وضعیت فرار کند. او به ابیگیل و جک می‌گوید که فرار کنند و خودش را برای نبرد نهایی آماده می‌کند.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جان مارستون:</span> "ابیگیل، جک... بروید. من شما را پیدا خواهم کرد. قول می‌دهم."</p>
+                        <p><span class="character">ابیگیل مارستون:</span> "نه، جان! بدون تو نمی‌روم!"</p>
+                        <p><span class="character">جان مارستون:</span> "باید بروی. برای جک."</p>
+                    </div>
+                    
+                    <p>جان در انباری مزرعه پناه می‌گیرد و با سربازان می‌جنگد. او بسیاری از آن‌ها را از پای درمی‌آورد، اما در نهایت، شمار دشمنان بسیار زیاد است.</p>
+                    
+                    <p>در صحنه پایانی، جان از انبار بیرون می‌آید و با اسلحه‌ای که تقریباً خالی است، رو به سربازان می‌ایستد. او می‌داند که این پایان راه است، اما حداقل خانواده‌اش در امان هستند.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جان مارストون:</span> "خداحافظ، ابیگیل... خداحافظ، جک..."</p>
+                    </div>
+                    
+                    <p>سربازان شلیک می‌کنند و جان مارستون کشته می‌شود. دوران غرب وحشی به طور رسمی به پایان می‌رسد.</p>
+                `
+            },
+            {
+                title: "اپیلوگ: انتقام",
+                content: `
+                    <p>چند سال بعد، جک مارستون که اکنون جوانی شده است، به مزرعه بازمی‌گردد. او هرگز مرگ پدرش را فراموش نکرده و به دنبال انتقام است.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جک مارستون:</span> "پدر... قول می‌دهم انتقامت را بگیرم."</p>
+                    </div>
+                    
+                    <p>جک به دنبال افسر ارشدی می‌گردد که فرمان حمله به مزرعه را داده بود. پس از ماه‌ها جستجو، او را در یک شهر کوچک پیدا می‌کند.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">افسر ارشد:</span> "تو... تو پسر مارستون هستی؟"</p>
+                        <p><span class="character">جک مارستون:</span> "بله. و آمده‌ام تا کار پدرم را تمام کنم."</p>
+                    </div>
+                    
+                    <p>جک و افسر ارشد در یک دوئل کلاسیک غربی روبروی هم قرار می‌گیرند. در نهایت، جک سریع‌تر است و افسر را می‌کشد.</p>
+                    
+                    <p>با کشته شدن افسر، جک انتقام پدرش را گرفته است. اما او می‌داند که این انتقام چیزی را تغییر نمی‌دهد. پدرش مرده است و دوران غرب وحشی به پایان رسیده است.</p>
+                    
+                    <div class="dialogue">
+                        <p><span class="character">جک مارستون:</span> "پدر... الان می‌فهمم. تو سعی کردی از این زندگی دوری کنی. سعی کردی مرا از این راه دور نگه داری. اما در نهایت، من هم همان راهی را رفتم که تو رفتی."</p>
+                    </div>
+                    
+                    <p>جک سوار اسبش می‌شود و از شهر دور می‌شود، در حالی که نمی‌داند آینده چه چیزی برایش در نظر گرفته است. داستان Red Dead Redemption به پایان می‌رسد، اما میراث جان مارستون برای همیشه زنده می‌ماند.</p>
+                `
+            }
+        ];
+
+        // متغیرهای حالت
+        let currentChapter = 0;
+        
+        // توابع نمایش صفحات
+        function showPage(pageId) {
+            // مخفی کردن همه صفحات
+            document.querySelectorAll('.main-menu, .settings-page, .story-page, .credits-page, .print-page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // نمایش صفحه درخواستی
+            document.querySelector(`.${pageId}`).style.display = 'block';
+            
+            // اگر صفحه داستان است، محتوا را بارگذاری کن
+            if (pageId === 'story-page') {
+                loadChapter(currentChapter);
+            }
+            
+            // اگر صفحه چاپ است، محتوای چاپ را بارگذاری کن
+            if (pageId === 'print-page') {
+                loadPrintContent();
+            }
+        }
+        
+        // بارگذاری فصل
+        function loadChapter(chapterIndex) {
+            const chapter = storyData[chapterIndex];
+            document.getElementById('chapter-title').textContent = chapter.title;
+            document.getElementById('story-content').innerHTML = chapter.content;
+            
+            // به روزرسانی دکمه‌های ناوبری
+            document.getElementById('prev-btn').disabled = chapterIndex === 0;
+            document.getElementById('next-btn').disabled = chapterIndex === storyData.length - 1;
+            
+            // اگر تصاویر فعال هستند، تصاویر را اضافه کن
+            if (document.getElementById('show-images').checked) {
+                addImagesToChapter(chapterIndex);
+            }
+        }
+        
+        // اضافه کردن تصاویر به فصل
+        function addImagesToChapter(chapterIndex) {
+            const storyContent = document.getElementById('story-content');
+            
+            // تصاویر بر اساس فصل
+            const images = [
+                'https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption.jpg',
+                'https://upload.wikimedia.org/wikipedia/en/thumb/8/82/John_Marston_Red_Dead_Redemption.jpg/220px-John_Marston_Red_Dead_Redemption.jpg',
+                'https://upload.wikimedia.org/wikipedia/en/thumb/9/91/Red_Dead_Redemption_2_coverart.jpg/220px-Red_Dead_Redemption_2_coverart.jpg'
+            ];
+            
+            // اضافه کردن تصاویر به محتوا
+            if (chapterIndex < images.length) {
+                const img = document.createElement('img');
+                img.src = images[chapterIndex];
+                img.alt = `تصویر فصل ${chapterIndex + 1}`;
+                img.className = 'story-image';
+                storyContent.appendChild(img);
+            }
+        }
+        
+        // فصل بعدی
+        function nextChapter() {
+            if (currentChapter < storyData.length - 1) {
+                currentChapter++;
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // فصل قبلی
+        function prevChapter() {
+            if (currentChapter > 0) {
+                currentChapter--;
+                loadChapter(currentChapter);
+            }
+        }
+        
+        // بارگذاری محتوای چاپ
+        function loadPrintContent() {
+            const printContent = document.getElementById('print-content');
+            let fullStory = '';
+            
+            storyData.forEach(chapter => {
+                fullStory += `<h2>${chapter.title}</h2>`;
+                fullStory += chapter.content;
+                fullStory += '<hr style="margin: 30px 0;">';
+            });
+            
+            printContent.innerHTML = fullStory;
+        }
+        
+        // چاپ رمان
+        function printStory() {
+            loadPrintContent();
+            showPage('print-page');
+            
+            // پس از نمایش صفحه چاپ، عمل چاپ را انجام بده
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
+        
+        // خروج از برنامه
+        function exitApp() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟')) {
+                // در مرورگر، بستن پنجره ممکن است کار نکند
+                window.close();
+                
+                // راه حل جایگزین برای موبایل
+                if (navigator.app) {
+                    navigator.app.exitApp();
+                } else {
+                    alert('برای خروج، لطفاً پنجره مرورگر را ببندید.');
+                }
+            }
+        }
+        
+        // تنظیمات اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            // تنظیم رویدادها برای کنترل‌های تنظیمات
+            document.getElementById('theme-selector').addEventListener('change', function() {
+                document.body.className = this.value;
+            });
+            
+            document.getElementById('font-size').addEventListener('input', function() {
+                const fontSize = this.value + 'px';
+                document.documentElement.style.setProperty('--font-size', fontSize);
+                document.getElementById('font-size-value').textContent = fontSize;
+            });
+            
+            document.getElementById('font-family-selector').addEventListener('change', function() {
+                document.documentElement.style.setProperty('--font-family', this.value);
+            });
+            
+            document.getElementById('bg-music').addEventListener('change', function() {
+                document.getElementById('music-volume').disabled = !this.checked;
+            });
+            
+            document.getElementById('music-volume').addEventListener('input', function() {
+                document.getElementById('music-volume-value').textContent = this.value + '%';
+            });
+            
+            document.getElementById('online-content').addEventListener('change', function() {
+                document.getElementById('online-options').style.display = this.checked ? 'block' : 'none';
+            });
+            
+            document.getElementById('show-images').addEventListener('change', function() {
+                if (this.checked) {
+                    addImagesToChapter(currentChapter);
+                } else {
+                    // حذف همه تصاویر
+                    document.querySelectorAll('.story-image').forEach(img => img.remove());
+                }
+            });
+            
+            // نمایش صفحه اصلی در ابتدا
+            showPage('main-menu');
+        });
+    </script>
+</body>
+</html>
